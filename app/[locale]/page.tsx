@@ -1,20 +1,14 @@
-import { Show, SignInButton, UserButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { SignIn } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const t = useTranslations("HomePage");
+export default async function HomePage() {
+  const { userId } = await auth();
+  if (userId) redirect("/admin");
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6">
-      <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
-      <Show when="signed-out">
-        <SignInButton>
-          <Button>Sign in</Button>
-        </SignInButton>
-      </Show>
-      <Show when="signed-in">
-        <UserButton />
-      </Show>
+    <main className="flex min-h-screen items-center justify-center">
+      <SignIn routing="hash" forceRedirectUrl="/admin" />
     </main>
   );
 }
