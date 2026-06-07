@@ -10,7 +10,7 @@ export default function AdminLayout({
   return (
     <SidebarProvider>
       <AdminSidebar />
-      <SidebarTrigger />
+      <SidebarTrigger className="ml-3 mt-3" />
       <div className="min-h-screen bg-background">{children}</div>
     </SidebarProvider>
   );
