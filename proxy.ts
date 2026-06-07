@@ -6,7 +6,8 @@ const isAdminRoute = createRouteMatcher(["/admin(.*)", "/:locale/admin(.*)"]);
 
 const intlMiddleware = createMiddleware(routing);
 
-export default clerkMiddleware((_auth, request) => {
+export default clerkMiddleware(async (auth, request) => {
+  if (isAdminRoute(request)) await auth.protect();
   return intlMiddleware(request);
 });
 
