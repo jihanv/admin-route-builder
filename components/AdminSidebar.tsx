@@ -1,5 +1,23 @@
-import { Sidebar } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+} from "@/components/ui/sidebar";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronRight } from "lucide-react";
 
 export function AdminSidebar() {
   return (
@@ -12,6 +30,35 @@ export function AdminSidebar() {
           REI Mission
         </span>
       </div>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarMenu>
+            <Collapsible defaultOpen className="group/collapsible">
+              <SidebarMenuItem className="overflow-hidden opacity-100 transition-opacity delay-150 duration-150 group-data-[collapsible=icon]:pointer-events-none group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:delay-0">
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton className="hover:!bg-sidebar-foreground hover:!text-sidebar">
+                    <span>Missions</span>
+                    <ChevronRight className="ml-auto size-4" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        asChild
+                        className="hover:!bg-sidebar-foreground hover:!text-sidebar"
+                      >
+                        <Link href="/admin">Create New Mission</Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
     </Sidebar>
   );
 }
