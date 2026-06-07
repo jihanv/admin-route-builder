@@ -1,3 +1,4 @@
+import { AdminSidebar } from "@/components/AdminSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AdminLayout({
@@ -7,6 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     <SidebarProvider>
+      <AdminSidebar />
       <div className="min-h-screen bg-background">{children}</div>
     </SidebarProvider>
   );
