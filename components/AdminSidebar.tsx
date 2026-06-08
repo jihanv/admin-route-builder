@@ -4,9 +4,12 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { AdminSidebarMenuGroup } from "@/components/AdminSidebarMenuGroup";
+import Link from "next/link";
 
 export function AdminSidebar() {
   return (
@@ -59,6 +62,14 @@ export function AdminSidebar() {
                 },
               ]}
             />
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                className="hover:bg-sidebar-foreground! hover:text-sidebar!"
+              >
+                <Link href="/admin/settings">Settings</Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
