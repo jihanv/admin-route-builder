@@ -37,9 +37,9 @@ export function AdminSidebar() {
             <Collapsible defaultOpen className="group/collapsible">
               <SidebarMenuItem className="overflow-hidden opacity-100 transition-opacity delay-150 duration-150 group-data-[collapsible=icon]:pointer-events-none group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:delay-0">
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="hover:!bg-sidebar-foreground hover:!text-sidebar">
+                  <SidebarMenuButton className="hover:bg-sidebar-foreground! hover:text-sidebar!">
                     <span>Missions</span>
-                    <ChevronRight className="ml-auto size-4" />
+                    <ChevronRight className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -47,9 +47,27 @@ export function AdminSidebar() {
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton
                         asChild
-                        className="hover:!bg-sidebar-foreground hover:!text-sidebar"
+                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
                       >
                         <Link href="/admin">Create New Mission</Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        asChild
+                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
+                      >
+                        <Link href="/admin/missions">Current Missions</Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        asChild
+                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
+                      >
+                        <Link href="/admin/missions/drafts">
+                          Draft Missions
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   </SidebarMenuSub>
