@@ -42,6 +42,23 @@ export function AdminSidebar() {
                 { label: "User Progress", href: "/admin/users/progress" },
               ]}
             />
+            <AdminSidebarMenuGroup
+              title="Communication"
+              items={[
+                {
+                  label: "Announcements",
+                  href: "/admin/communication/announcements",
+                },
+                {
+                  label: "Push Notifications",
+                  href: "/admin/communication/push",
+                },
+                {
+                  label: "Message History",
+                  href: "/admin/communication/history",
+                },
+              ]}
+            />
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
