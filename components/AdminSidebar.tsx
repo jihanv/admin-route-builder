@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
@@ -10,6 +11,7 @@ import {
 import Image from "next/image";
 import { AdminSidebarMenuGroup } from "@/components/AdminSidebarMenuGroup";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 export function AdminSidebar() {
   return (
@@ -73,6 +75,11 @@ export function AdminSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="group-data-[collapsible=icon]:items-center">
+        <div className="flex items-center gap-2 px-2 py-2">
+          <UserButton />
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }
