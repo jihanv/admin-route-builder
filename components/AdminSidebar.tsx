@@ -31,6 +31,17 @@ export function AdminSidebar() {
                 { label: "Draft Missions", href: "/admin/missions/drafts" },
               ]}
             />
+            <AdminSidebarMenuGroup
+              title="Users"
+              items={[
+                {
+                  label: "Active Mission Participants",
+                  href: "/admin/users/active",
+                },
+                { label: "All Users", href: "/admin/users" },
+                { label: "User Progress", href: "/admin/users/progress" },
+              ]}
+            />
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
