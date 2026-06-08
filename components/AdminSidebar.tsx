@@ -4,20 +4,9 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import Link from "next/link";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronRight } from "lucide-react";
+import { AdminSidebarMenuGroup } from "@/components/AdminSidebarMenuGroup";
 
 export function AdminSidebar() {
   return (
@@ -34,46 +23,14 @@ export function AdminSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
           <SidebarMenu>
-            <Collapsible defaultOpen className="group/collapsible">
-              <SidebarMenuItem className="overflow-hidden opacity-100 transition-opacity delay-150 duration-150 group-data-[collapsible=icon]:pointer-events-none group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:delay-0">
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="hover:bg-sidebar-foreground! hover:text-sidebar!">
-                    <span>Missions</span>
-                    <ChevronRight className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
-                      >
-                        <Link href="/admin">Create New Mission</Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
-                      >
-                        <Link href="/admin/missions">Current Missions</Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        className="hover:bg-sidebar-foreground! hover:text-sidebar!"
-                      >
-                        <Link href="/admin/missions/drafts">
-                          Draft Missions
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </SidebarMenuItem>
-            </Collapsible>
+            <AdminSidebarMenuGroup
+              title="Missions"
+              items={[
+                { label: "Create New Mission", href: "/admin" },
+                { label: "Current Missions", href: "/admin/missions" },
+                { label: "Draft Missions", href: "/admin/missions/drafts" },
+              ]}
+            />
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
