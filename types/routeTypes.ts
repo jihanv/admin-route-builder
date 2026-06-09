@@ -8,4 +8,7 @@ export type AdminMissionRoute = {
   title: string;
   startDate: string;
   goalDistanceMeters: number;
+  description: string;
+  routePoints: RoutePoint[];
+  createdByAdminId: string;
 };
