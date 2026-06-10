@@ -32,9 +32,9 @@ export function AdminSidebar() {
             <AdminSidebarMenuGroup
               title="Missions"
               items={[
-                { label: "Create New Mission", href: "/admin" },
-                { label: "Current Missions", href: "/admin/missions" },
-                { label: "Draft Missions", href: "/admin/missions/drafts" },
+                { label: "Create New Mission", href: "/mission/new" },
+                { label: "Current Missions", href: "/mission/current" },
+                { label: "Draft Missions", href: "/mission/drafts" },
               ]}
             />
             <AdminSidebarMenuGroup
@@ -42,10 +42,10 @@ export function AdminSidebar() {
               items={[
                 {
                   label: "Active Mission Participants",
-                  href: "/admin/users/active",
+                  href: "/dashboard/users/active",
                 },
-                { label: "All Users", href: "/admin/users" },
-                { label: "User Progress", href: "/admin/users/progress" },
+                { label: "All Users", href: "/dashboard/users" },
+                { label: "User Progress", href: "/dashboard/users/progress" },
               ]}
             />
             <AdminSidebarMenuGroup
@@ -53,15 +53,15 @@ export function AdminSidebar() {
               items={[
                 {
                   label: "Announcements",
-                  href: "/admin/communication/announcements",
+                  href: "/dashboard/communication/announcements",
                 },
                 {
                   label: "Push Notifications",
-                  href: "/admin/communication/push",
+                  href: "/dashboard/communication/push",
                 },
                 {
                   label: "Message History",
-                  href: "/admin/communication/history",
+                  href: "/dashboard/communication/history",
                 },
               ]}
             />
@@ -70,7 +70,7 @@ export function AdminSidebar() {
                 asChild
                 className="hover:bg-sidebar-foreground! hover:text-sidebar!"
               >
-                <Link href="/admin/settings">Settings</Link>
+                <Link href="/dashboard/settings">Settings</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
