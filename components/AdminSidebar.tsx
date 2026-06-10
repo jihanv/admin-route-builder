@@ -32,9 +32,12 @@ export function AdminSidebar() {
             <AdminSidebarMenuGroup
               title="Missions"
               items={[
-                { label: "Create New Mission", href: "/mission/new" },
-                { label: "Current Missions", href: "/mission/current" },
-                { label: "Draft Missions", href: "/mission/drafts" },
+                { label: "Create New Mission", href: "/dashboard/mission/new" },
+                {
+                  label: "Current Missions",
+                  href: "/dashboard/mission/current",
+                },
+                { label: "Draft Missions", href: "/dashboard/mission/drafts" },
               ]}
             />
             <AdminSidebarMenuGroup
