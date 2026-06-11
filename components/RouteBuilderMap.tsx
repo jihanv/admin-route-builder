@@ -26,7 +26,7 @@ export function RouteBuilderMap() {
     ]);
   };
   return (
-    <APIProvider apiKey={apiKey}>
+    <APIProvider apiKey={apiKey} libraries={["routes"]}>
       <div className="mb-3 flex items-center gap-5 rounded-lg border bg-card p-3 text-card-foreground">
         <div className="flex items-center gap-2">
           <Button
