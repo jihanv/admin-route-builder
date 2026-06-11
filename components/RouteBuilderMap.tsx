@@ -16,8 +16,10 @@ export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const [routePoints, setRoutePoints] = useState<RoutePoint[]>([]);
   const [snapToRoads, setSnapToRoads] = useState(false);
-  const [snappedRoutePath] = useState<{ lat: number; lng: number }[]>([]);
-
+  const [snappedRoutePath, setSnappedRoutePath] = useState<
+    { lat: number; lng: number }[]
+  >([]);
+  const [snapError, setSnapError] = useState("");
   const displayRoutePath =
     snapToRoads && snappedRoutePath.length > 0
       ? snappedRoutePath
