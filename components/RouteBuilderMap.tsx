@@ -16,6 +16,15 @@ export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const [routePoints, setRoutePoints] = useState<RoutePoint[]>([]);
   const [snapToRoads, setSnapToRoads] = useState(false);
+  const [snappedRoutePath] = useState<{ lat: number; lng: number }[]>([]);
+
+  const displayRoutePath =
+    snapToRoads && snappedRoutePath.length > 0
+      ? snappedRoutePath
+      : routePoints.map((point) => ({
+          lat: point.latitude,
+          lng: point.longitude,
+        }));
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
@@ -68,13 +77,7 @@ export function RouteBuilderMap() {
             position={{ lat: point.latitude, lng: point.longitude }}
           />
         ))}
-        <Polyline
-          path={routePoints.map((point) => ({
-            lat: point.latitude,
-            lng: point.longitude,
-          }))}
-          strokeWeight={4}
-        />
+        <Polyline path={displayRoutePath} strokeWeight={4} />
       </Map>
 
       <div className="mt-3 rounded-lg border bg-card p-4 text-card-foreground">
