@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 "use client";
 import { useState } from "react";
 import {
@@ -51,7 +52,10 @@ export function RouteBuilderMap() {
     <APIProvider
       apiKey={apiKey}
       libraries={["routes"]}
-      onLoad={() => setIsMapsApiLoaded(true)}
+      onLoad={async () => {
+        await google.maps.importLibrary("routes");
+        setIsMapsApiLoaded(true);
+      }}
     >
       <div className="mb-3 flex items-center gap-5 rounded-lg border bg-card p-3 text-card-foreground">
         <div className="flex items-center gap-2">
