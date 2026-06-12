@@ -31,6 +31,11 @@ export function RouteBuilderMap() {
           lng: point.longitude,
         }));
 
+  const toGooglePoint = (point: RoutePoint) => ({
+    lat: point.latitude,
+    lng: point.longitude,
+  });
+
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
     if (!position) return;
