@@ -65,7 +65,15 @@ export function RouteBuilderMap() {
     }
 
     setSnapError("");
-    await google.maps.importLibrary("routes");
+
+    if (routePoints.length < 2) return;
+
+    const { Route } = (await google.maps.importLibrary(
+      "routes",
+    )) as google.maps.RoutesLibrary;
+
+    const origin = toGooglePoint(routePoints[0]);
+    const destination = toGooglePoint(routePoints[routePoints.length - 1]);
   };
 
   return (
