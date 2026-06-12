@@ -91,6 +91,12 @@ export function RouteBuilderMap() {
           </span>
         </div>
       </div>
+      {snapError && (
+        <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {snapError}
+        </p>
+      )}
+
       <div className="relative">
         {!isMapsApiLoaded && (
           <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg border bg-card/80">
