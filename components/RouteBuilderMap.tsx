@@ -23,18 +23,14 @@ export function RouteBuilderMap() {
   const [snapError, setSnapError] = useState("");
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
 
-  const displayRoutePath =
-    snapToRoads && snappedRoutePath.length > 0
-      ? snappedRoutePath
-      : routePoints.map((point) => ({
-          lat: point.latitude,
-          lng: point.longitude,
-        }));
-
   const toGooglePoint = (point: RoutePoint) => ({
     lat: point.latitude,
     lng: point.longitude,
   });
+  const displayRoutePath =
+    snapToRoads && snappedRoutePath.length > 0
+      ? snappedRoutePath
+      : routePoints.map(toGooglePoint);
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
