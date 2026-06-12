@@ -36,6 +36,15 @@ export function RouteBuilderMap() {
       { latitude: position.lat, longitude: position.lng },
     ]);
   };
+
+  const handleSnapToRoadsChange = (checked: boolean) => {
+    setSnapToRoads(checked);
+    if (!checked) {
+      setSnappedRoutePath([]);
+      setSnapError("");
+    }
+  };
+
   return (
     <APIProvider apiKey={apiKey} libraries={["routes"]}>
       <div className="mb-3 flex items-center gap-5 rounded-lg border bg-card p-3 text-card-foreground">
@@ -61,7 +70,10 @@ export function RouteBuilderMap() {
           <span className="text-sm font-medium text-foreground">
             Snap to Roads
           </span>
-          <Switch checked={snapToRoads} onCheckedChange={setSnapToRoads} />
+          <Switch
+            checked={snapToRoads}
+            onCheckedChange={handleSnapToRoadsChange}
+          />
           <span className="text-sm font-medium text-muted-foreground">
             {snapToRoads ? "On" : "Off"}
           </span>
