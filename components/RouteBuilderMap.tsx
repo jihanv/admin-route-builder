@@ -75,12 +75,31 @@ export function RouteBuilderMap() {
     const origin = toGooglePoint(routePoints[0]);
     const destination = toGooglePoint(routePoints[routePoints.length - 1]);
 
+    //Create walking route request
     const request: google.maps.routes.ComputeRoutesRequest = {
       origin,
       destination,
       travelMode: "WALKING",
       fields: ["path"],
     };
+
+    try {
+      const { routes } = await Route.computeRoutes(request);
+      const routePath = routes?.[0]?.path ?? [];
+
+      if (routePath.length === 0)
+        throw new Error("No walking route path returned.");
+
+      setSnappedRoutePath(
+        routePath.map((point) => ({ lat: point.lat, lng: point.lng })),
+      );
+    } catch (error) {
+      console.error("Route snap failed:", error);
+      setSnapError(
+        "Could not calculate a walking route. Showing straight line instead.",
+      );
+      setSnappedRoutePath([]);
+    }
   };
 
   return (
