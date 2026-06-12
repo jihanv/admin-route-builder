@@ -74,6 +74,13 @@ export function RouteBuilderMap() {
 
     const origin = toGooglePoint(routePoints[0]);
     const destination = toGooglePoint(routePoints[routePoints.length - 1]);
+
+    const request: google.maps.routes.ComputeRoutesRequest = {
+      origin,
+      destination,
+      travelMode: "WALKING",
+      fields: ["path"],
+    };
   };
 
   return (
