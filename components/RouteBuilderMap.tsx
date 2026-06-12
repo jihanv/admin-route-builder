@@ -20,6 +20,8 @@ export function RouteBuilderMap() {
     { lat: number; lng: number }[]
   >([]);
   const [snapError, setSnapError] = useState("");
+  const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
+
   const displayRoutePath =
     snapToRoads && snappedRoutePath.length > 0
       ? snappedRoutePath
@@ -46,7 +48,11 @@ export function RouteBuilderMap() {
   };
 
   return (
-    <APIProvider apiKey={apiKey} libraries={["routes"]}>
+    <APIProvider
+      apiKey={apiKey}
+      libraries={["routes"]}
+      onLoad={() => setIsMapsApiLoaded(true)}
+    >
       <div className="mb-3 flex items-center gap-5 rounded-lg border bg-card p-3 text-card-foreground">
         <div className="flex items-center gap-2">
           <Button
@@ -73,6 +79,7 @@ export function RouteBuilderMap() {
           <Switch
             checked={snapToRoads}
             onCheckedChange={handleSnapToRoadsChange}
+            disabled={!isMapsApiLoaded}
           />
           <span className="text-sm font-medium text-muted-foreground">
             {snapToRoads ? "On" : "Off"}
