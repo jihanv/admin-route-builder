@@ -12,6 +12,12 @@ import type { RoutePoint } from "@/types/routeTypes";
 import { RoutePointList } from "@/components/RoutePointList";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
@@ -31,6 +37,14 @@ export function RouteBuilderMap() {
     snapToRoads && snappedRoutePath.length > 0
       ? snappedRoutePath
       : routePoints.map(toGooglePoint);
+
+  const snapTooltipMessage = !isMapsApiLoaded
+    ? "Loading Google Maps tools..."
+    : routePoints.length < 2
+      ? "Add at least 2 route points to enable Snap to Roads."
+      : "Use Google walking paths where available.";
+
+  const isSnapToggleDisabled = !isMapsApiLoaded || routePoints.length < 2;
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
@@ -86,11 +100,22 @@ export function RouteBuilderMap() {
           <span className="text-sm font-medium text-foreground">
             Snap to Roads
           </span>
-          <Switch
-            checked={snapToRoads}
-            onCheckedChange={handleSnapToRoadsChange}
-            disabled={!isMapsApiLoaded || routePoints.length < 2}
-          />
+          <TooltipProvider>
+            <Tooltip open={isSnapToggleDisabled ? undefined : false}>
+              <TooltipTrigger asChild>
+                <span className="inline-flex">
+                  <Switch
+                    checked={snapToRoads}
+                    onCheckedChange={handleSnapToRoadsChange}
+                    disabled={isSnapToggleDisabled}
+                  />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{snapTooltipMessage}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <span className="text-sm font-medium text-muted-foreground">
             {snapToRoads ? "On" : "Off"}
           </span>
