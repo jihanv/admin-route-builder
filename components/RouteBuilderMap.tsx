@@ -86,20 +86,27 @@ export function RouteBuilderMap() {
           </span>
         </div>
       </div>
-      <Map
-        className="h-125 w-full overflow-hidden rounded-lg border"
-        defaultCenter={{ lat: 49.2827, lng: -123.1207 }}
-        defaultZoom={12}
-        onClick={handleMapClick}
-      >
-        {routePoints.map((point, index) => (
-          <Marker
-            key={`${point.latitude}-${point.longitude}-${index}`}
-            position={{ lat: point.latitude, lng: point.longitude }}
-          />
-        ))}
-        <Polyline path={displayRoutePath} strokeWeight={4} />
-      </Map>
+      <div className="relative">
+        {!isMapsApiLoaded && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg border bg-card/80">
+            <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+          </div>
+        )}
+        <Map
+          className="h-125 w-full overflow-hidden rounded-lg border"
+          defaultCenter={{ lat: 49.2827, lng: -123.1207 }}
+          defaultZoom={12}
+          onClick={handleMapClick}
+        >
+          {routePoints.map((point, index) => (
+            <Marker
+              key={`${point.latitude}-${point.longitude}-${index}`}
+              position={{ lat: point.latitude, lng: point.longitude }}
+            />
+          ))}
+          <Polyline path={displayRoutePath} strokeWeight={4} />
+        </Map>
+      </div>
 
       <div className="mt-3 rounded-lg border bg-card p-4 text-card-foreground">
         <p className="mb-2 text-sm font-medium">
