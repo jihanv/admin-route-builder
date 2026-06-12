@@ -84,7 +84,7 @@ export function RouteBuilderMap() {
           <Switch
             checked={snapToRoads}
             onCheckedChange={handleSnapToRoadsChange}
-            disabled={!isMapsApiLoaded}
+            disabled={!isMapsApiLoaded || routePoints.length < 2}
           />
           <span className="text-sm font-medium text-muted-foreground">
             {snapToRoads ? "On" : "Off"}
