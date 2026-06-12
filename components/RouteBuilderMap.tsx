@@ -41,12 +41,17 @@ export function RouteBuilderMap() {
     ]);
   };
 
-  const handleSnapToRoadsChange = (checked: boolean) => {
+  const handleSnapToRoadsChange = async (checked: boolean) => {
     setSnapToRoads(checked);
+
     if (!checked) {
       setSnappedRoutePath([]);
       setSnapError("");
+      return;
     }
+
+    setSnapError("");
+    await google.maps.importLibrary("routes");
   };
 
   return (
