@@ -153,7 +153,7 @@ export function RouteBuilderMap() {
             Snap to Roads
           </span>
           <TooltipProvider>
-            <Tooltip open={isSnapToggleDisabled ? undefined : false}>
+            <Tooltip>
               <TooltipTrigger asChild>
                 <span className="inline-flex">
                   <Switch
@@ -163,9 +163,11 @@ export function RouteBuilderMap() {
                   />
                 </span>
               </TooltipTrigger>
-              <TooltipContent>
-                <p>{snapTooltipMessage}</p>
-              </TooltipContent>
+              {isSnapToggleDisabled && (
+                <TooltipContent>
+                  <p>{snapTooltipMessage}</p>
+                </TooltipContent>
+              )}
             </Tooltip>
           </TooltipProvider>
           <span className="text-sm font-medium text-muted-foreground">

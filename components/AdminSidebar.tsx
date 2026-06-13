@@ -68,7 +68,7 @@ export function AdminSidebar() {
                 },
               ]}
             />
-            <SidebarMenuItem>
+            <SidebarMenuItem className="overflow-hidden opacity-100 transition-opacity delay-150 duration-150 group-data-[collapsible=icon]:pointer-events-none group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:delay-0">
               <SidebarMenuButton
                 asChild
                 className="hover:bg-sidebar-foreground! hover:text-sidebar!"
