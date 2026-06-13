@@ -12,3 +12,10 @@ export type AdminMissionRoute = {
   routePoints: RoutePoint[];
   createdByAdminId: string;
 };
+
+export type RouteDraft = {
+  id: string;
+  title: string;
+  createdAt: string;
+  routePoints: RoutePoint[];
+};

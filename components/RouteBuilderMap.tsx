@@ -33,7 +33,9 @@ export function RouteBuilderMap() {
   >([]);
   const [snapError, setSnapError] = useState("");
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
-
+  const handleSaveDraft = () => {
+    localStorage.setItem("rei-admin-route-points", JSON.stringify(routePoints));
+  };
   const toGooglePoint = (point: RoutePoint) => ({
     lat: point.latitude,
     lng: point.longitude,
@@ -168,6 +170,14 @@ export function RouteBuilderMap() {
             disabled={routePoints.length === 0}
           >
             Undo
+          </Button>
+          <Button
+            className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
+            variant="outline"
+            onClick={handleSaveDraft}
+            disabled={routePoints.length === 0}
+          >
+            Save Draft
           </Button>
         </div>
         <div className="flex items-center gap-3 rounded-md border bg-primary/10 px-4 py-2">
