@@ -62,6 +62,13 @@ export function RouteBuilderMap() {
     setSnapToRoads(false);
   };
 
+  const handleUndoRoutePoint = () => {
+    setRoutePoints((points) => points.slice(0, -1));
+    setSnappedRoutePath([]);
+    setSnapError("");
+    setSnapToRoads(false);
+  };
+
   const handleSnapToRoadsChange = async (checked: boolean) => {
     setSnapToRoads(checked);
 
@@ -135,7 +142,7 @@ export function RouteBuilderMap() {
           <Button
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
-            onClick={() => setRoutePoints((points) => points.slice(0, -1))}
+            onClick={handleUndoRoutePoint}
             disabled={routePoints.length === 0}
           >
             Undo
@@ -180,7 +187,7 @@ export function RouteBuilderMap() {
         )}
         <Map
           className="h-125 w-full overflow-hidden rounded-lg border"
-          defaultCenter={{ lat: 49.2827, lng: -123.1207 }}
+          defaultCenter={{ lat: 35.647756, lng: 139.741834 }}
           defaultZoom={12}
           onClick={handleMapClick}
         >
