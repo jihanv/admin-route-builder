@@ -7,13 +7,18 @@ const isAdminRoute = createRouteMatcher([
   "/:locale/dashboard(.*)",
 ]);
 
+const isApiRoute = createRouteMatcher(["/api(.*)", "/trpc(.*)"]);
+
 const intlMiddleware = createMiddleware(routing);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isAdminRoute(request)) await auth.protect();
+
+  if (isApiRoute(request)) return;
+
   return intlMiddleware(request);
 });
 
 export const config = {
-  matcher: ["/((?!_next|.*\\..*).*)", "/(api|trpc)(.*)", "/__clerk/(.*)"],
+  matcher: ["/((?!_next|.*\\..*).*)", "/__clerk/(.*)"],
 };
