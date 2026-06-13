@@ -47,7 +47,7 @@ export function RouteBuilderMap() {
 
   const isSnapToggleDisabled = !isMapsApiLoaded || routePoints.length < 2;
 
-  const handleMapClick = (event: MapMouseEvent) => {
+  const handleMapClick = async (event: MapMouseEvent) => {
     const position = event.detail.latLng;
     if (!position) return;
 
@@ -57,6 +57,10 @@ export function RouteBuilderMap() {
     ];
 
     setRoutePoints(nextRoutePoints);
+
+    if (snapToRoads) {
+      await calculateSnappedRoute(nextRoutePoints);
+    }
   };
 
   const handleResetRoute = () => {
