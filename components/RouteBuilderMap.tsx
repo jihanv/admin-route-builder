@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   APIProvider,
-  Marker,
+  AdvancedMarker,
   Map,
   Polyline,
   type MapMouseEvent,
@@ -21,6 +21,7 @@ import {
 
 export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
   const [routePoints, setRoutePoints] = useState<RoutePoint[]>([]);
   const [snapToRoads, setSnapToRoads] = useState(false);
   const [snappedRoutePath, setSnappedRoutePath] = useState<
@@ -191,10 +192,11 @@ export function RouteBuilderMap() {
           className="h-125 w-full overflow-hidden rounded-lg border"
           defaultCenter={{ lat: 35.647756, lng: 139.741834 }}
           defaultZoom={12}
+          mapId={mapId}
           onClick={handleMapClick}
         >
           {routePoints.map((point, index) => (
-            <Marker
+            <AdvancedMarker
               key={`${point.latitude}-${point.longitude}-${index}`}
               position={{ lat: point.latitude, lng: point.longitude }}
             />
