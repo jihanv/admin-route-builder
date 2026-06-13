@@ -55,6 +55,13 @@ export function RouteBuilderMap() {
     ]);
   };
 
+  const handleResetRoute = () => {
+    setRoutePoints([]);
+    setSnappedRoutePath([]);
+    setSnapError("");
+    setSnapToRoads(false);
+  };
+
   const handleSnapToRoadsChange = async (checked: boolean) => {
     setSnapToRoads(checked);
 
@@ -74,11 +81,15 @@ export function RouteBuilderMap() {
 
     const origin = toGooglePoint(routePoints[0]);
     const destination = toGooglePoint(routePoints[routePoints.length - 1]);
+    const intermediates = routePoints.slice(1, -1).map((point) => ({
+      location: toGooglePoint(point),
+    }));
 
     //Create walking route request
     const request: google.maps.routes.ComputeRoutesRequest = {
       origin,
       destination,
+      intermediates,
       travelMode: "WALKING",
       fields: ["path"],
     };
@@ -116,7 +127,7 @@ export function RouteBuilderMap() {
           <Button
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
-            onClick={() => setRoutePoints([])}
+            onClick={handleResetRoute}
             disabled={routePoints.length === 0}
           >
             Reset
@@ -191,7 +202,7 @@ export function RouteBuilderMap() {
         <Button
           className="mb-3"
           variant="outline"
-          onClick={() => setRoutePoints([])}
+          onClick={handleResetRoute}
           disabled={routePoints.length === 0}
         >
           Clear Route
