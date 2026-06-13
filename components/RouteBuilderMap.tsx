@@ -50,10 +50,13 @@ export function RouteBuilderMap() {
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
     if (!position) return;
-    setRoutePoints([
+
+    const nextRoutePoints = [
       ...routePoints,
       { latitude: position.lat, longitude: position.lng },
-    ]);
+    ];
+
+    setRoutePoints(nextRoutePoints);
   };
 
   const handleResetRoute = () => {
