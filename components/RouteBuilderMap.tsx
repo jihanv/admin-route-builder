@@ -70,11 +70,15 @@ export function RouteBuilderMap() {
     setSnapToRoads(false);
   };
 
-  const handleUndoRoutePoint = () => {
-    setRoutePoints((points) => points.slice(0, -1));
-    setSnappedRoutePath([]);
+  const handleUndoRoutePoint = async () => {
+    const nextRoutePoints = routePoints.slice(0, -1);
+
+    setRoutePoints(nextRoutePoints);
     setSnapError("");
-    setSnapToRoads(false);
+
+    if (!snapToRoads) return;
+    if (nextRoutePoints.length < 2) setSnapToRoads(false);
+    await calculateSnappedRoute(nextRoutePoints);
   };
 
   const calculateSnappedRoute = async (points: RoutePoint[]) => {
