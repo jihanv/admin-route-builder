@@ -73,39 +73,33 @@ export function RouteBuilderMap() {
     setSnapToRoads(false);
   };
 
-  const handleSnapToRoadsChange = async (checked: boolean) => {
-    setSnapToRoads(checked);
+  const calculateSnappedRoute = async (points: RoutePoint[]) => {
+    setSnapError("");
 
-    if (!checked) {
+    if (points.length < 2) {
       setSnappedRoutePath([]);
-      setSnapError("");
       return;
     }
 
-    setSnapError("");
-
-    if (routePoints.length < 2) return;
-
-    const { Route } = (await google.maps.importLibrary(
-      "routes",
-    )) as google.maps.RoutesLibrary;
-
-    const origin = toGooglePoint(routePoints[0]);
-    const destination = toGooglePoint(routePoints[routePoints.length - 1]);
-    const intermediates = routePoints.slice(1, -1).map((point) => ({
-      location: toGooglePoint(point),
-    }));
-
-    //Create walking route request
-    const request: google.maps.routes.ComputeRoutesRequest = {
-      origin,
-      destination,
-      intermediates,
-      travelMode: "WALKING",
-      fields: ["path"],
-    };
-
     try {
+      const { Route } = (await google.maps.importLibrary(
+        "routes",
+      )) as google.maps.RoutesLibrary;
+
+      const origin = toGooglePoint(points[0]);
+      const destination = toGooglePoint(points[points.length - 1]);
+      const intermediates = points.slice(1, -1).map((point) => ({
+        location: toGooglePoint(point),
+      }));
+
+      const request: google.maps.routes.ComputeRoutesRequest = {
+        origin,
+        destination,
+        intermediates,
+        travelMode: "WALKING",
+        fields: ["path"],
+      };
+
       const { routes } = await Route.computeRoutes(request);
       const routePath = routes?.[0]?.path ?? [];
 
@@ -122,6 +116,18 @@ export function RouteBuilderMap() {
       );
       setSnappedRoutePath([]);
     }
+  };
+
+  const handleSnapToRoadsChange = async (checked: boolean) => {
+    setSnapToRoads(checked);
+
+    if (!checked) {
+      setSnappedRoutePath([]);
+      setSnapError("");
+      return;
+    }
+
+    await calculateSnappedRoute(routePoints);
   };
 
   return (
