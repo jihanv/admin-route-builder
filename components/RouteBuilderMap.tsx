@@ -1,11 +1,15 @@
 /// <reference types="google.maps" />
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   APIProvider,
   AdvancedMarker,
+  ControlPosition,
   Map,
+  MapControl,
   Polyline,
+  useMapsLibrary,
+  useMap,
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
 import type { RoutePoint } from "@/types/routeTypes";
@@ -141,7 +145,7 @@ export function RouteBuilderMap() {
   return (
     <APIProvider
       apiKey={apiKey}
-      libraries={["routes"]}
+      libraries={["routes", "places"]}
       onLoad={async () => {
         await google.maps.importLibrary("routes");
         setIsMapsApiLoaded(true);
@@ -212,6 +216,9 @@ export function RouteBuilderMap() {
           mapId={mapId}
           onClick={handleMapClick}
         >
+          <MapControl position={ControlPosition.TOP_CENTER}>
+            <PlaceSearchControl />
+          </MapControl>
           {routePoints.map((point, index) => (
             <AdvancedMarker
               key={`${point.latitude}-${point.longitude}-${index}`}
@@ -238,4 +245,31 @@ export function RouteBuilderMap() {
       </div>
     </APIProvider>
   );
+}
+
+function PlaceSearchControl() {
+  const searchControlRef = useRef<HTMLDivElement>(null);
+  const placesLibrary = useMapsLibrary("places");
+  const map = useMap();
+  useEffect(() => {
+    if (!placesLibrary || !searchControlRef.current) return;
+
+    const placeAutocomplete = new placesLibrary.PlaceAutocompleteElement({});
+
+    placeAutocomplete.addEventListener("gmp-select", async (event) => {
+      const { placePrediction } =
+        event as google.maps.places.PlacePredictionSelectEvent;
+      const place = placePrediction.toPlace();
+
+      await place.fetchFields({ fields: ["displayName", "location"] });
+      if (!place.location || !map) return;
+
+      map.panTo(place.location);
+      map.setZoom(15);
+      console.log(place.displayName, place.location?.toJSON());
+    });
+    searchControlRef.current.replaceChildren(placeAutocomplete);
+  }, [placesLibrary, map]);
+
+  return <div ref={searchControlRef} className="mt-3 w-72" />;
 }
