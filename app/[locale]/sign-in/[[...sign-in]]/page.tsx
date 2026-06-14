@@ -26,8 +26,8 @@ export default function Page() {
           </ClerkLoading>
         </div>
       </div>
-      <div className="h-full bg-neutral-700 hidden lg:flex items-center justify-center">
-        <Image src="/icon.svg" height={100} width={100} alt="Logo" />
+      <div className="h-full bg-white hidden lg:flex items-center justify-center">
+        <Image src="/rei-logo.ico" height={100} width={100} alt="Logo" />
       </div>
     </div>
   );
