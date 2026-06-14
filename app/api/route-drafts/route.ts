@@ -2,6 +2,17 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 
+function isRoutePointArray(value: unknown) {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (point) =>
+        typeof point?.latitude === "number" &&
+        typeof point?.longitude === "number",
+    )
+  );
+}
+
 export async function GET() {
   const { isAuthenticated, userId, sessionClaims } = await auth();
 
@@ -13,5 +24,6 @@ export async function GET() {
 
   if (role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
   return NextResponse.json({ ok: true, userId, role });
 }
