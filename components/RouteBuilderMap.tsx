@@ -134,8 +134,13 @@ export function RouteBuilderMap() {
       const { routes } = await Route.computeRoutes(request);
       const routePath = routes?.[0]?.path ?? [];
 
-      if (routePath.length === 0)
-        throw new Error("No walking route path returned.");
+      if (routePath.length === 0) {
+        setSnapError(
+          "Could not calculate a walking route. Showing straight line instead.",
+        );
+        setSnappedRoutePath([]);
+        return;
+      }
 
       setSnappedRoutePath(
         routePath.map((point) => ({ lat: point.lat, lng: point.lng })),
