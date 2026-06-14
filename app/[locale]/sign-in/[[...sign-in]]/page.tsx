@@ -17,7 +17,7 @@ export default function Page() {
         <div className="flex items-center justify-center mt-8">
           <ClerkLoaded>
             <SignIn
-              signUpUrl={`/${locale}/signup`}
+              signUpUrl={`/${locale}/sign-up`}
               forceRedirectUrl={`/${locale}/dashboard`}
             />
           </ClerkLoaded>
