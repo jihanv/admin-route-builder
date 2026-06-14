@@ -3,10 +3,15 @@ import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 
 export async function GET() {
-  const { isAuthenticated, userId } = await auth();
+  const { isAuthenticated, userId, sessionClaims } = await auth();
 
   if (!isAuthenticated)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  return NextResponse.json({ ok: true, userId });
+  const role =
+    (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
+
+  if (role !== "admin")
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  return NextResponse.json({ ok: true, userId, role });
 }
