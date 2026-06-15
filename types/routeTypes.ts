@@ -13,11 +13,31 @@ export type AdminMissionRoute = {
   createdByAdminId: string;
 };
 
-export type RouteDraft = {
+export type Mission = {
   id: string;
   title: string;
-  createdAt: string;
+  description: string;
+  startDate: string;
+  goalDistanceMeters: number;
   routePoints: RoutePoint[];
+  milestones: MissionMilestone[];
+  createdByAdminId: string;
+  createdAt: string;
+  updatedAt: string;
+  status: "published";
+};
+export type RouteDraft = {
+  id: string;
+  title?: string;
+  description?: string;
+  startDate?: string;
+  goalDistanceMeters?: number;
+  routePoints?: RoutePoint[];
+  milestones?: MissionMilestone[];
+  createdByAdminId: string;
+  createdAt: string;
+  updatedAt: string;
+  status: "draft";
 };
 
 export type MissionMilestone = {
