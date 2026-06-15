@@ -35,15 +35,15 @@ export type Mission = {
   status: "published";
 };
 export type RouteDraft = {
-  id: string;
+  id?: string;
   title?: string;
   description?: string;
   startDate?: string;
   goalDistanceMeters?: number;
   routePoints?: RoutePoint[];
   milestones?: MissionMilestone[];
-  createdByAdminId: string;
-  createdAt: string;
-  updatedAt: string;
-  status: "draft";
+  createdByAdminId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: "draft";
 };
