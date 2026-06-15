@@ -12,6 +12,14 @@ export type AdminMissionRoute = {
   routePoints: RoutePoint[];
   createdByAdminId: string;
 };
+export type MissionMilestone = {
+  id: string;
+  title: string;
+  description: string;
+  distanceMeters: number;
+  position: RoutePoint;
+  imageUrls: string[];
+};
 
 export type Mission = {
   id: string;
@@ -38,13 +46,4 @@ export type RouteDraft = {
   createdAt: string;
   updatedAt: string;
   status: "draft";
-};
-
-export type MissionMilestone = {
-  id: string;
-  title: string;
-  description: string;
-  distanceMeters: number;
-  position: RoutePoint;
-  imageUrls: string[];
 };
