@@ -7,8 +7,10 @@ function isRoutePointArray(value: unknown) {
     Array.isArray(value) &&
     value.every(
       (point) =>
-        typeof point?.latitude === "number" &&
-        typeof point?.longitude === "number",
+        typeof point === "object" &&
+        point !== null &&
+        typeof (point as { latitude?: unknown }).latitude === "number" &&
+        typeof (point as { longitude?: unknown }).longitude === "number",
     )
   );
 }
