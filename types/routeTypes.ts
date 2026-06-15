@@ -19,3 +19,12 @@ export type RouteDraft = {
   createdAt: string;
   routePoints: RoutePoint[];
 };
+
+export type MissionMilestone = {
+  id: string;
+  title: string;
+  description: string;
+  distanceMeters: number;
+  position: RoutePoint;
+  imageUrls: string[];
+};
