@@ -12,7 +12,7 @@ import {
   useMap,
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import type { RouteDraft, RoutePoint } from "@/types/routeTypes";
+import type { RoutePoint } from "@/types/routeTypes";
 import { RoutePointList } from "@/components/RoutePointList";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -34,23 +34,15 @@ export function RouteBuilderMap() {
   const [snapError, setSnapError] = useState("");
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
 
-  const handleSaveDraft = () => {
-    const savedDrafts = localStorage.getItem("rei-admin-route-drafts");
-    const existingDrafts = savedDrafts
-      ? (JSON.parse(savedDrafts) as RouteDraft[])
-      : [];
-
-    const nextDraft: RouteDraft = {
-      id: `draft-${Date.now()}`,
-      title: "Untitled Route",
-      createdAt: new Date().toISOString(),
-      routePoints,
-    };
-
-    localStorage.setItem(
-      "rei-admin-route-drafts",
-      JSON.stringify([...existingDrafts, nextDraft]),
-    );
+  const handleSaveDraft = async () => {
+    await fetch("/api/route-drafts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: "Untitled Route",
+        routePoints,
+      }),
+    });
   };
 
   const toGooglePoint = (point: RoutePoint) => ({

@@ -58,5 +58,17 @@ export async function POST(request: Request) {
   if (!parseResult.success)
     return NextResponse.json({ error: "Invalid route draft" }, { status: 400 });
 
-  return NextResponse.json({ ok: true, draft: parseResult.data });
+  const now = new Date().toISOString();
+
+  const draftRef = await adminDb.collection("routeDrafts").add({
+    title: parseResult.data.title ?? "Untitled Route",
+    routePoints: parseResult.data.routePoints ?? [],
+    milestones: [],
+    createdByAdminId: userId,
+    createdAt: now,
+    updatedAt: now,
+    status: "draft",
+  });
+
+  return NextResponse.json({ id: draftRef.id });
 }
