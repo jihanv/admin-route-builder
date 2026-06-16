@@ -33,9 +33,12 @@ export function RouteBuilderMap() {
   >([]);
   const [snapError, setSnapError] = useState("");
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const handleSaveDraft = async () => {
-    await fetch("/api/route-drafts", {
+    setSaveMessage("Saving draft...");
+
+    const response = await fetch("/api/route-drafts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -43,6 +46,8 @@ export function RouteBuilderMap() {
         routePoints,
       }),
     });
+
+    setSaveMessage(response.ok ? "Draft saved." : "Could not save draft.");
   };
 
   const toGooglePoint = (point: RoutePoint) => ({
