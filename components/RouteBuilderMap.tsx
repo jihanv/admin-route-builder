@@ -39,8 +39,10 @@ export function RouteBuilderMap() {
   const handleSaveDraft = async () => {
     setSaveMessage("Saving draft...");
 
-    const response = await saveRouteDraft(routePoints);
-
+    const response = await saveRouteDraft({
+      title: "Untitled Route",
+      routePoints,
+    });
     setSaveMessage(response.ok ? "Draft saved." : "Could not save draft.");
   };
 
