@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { saveRouteDraft } from "@/lib/routeDraftApi";
 
 export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
@@ -38,14 +39,7 @@ export function RouteBuilderMap() {
   const handleSaveDraft = async () => {
     setSaveMessage("Saving draft...");
 
-    const response = await fetch("/api/route-drafts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: "Untitled Route",
-        routePoints,
-      }),
-    });
+    const response = await saveRouteDraft(routePoints);
 
     setSaveMessage(response.ok ? "Draft saved." : "Could not save draft.");
   };
