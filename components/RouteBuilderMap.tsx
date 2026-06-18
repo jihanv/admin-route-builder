@@ -36,8 +36,10 @@ export function RouteBuilderMap() {
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [draftId, setDraftId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSaveDraft = async () => {
+    setIsSaving(true);
     setSaveMessage("Saving draft...");
 
     const response = await saveRouteDraft({
@@ -45,12 +47,14 @@ export function RouteBuilderMap() {
       routePoints,
     });
     if (!response.ok) {
+      setIsSaving(false);
       setSaveMessage("Could not save draft.");
       return;
     }
 
     const savedDraft = await response.json();
     setDraftId(savedDraft.id);
+    setIsSaving(false);
     setSaveMessage("Draft saved.");
   };
 
@@ -69,9 +73,13 @@ export function RouteBuilderMap() {
       ? "Add at least 2 route points to enable Snap to Roads."
       : "Use Google walking paths where available.";
 
-  const isSnapToggleDisabled = !isMapsApiLoaded || routePoints.length < 2;
+  const isSnapToggleDisabled =
+    isSaving || !isMapsApiLoaded || routePoints.length < 2;
 
   const handleMapClick = async (event: MapMouseEvent) => {
+    if (isSaving) {
+      return;
+    }
     const position = event.detail.latLng;
     if (!position) return;
 
@@ -182,7 +190,7 @@ export function RouteBuilderMap() {
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
             onClick={handleResetRoute}
-            disabled={routePoints.length === 0}
+            disabled={routePoints.length === 0 || isSaving}
           >
             Reset
           </Button>
@@ -190,17 +198,17 @@ export function RouteBuilderMap() {
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
             onClick={handleUndoRoutePoint}
-            disabled={routePoints.length === 0}
+            disabled={routePoints.length === 0 || isSaving}
           >
             Undo
           </Button>
           <Button
-            className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
+            className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground min-w-28"
             variant="outline"
             onClick={handleSaveDraft}
-            disabled={routePoints.length === 0}
+            disabled={routePoints.length === 0 || isSaving}
           >
-            Save Draft
+            {isSaving ? "Saving..." : "Save Draft"}
           </Button>
         </div>
         <div className="flex items-center gap-3 rounded-md border bg-primary/10 px-4 py-2">
@@ -271,7 +279,7 @@ export function RouteBuilderMap() {
           className="mb-3"
           variant="outline"
           onClick={handleResetRoute}
-          disabled={routePoints.length === 0}
+          disabled={routePoints.length === 0 || isSaving}
         >
           Clear Route
         </Button>
