@@ -10,6 +10,9 @@ const routePointSchema = z.object({
 
 const routeDraftRequestSchema = z.object({
   title: z.string().optional(),
+  description: z.string().optional(),
+  startDate: z.string().optional(),
+  goalDistanceMeters: z.number().optional(),
   routePoints: z.array(routePointSchema).optional(),
 });
 
@@ -62,6 +65,9 @@ export async function POST(request: Request) {
 
   const draftRef = await adminDb.collection("routeDrafts").add({
     title: parseResult.data.title ?? "Untitled Route",
+    description: parseResult.data.description ?? "",
+    startDate: parseResult.data.startDate ?? "",
+    goalDistanceMeters: parseResult.data.goalDistanceMeters ?? 0,
     routePoints: parseResult.data.routePoints ?? [],
     milestones: [],
     createdByAdminId: userId,
