@@ -1,7 +1,9 @@
 import type { RouteDraft } from "@/types/routeTypes";
 
-type SaveRouteDraftInput = Pick<RouteDraft, "title" | "routePoints">;
-
+type SaveRouteDraftInput = Pick<
+  RouteDraft,
+  "title" | "description" | "startDate" | "goalDistanceMeters" | "routePoints"
+>;
 export async function saveRouteDraft(draft: SaveRouteDraftInput) {
   return fetch("/api/route-drafts", {
     method: "POST",
