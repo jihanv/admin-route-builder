@@ -42,20 +42,26 @@ export function RouteBuilderMap() {
     setIsSaving(true);
     setSaveMessage("Saving draft...");
 
-    const response = await saveRouteDraft({
-      title: "Untitled Route",
-      routePoints,
-    });
-    if (!response.ok) {
-      setIsSaving(false);
-      setSaveMessage("Could not save draft.");
-      return;
-    }
+    try {
+      const response = await saveRouteDraft({
+        title: "Untitled Route",
+        routePoints,
+      });
 
-    const savedDraft = await response.json();
-    setDraftId(savedDraft.id);
-    setIsSaving(false);
-    setSaveMessage("Draft saved.");
+      if (!response.ok) {
+        setSaveMessage("Could not save draft.");
+        return;
+      }
+
+      const savedDraft = await response.json();
+      setDraftId(savedDraft.id);
+      setSaveMessage("Draft saved.");
+    } catch (error) {
+      console.error("Save draft failed:", error);
+      setSaveMessage("Could not save draft.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const toGooglePoint = (point: RoutePoint) => ({
