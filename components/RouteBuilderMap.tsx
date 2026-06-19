@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { saveRouteDraft } from "@/lib/routeDraftApi";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
@@ -37,6 +38,7 @@ export function RouteBuilderMap() {
   const [saveMessage, setSaveMessage] = useState("");
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleSaveDraft = async () => {
     setIsSaving(true);
@@ -190,8 +192,9 @@ export function RouteBuilderMap() {
         setIsMapsApiLoaded(true);
       }}
     >
-      <div className="mb-3 flex items-center gap-5 rounded-lg border bg-card p-3 text-card-foreground">
-        <div className="flex items-center gap-2">
+      <div className="mb-3 flex flex-col gap-3 rounded-lg border bg-card p-3 text-card-foreground sm:flex-row sm:items-center sm:justify-between">
+        {" "}
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center">
           <Button
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
@@ -217,31 +220,33 @@ export function RouteBuilderMap() {
             {isSaving ? "Saving..." : "Save Draft"}
           </Button>
         </div>
-        <div className="flex items-center gap-3 rounded-md border bg-primary/10 px-4 py-2">
+        <div className="flex items-center justify-between gap-3 rounded-md border bg-primary/10 px-4 py-2">
           <span className="text-sm font-medium text-foreground">
             Snap to Roads
           </span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="inline-flex">
-                  <Switch
-                    checked={snapToRoads}
-                    onCheckedChange={handleSnapToRoadsChange}
-                    disabled={isSnapToggleDisabled}
-                  />
-                </span>
-              </TooltipTrigger>
-              {isSnapToggleDisabled && (
-                <TooltipContent>
-                  <p>{snapTooltipMessage}</p>
-                </TooltipContent>
-              )}
-            </Tooltip>
-          </TooltipProvider>
-          <span className="text-sm font-medium text-muted-foreground">
-            {snapToRoads ? "On" : "Off"}
-          </span>
+          <div className="flex items-center gap-3">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="inline-flex">
+                    <Switch
+                      checked={snapToRoads}
+                      onCheckedChange={handleSnapToRoadsChange}
+                      disabled={isSnapToggleDisabled}
+                    />
+                  </span>
+                </TooltipTrigger>
+                {isSnapToggleDisabled && (
+                  <TooltipContent>
+                    <p>{snapTooltipMessage}</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
+            <span className="text-sm font-medium text-muted-foreground">
+              {snapToRoads ? "On" : "Off"}
+            </span>
+          </div>
         </div>
       </div>
       {snapError && (
@@ -257,6 +262,7 @@ export function RouteBuilderMap() {
           </div>
         )}
         <Map
+          mapTypeControl={!isMobile}
           className="h-125 w-full overflow-hidden rounded-lg border"
           defaultCenter={{ lat: 35.647756, lng: 139.741834 }}
           defaultZoom={12}
@@ -302,6 +308,7 @@ function PlaceSearchControl() {
     if (!placesLibrary || !searchControlRef.current) return;
 
     const placeAutocomplete = new placesLibrary.PlaceAutocompleteElement({});
+    placeAutocomplete.style.width = "100%";
 
     placeAutocomplete.addEventListener("gmp-select", async (event) => {
       const { placePrediction } =
@@ -318,5 +325,5 @@ function PlaceSearchControl() {
     searchControlRef.current.replaceChildren(placeAutocomplete);
   }, [placesLibrary, map]);
 
-  return <div ref={searchControlRef} className="mt-3 w-72" />;
+  return <div ref={searchControlRef} className="mt-3 w-56 sm:w-72" />;
 }
