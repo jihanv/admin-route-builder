@@ -2,11 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { z } from "zod";
-
-const routePointSchema = z.object({
-  latitude: z.number(),
-  longitude: z.number(),
-});
+import { routePointSchema } from "@/lib/routeDraftSchemas";
 
 const routeDraftRequestSchema = z.object({
   title: z.string().optional(),
