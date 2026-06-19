@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { routePointSchema } from "@/lib/routeDraftSchemas";
+import { adminDb } from "@/lib/firebaseAdmin";
 
 const routeDraftPatchSchema = z.object({
   title: z.string().optional(),
@@ -32,5 +33,13 @@ export async function PATCH(
   if (!parseResult.success)
     return NextResponse.json({ error: "Invalid route draft" }, { status: 400 });
 
-  return NextResponse.json({ ok: true, draftId, draft: parseResult.data });
+  await adminDb
+    .collection("routeDrafts")
+    .doc(draftId)
+    .update({
+      ...parseResult.data,
+      updatedAt: new Date().toISOString(),
+    });
+
+  return NextResponse.json({ ok: true, draftId });
 }
