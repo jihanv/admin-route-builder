@@ -1,5 +1,19 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { z } from "zod";
+
+const routePointSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+});
+
+const routeDraftPatchSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  startDate: z.string().optional(),
+  goalDistanceMeters: z.number().optional(),
+  routePoints: z.array(routePointSchema).optional(),
+});
 
 export async function PATCH(
   request: Request,
@@ -17,6 +31,10 @@ export async function PATCH(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { draftId } = await params;
+  const parseResult = routeDraftPatchSchema.safeParse(await request.json());
 
-  return NextResponse.json({ ok: true, draftId });
+  if (!parseResult.success)
+    return NextResponse.json({ error: "Invalid route draft" }, { status: 400 });
+
+  return NextResponse.json({ ok: true, draftId, draft: parseResult.data });
 }
