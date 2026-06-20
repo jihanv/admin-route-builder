@@ -33,13 +33,19 @@ export async function PATCH(
   if (!parseResult.success)
     return NextResponse.json({ error: "Invalid route draft" }, { status: 400 });
 
-  await adminDb
-    .collection("routeDrafts")
-    .doc(draftId)
-    .update({
-      ...parseResult.data,
-      updatedAt: new Date().toISOString(),
-    });
+  const draftRef = adminDb.collection("routeDrafts").doc(draftId);
+  const draftSnapshot = await draftRef.get();
+
+  if (!draftSnapshot.exists)
+    return NextResponse.json(
+      { error: "Route draft not found" },
+      { status: 404 },
+    );
+
+  await draftRef.update({
+    ...parseResult.data,
+    updatedAt: new Date().toISOString(),
+  });
 
   return NextResponse.json({ ok: true, draftId });
 }
