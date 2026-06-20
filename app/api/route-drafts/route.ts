@@ -12,19 +12,6 @@ const routeDraftRequestSchema = z.object({
   routePoints: z.array(routePointSchema).optional(),
 });
 
-function isRoutePointArray(value: unknown) {
-  return (
-    Array.isArray(value) &&
-    value.every(
-      (point) =>
-        typeof point === "object" &&
-        point !== null &&
-        typeof (point as { latitude?: unknown }).latitude === "number" &&
-        typeof (point as { longitude?: unknown }).longitude === "number",
-    )
-  );
-}
-
 export async function GET() {
   const { isAuthenticated, userId, sessionClaims } = await auth();
 

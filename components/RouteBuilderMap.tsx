@@ -34,7 +34,6 @@ export function RouteBuilderMap() {
   const [snappedRoutePath, setSnappedRoutePath] = useState<
     { lat: number; lng: number }[]
   >([]);
-  const [snapError, setSnapError] = useState("");
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -109,7 +108,7 @@ export function RouteBuilderMap() {
   const handleResetRoute = () => {
     setRoutePoints([]);
     setSnappedRoutePath([]);
-    setSnapError("");
+
     setSnapToRoads(false);
   };
 
@@ -117,7 +116,6 @@ export function RouteBuilderMap() {
     const nextRoutePoints = routePoints.slice(0, -1);
 
     setRoutePoints(nextRoutePoints);
-    setSnapError("");
 
     if (!snapToRoads) return;
     if (nextRoutePoints.length < 2) setSnapToRoads(false);
@@ -125,8 +123,6 @@ export function RouteBuilderMap() {
   };
 
   const calculateSnappedRoute = async (points: RoutePoint[]) => {
-    setSnapError("");
-
     if (points.length < 2) {
       setSnappedRoutePath([]);
       return;
@@ -167,7 +163,7 @@ export function RouteBuilderMap() {
       );
     } catch (error) {
       console.error("Route snap failed:", error);
-      setSnapError(
+      toast.error(
         "Could not calculate a walking route. Showing straight line instead.",
       );
       setSnappedRoutePath([]);
@@ -179,7 +175,7 @@ export function RouteBuilderMap() {
 
     if (!checked) {
       setSnappedRoutePath([]);
-      setSnapError("");
+
       return;
     }
 
@@ -252,12 +248,6 @@ export function RouteBuilderMap() {
           </div>
         </div>
       </div>
-
-      {snapError && (
-        <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {snapError}
-        </p>
-      )}
 
       <div className="relative">
         {!isMapsApiLoaded && (
