@@ -9,10 +9,7 @@ export default function CreateNewMissionPage() {
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="route-picker" />
       <div>
-        <p className="text-lg font-black text-muted-foreground">Step 1</p>
-        <h1 className="text-2xl font-semibold text-primary">
-          {routePickerStep.label}
-        </h1>
+        <h1 className="text-2xl font-semibold text-primary">Route Picker</h1>
       </div>
       <RouteBuilderMap />
     </section>

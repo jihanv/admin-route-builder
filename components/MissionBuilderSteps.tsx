@@ -10,7 +10,7 @@ export function MissionBuilderSteps({
 }) {
   return (
     <div className="flex flex-wrap gap-2 text-sm">
-      {missionBuilderSteps.map((step) => (
+      {missionBuilderSteps.map((step, index) => (
         <span
           key={step.id}
           className={
@@ -19,7 +19,7 @@ export function MissionBuilderSteps({
               : "text-muted-foreground"
           }
         >
-          {step.label}
+          {index + 1}. {step.label}
         </span>
       ))}
     </div>
