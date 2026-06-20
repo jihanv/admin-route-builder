@@ -47,5 +47,5 @@ export async function PATCH(
     updatedAt: new Date().toISOString(),
   });
 
-  return NextResponse.json({ ok: true, draftId });
+  return NextResponse.json({ id: draftId });
 }

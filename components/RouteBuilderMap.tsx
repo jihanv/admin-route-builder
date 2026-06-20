@@ -43,9 +43,11 @@ export function RouteBuilderMap() {
   const handleSaveDraft = async () => {
     setIsSaving(true);
     setSaveMessage("Saving draft...");
+    const isUpdatingExistingDraft = Boolean(draftId);
 
     try {
       const response = await saveRouteDraft({
+        id: draftId,
         title: "Untitled Route",
         routePoints,
       });
@@ -57,7 +59,9 @@ export function RouteBuilderMap() {
 
       const savedDraft = await response.json();
       setDraftId(savedDraft.id);
-      setSaveMessage("Draft saved.");
+      setSaveMessage(
+        isUpdatingExistingDraft ? "Draft updated." : "Draft created.",
+      );
     } catch (error) {
       console.error("Save draft failed:", error);
       setSaveMessage("Could not save draft.");
