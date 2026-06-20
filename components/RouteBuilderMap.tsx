@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/tooltip";
 import { saveRouteDraft } from "@/lib/routeDraftApi";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "sonner";
 
 export function RouteBuilderMap() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
@@ -40,9 +41,16 @@ export function RouteBuilderMap() {
   const [isSaving, setIsSaving] = useState(false);
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    if (!saveMessage.startsWith("Draft")) return;
+
+    const timeoutId = window.setTimeout(() => setSaveMessage(""), 3000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [saveMessage]);
+
   const handleSaveDraft = async () => {
     setIsSaving(true);
-    setSaveMessage("Saving draft...");
     const isUpdatingExistingDraft = Boolean(draftId);
 
     try {
@@ -53,18 +61,18 @@ export function RouteBuilderMap() {
       });
 
       if (!response.ok) {
-        setSaveMessage("Could not save draft.");
+        toast.error("Could not save draft.");
         return;
       }
 
       const savedDraft = await response.json();
       setDraftId(savedDraft.id);
-      setSaveMessage(
+      toast.success(
         isUpdatingExistingDraft ? "Draft updated." : "Draft created.",
       );
     } catch (error) {
       console.error("Save draft failed:", error);
-      setSaveMessage("Could not save draft.");
+      toast.error("Could not save draft.");
     } finally {
       setIsSaving(false);
     }
@@ -253,6 +261,14 @@ export function RouteBuilderMap() {
           </div>
         </div>
       </div>
+      {saveMessage && (
+        <p
+          role="status"
+          className="fixed bottom-6 right-6 z-50 rounded-md border bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-lg"
+        >
+          {saveMessage}
+        </p>
+      )}
       {snapError && (
         <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {snapError}
