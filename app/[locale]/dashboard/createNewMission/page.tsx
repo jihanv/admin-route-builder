@@ -1,3 +1,5 @@
+"use client";
+
 import { RouteBuilderMap } from "@/components/RouteBuilderMap";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import Link from "next/link";
