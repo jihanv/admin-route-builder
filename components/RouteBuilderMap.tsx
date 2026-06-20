@@ -155,7 +155,7 @@ export function RouteBuilderMap() {
       const routePath = routes?.[0]?.path ?? [];
 
       if (routePath.length === 0) {
-        setSnapError(
+        toast.error(
           "Could not calculate a walking route. Showing straight line instead.",
         );
         setSnappedRoutePath([]);
