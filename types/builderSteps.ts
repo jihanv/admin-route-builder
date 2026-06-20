@@ -5,8 +5,8 @@ export type MissionBuilderStepId =
   | "review-publish";
 
 export const missionBuilderSteps = [
-  { id: "route-picker", label: "Route Picker" },
-  { id: "mission-details", label: "Mission Details" },
+  { id: "route-picker", label: "Route" },
+  { id: "mission-details", label: "Details" },
   { id: "milestones", label: "Milestones" },
-  { id: "review-publish", label: "Review / Publish" },
+  { id: "review-publish", label: "Review" },
 ] as const;
