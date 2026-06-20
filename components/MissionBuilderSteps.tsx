@@ -13,11 +13,7 @@ export function MissionBuilderSteps({
       {missionBuilderSteps.map((step, index) => (
         <span
           key={step.id}
-          className={
-            step.id === currentStepId
-              ? "font-semibold text-primary"
-              : "text-muted-foreground"
-          }
+          className={`rounded-full border px-3 py-1 ${step.id === currentStepId ? "border-primary bg-primary/10 font-semibold text-primary" : "border-border bg-card text-muted-foreground"}`}
         >
           {index + 1}. {step.label}
         </span>
