@@ -1,5 +1,7 @@
 import { RouteBuilderMap } from "@/components/RouteBuilderMap";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function CreateNewMissionPage() {
   return (
@@ -9,6 +11,11 @@ export default function CreateNewMissionPage() {
         <h1 className="text-2xl font-semibold text-primary">Route Picker</h1>
       </div>
       <RouteBuilderMap />
+      <div className="flex justify-end">
+        <div className="flex justify-end">
+          <Button disabled>Next: Mission Details</Button>
+        </div>
+      </div>
     </section>
   );
 }

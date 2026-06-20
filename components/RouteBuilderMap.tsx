@@ -13,7 +13,6 @@ import {
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
 import type { RoutePoint } from "@/types/routeTypes";
-import { RoutePointList } from "@/components/RoutePointList";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -26,7 +25,11 @@ import { saveRouteDraft } from "@/lib/routeDraftApi";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 
-export function RouteBuilderMap() {
+export function RouteBuilderMap({
+  onDraftSaved,
+}: {
+  onDraftSaved?: (draftId: string) => void;
+}) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
   const [routePoints, setRoutePoints] = useState<RoutePoint[]>([]);
@@ -57,6 +60,7 @@ export function RouteBuilderMap() {
 
       const savedDraft = await response.json();
       setDraftId(savedDraft.id);
+      onDraftSaved?.(savedDraft.id);
       toast.success(
         isUpdatingExistingDraft ? "Draft updated." : "Draft created.",
       );
@@ -257,7 +261,7 @@ export function RouteBuilderMap() {
         )}
         <Map
           mapTypeControl={!isMobile}
-          className="h-125 w-full overflow-hidden rounded-lg border"
+          className="h-100 w-full overflow-hidden rounded-lg border"
           defaultCenter={{ lat: 35.647756, lng: 139.741834 }}
           defaultZoom={12}
           mapId={mapId}
@@ -276,7 +280,7 @@ export function RouteBuilderMap() {
         </Map>
       </div>
 
-      <div className="mt-3 rounded-lg border bg-card p-4 text-card-foreground">
+      {/* <div className="mt-3 rounded-lg border bg-card p-4 text-card-foreground">
         <p className="mb-2 text-sm font-medium">
           Route Points ({routePoints.length})
         </p>
@@ -289,7 +293,7 @@ export function RouteBuilderMap() {
         >
           Clear Route
         </Button>
-      </div>
+      </div> */}
     </APIProvider>
   );
 }
