@@ -17,7 +17,15 @@ export default function CreateNewMissionPage() {
       <RouteBuilderMap onDraftSaved={setSavedDraftId} />
       <div className="flex justify-end">
         <div className="flex justify-end">
-          <Button disabled>Next: Mission Details</Button>
+          {savedDraftId ? (
+            <Button asChild>
+              <Link href={`/dashboard/mission/new/${savedDraftId}/details`}>
+                Next: Mission Details
+              </Link>
+            </Button>
+          ) : (
+            <Button disabled>Next: Mission Details</Button>
+          )}
         </div>
       </div>
     </section>
