@@ -8,7 +8,7 @@ export default async function MissionDetailsPage({
   params: Promise<{ draftId: string }>;
 }) {
   const { draftId } = await params;
-  const { sessionClaims } = await auth();
+  const { sessionClaims, userId } = await auth();
   const adminRole =
     (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
 
@@ -39,8 +39,17 @@ export default async function MissionDetailsPage({
       </section>
     );
   }
+
+  const draft = draftSnapshot.data();
+  const canEditDraft = draft?.createdByAdminId === userId;
+
   return (
     <section className="space-y-6 p-8">
+      {!canEditDraft && (
+        <p className="rounded-md border bg-card p-3 text-sm text-muted-foreground">
+          You can view this mission draft, but only the creator can edit it.
+        </p>
+      )}
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
