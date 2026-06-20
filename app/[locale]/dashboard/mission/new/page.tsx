@@ -20,7 +20,10 @@ export default function CreateNewMissionPage() {
       <div>
         <h1 className="text-2xl font-semibold text-primary">Route Picker</h1>
       </div>
-      <RouteBuilderMap onDraftSaved={setSavedDraftId} />
+      <RouteBuilderMap
+        onDraftSaved={setSavedDraftId}
+        onRouteChanged={() => setSavedDraftId(null)}
+      />
       <div className="flex flex-col items-end gap-2">
         {savedDraftId ? (
           <Button asChild>

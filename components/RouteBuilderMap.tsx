@@ -27,8 +27,10 @@ import { toast } from "sonner";
 
 export function RouteBuilderMap({
   onDraftSaved,
+  onRouteChanged,
 }: {
   onDraftSaved?: (draftId: string) => void;
+  onRouteChanged?: () => void;
 }) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
@@ -41,6 +43,7 @@ export function RouteBuilderMap({
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const isMobile = useIsMobile();
+  const markRouteUnsaved = () => onRouteChanged?.();
 
   const handleSaveDraft = async () => {
     setIsSaving(true);
@@ -96,6 +99,7 @@ export function RouteBuilderMap({
     }
     const position = event.detail.latLng;
     if (!position) return;
+    markRouteUnsaved();
 
     const nextRoutePoints = [
       ...routePoints,
@@ -110,6 +114,7 @@ export function RouteBuilderMap({
   };
 
   const handleResetRoute = () => {
+    markRouteUnsaved();
     setRoutePoints([]);
     setSnappedRoutePath([]);
 
@@ -117,6 +122,7 @@ export function RouteBuilderMap({
   };
 
   const handleUndoRoutePoint = async () => {
+    markRouteUnsaved();
     const nextRoutePoints = routePoints.slice(0, -1);
 
     setRoutePoints(nextRoutePoints);
