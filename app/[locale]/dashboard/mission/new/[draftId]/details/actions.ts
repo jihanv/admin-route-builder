@@ -1,3 +1,5 @@
+"use server";
+
 export async function updateMissionDetailsAction(
   draftId: string,
   formData: FormData,
