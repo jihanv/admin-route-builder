@@ -16,7 +16,7 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ draftId: string }> },
 ) {
-  const { isAuthenticated, sessionClaims } = await auth();
+  const { isAuthenticated, sessionClaims, userId } = await auth();
 
   if (!isAuthenticated)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -41,6 +41,15 @@ export async function PATCH(
       { error: "Route draft not found" },
       { status: 404 },
     );
+
+  const draft = draftSnapshot.data();
+
+  if (draft?.createdByAdminId !== userId) {
+    return NextResponse.json(
+      { error: "Cannot edit another admin's draft" },
+      { status: 403 },
+    );
+  }
 
   await draftRef.update({
     ...parseResult.data,
