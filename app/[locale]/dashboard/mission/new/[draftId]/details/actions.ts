@@ -1,5 +1,6 @@
-"use server";
-
-export async function updateMissionDetailsAction() {
-  throw new Error("Mission details saving is not implemented yet.");
+export async function updateMissionDetailsAction(
+  draftId: string,
+  formData: FormData,
+) {
+  console.log("Updating mission draft:", draftId, formData.get("title"));
 }

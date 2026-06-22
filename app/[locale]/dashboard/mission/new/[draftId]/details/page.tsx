@@ -1,6 +1,7 @@
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
+import { updateMissionDetailsAction } from "./actions";
 
 export default async function MissionDetailsPage({
   params,
@@ -44,7 +45,7 @@ export default async function MissionDetailsPage({
   const canEditDraft = draft?.createdByAdminId === userId;
 
   const draftTitle = draft?.title ?? "Untitled Route";
-
+  const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
       {!canEditDraft && (
