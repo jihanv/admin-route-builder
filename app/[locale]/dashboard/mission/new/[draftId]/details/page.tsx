@@ -43,6 +43,8 @@ export default async function MissionDetailsPage({
   const draft = draftSnapshot.data();
   const canEditDraft = draft?.createdByAdminId === userId;
 
+  const draftTitle = draft?.title ?? "Untitled Route";
+
   return (
     <section className="space-y-6 p-8">
       {!canEditDraft && (
@@ -52,6 +54,9 @@ export default async function MissionDetailsPage({
       )}
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
+      <p className="text-sm text-muted-foreground">
+        Current title: {draftTitle}
+      </p>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
     </section>
   );
