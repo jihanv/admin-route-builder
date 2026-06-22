@@ -13,5 +13,17 @@ export async function updateMissionDetailsAction(
   draftId: string,
   formData: FormData,
 ) {
-  console.log("Updating mission draft:", draftId, formData.get("title"));
+  const result = missionDetailsSchema.safeParse({
+    title: formData.get("title"),
+  });
+
+  if (!result.success) {
+    console.log(
+      "Mission details validation failed:",
+      z.treeifyError(result.error),
+    );
+    return;
+  }
+
+  console.log("Validated mission details:", draftId, result.data.title);
 }
