@@ -1,5 +1,6 @@
 "use server";
 import { z } from "zod";
+import { auth } from "@clerk/nextjs/server";
 
 const missionDetailsSchema = z.object({
   title: z
@@ -20,7 +21,14 @@ export async function updateMissionDetailsAction(
     console.log("Invalid draft id:", z.treeifyError(draftIdResult.error));
     return;
   }
+  const { userId, sessionClaims } = await auth();
+  const adminRole =
+    (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
 
+  if (!userId || adminRole !== "admin") {
+    console.log("Unauthorized mission details update.");
+    return;
+  }
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
   });
