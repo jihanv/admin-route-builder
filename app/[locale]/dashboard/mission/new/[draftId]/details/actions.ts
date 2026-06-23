@@ -1,6 +1,7 @@
 "use server";
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
+import { adminDb } from "@/lib/firebaseAdmin";
 
 const missionDetailsSchema = z.object({
   title: z
@@ -29,6 +30,21 @@ export async function updateMissionDetailsAction(
     console.log("Unauthorized mission details update.");
     return;
   }
+
+  const draftRef = adminDb.collection("routeDrafts").doc(draftIdResult.data);
+  const draftSnapshot = await draftRef.get();
+
+  if (!draftSnapshot.exists) {
+    console.log("Mission draft does not exist.");
+    return;
+  }
+
+  const draft = draftSnapshot.data();
+  if (draft?.createdByAdminId !== userId) {
+    console.log("Cannot edit another admin's draft.");
+    return;
+  }
+
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
   });
