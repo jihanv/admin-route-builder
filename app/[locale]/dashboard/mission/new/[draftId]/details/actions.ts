@@ -57,5 +57,10 @@ export async function updateMissionDetailsAction(
     return;
   }
 
-  console.log("Validated mission details:", draftId, result.data.title);
+  await draftRef.update({
+    title: result.data.title,
+    updatedAt: new Date().toISOString(),
+  });
+
+  console.log("Mission details updated:", draftIdResult.data);
 }
