@@ -4,6 +4,7 @@ import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 export default async function MissionDetailsPage({
   params,
@@ -47,6 +48,8 @@ export default async function MissionDetailsPage({
   const canEditDraft = draft?.createdByAdminId === userId;
 
   const draftTitle = draft?.title ?? "Untitled Route";
+  const draftDescription = draft?.description ?? "";
+
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
@@ -64,6 +67,12 @@ export default async function MissionDetailsPage({
       >
         <label className="block text-sm font-medium">Mission title</label>
         <Input name="title" defaultValue={draftTitle} />
+        <label className="block text-sm font-medium">Description</label>
+        <Textarea
+          name="description"
+          defaultValue={draftDescription}
+          placeholder="Describe the mission route for participants."
+        />
         <Button type="submit">Save Details</Button>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
