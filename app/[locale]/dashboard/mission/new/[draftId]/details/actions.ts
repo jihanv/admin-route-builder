@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
+import { revalidatePath } from "next/cache";
 
 const missionDetailsSchema = z.object({
   title: z
@@ -61,6 +62,8 @@ export async function updateMissionDetailsAction(
     title: result.data.title,
     updatedAt: new Date().toISOString(),
   });
+
+  revalidatePath(`/dashboard/mission/new/${draftIdResult.data}/details`);
 
   console.log("Mission details updated:", draftIdResult.data);
 }
