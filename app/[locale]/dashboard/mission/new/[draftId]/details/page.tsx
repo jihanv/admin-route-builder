@@ -5,6 +5,7 @@ import { updateMissionDetailsAction } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { DatePicker } from "@/components/DatePicker";
 
 export default async function MissionDetailsPage({
   params,
@@ -49,6 +50,7 @@ export default async function MissionDetailsPage({
 
   const draftTitle = draft?.title ?? "Untitled Route";
   const draftDescription = draft?.description ?? "";
+  const draftStartDate = draft?.startDate ?? "";
 
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
@@ -73,6 +75,8 @@ export default async function MissionDetailsPage({
           defaultValue={draftDescription}
           placeholder="Describe the mission route for participants."
         />
+        <label className="block text-sm font-medium">Start date</label>
+        <DatePicker name="startDate" defaultValue={draftStartDate} />
         <Button type="submit">Save Details</Button>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>

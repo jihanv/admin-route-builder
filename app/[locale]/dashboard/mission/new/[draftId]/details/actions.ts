@@ -72,6 +72,7 @@ export async function updateMissionDetailsAction(
   await draftRef.update({
     title: result.data.title,
     description: result.data.description,
+    startDate: result.data.startDate,
     updatedAt: new Date().toISOString(),
   });
 
