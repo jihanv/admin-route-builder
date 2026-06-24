@@ -52,6 +52,7 @@ export async function updateMissionDetailsAction(
 
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
+    description: formData.get("description") ?? "",
   });
 
   if (!result.success) {
