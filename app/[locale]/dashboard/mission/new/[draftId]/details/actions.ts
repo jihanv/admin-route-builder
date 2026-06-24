@@ -14,6 +14,11 @@ const missionDetailsSchema = z.object({
     .string()
     .trim()
     .max(1000, "Description must be 1000 characters or less."),
+  startDate: z
+    .string()
+    .trim()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must use YYYY-MM-DD format.")
+    .or(z.literal("")),
 });
 const draftIdSchema = z.string().trim().min(1).max(128);
 
@@ -53,6 +58,7 @@ export async function updateMissionDetailsAction(
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description") ?? "",
+    startDate: formData.get("startDate") ?? "",
   });
 
   if (!result.success) {
