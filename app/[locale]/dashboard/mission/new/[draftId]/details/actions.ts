@@ -10,6 +10,10 @@ const missionDetailsSchema = z.object({
     .trim()
     .min(1, "Mission title is required.")
     .max(120, "Mission title must be 120 characters or less."),
+  description: z
+    .string()
+    .trim()
+    .max(1000, "Description must be 1000 characters or less."),
 });
 const draftIdSchema = z.string().trim().min(1).max(128);
 

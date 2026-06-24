@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default async function MissionDetailsPage({
   params,
@@ -56,19 +57,13 @@ export default async function MissionDetailsPage({
       )}
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
-      <p className="text-sm text-muted-foreground">
-        Current title: {draftTitle}
-      </p>
+
       <form
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
         <label className="block text-sm font-medium">Mission title</label>
-        <input
-          name="title"
-          defaultValue={draftTitle}
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
+        <Input name="title" defaultValue={draftTitle} />
         <Button type="submit">Save Details</Button>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
