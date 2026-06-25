@@ -5,6 +5,7 @@ import { updateMissionDetailsAction } from "./actions";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
+import { Button } from "@/components/ui/button";
 
 export default async function MissionDetailsPage({
   params,
@@ -82,6 +83,7 @@ export default async function MissionDetailsPage({
           defaultStartValue={draftStartDate}
           defaultEndValue={draftEndDate}
         />
+        <Button type="submit">Save Details</Button>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
     </section>
