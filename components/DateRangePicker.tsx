@@ -1,12 +1,7 @@
 "use client";
 import type { DateRange } from "react-day-picker";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Calendar } from "@/components/ui/calendar";
 
 type DateRangePickerProps = {
@@ -54,26 +49,16 @@ export function DateRangePicker({
         readOnly
       />
 
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full justify-start bg-background text-left font-normal"
-          >
-            {buttonLabel}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="range"
-            timeZone="Asia/Tokyo"
-            selected={dateRange}
-            onSelect={(range) => setDateRange(range)}
-            numberOfMonths={2}
-          />
-        </PopoverContent>
-      </Popover>
+      <div className="inline-block rounded-lg border bg-card p-3">
+        <p className="mb-3 text-sm text-muted-foreground">{buttonLabel}</p>
+        <Calendar
+          mode="range"
+          timeZone="Asia/Tokyo"
+          selected={dateRange}
+          onSelect={(range) => setDateRange(range)}
+          numberOfMonths={2}
+        />
+      </div>
     </div>
   );
 }
