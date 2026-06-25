@@ -34,7 +34,10 @@ export function DatePicker({
             timeZone="Asia/Tokyo"
             selected={selectedDateObject}
             onSelect={(date) =>
-              setSelectedDate(date?.toLocaleDateString("en-CA") ?? "")
+              setSelectedDate(
+                date?.toLocaleDateString("en-CA", { timeZone: "Asia/Tokyo" }) ??
+                  "",
+              )
             }
           />
         </PopoverContent>

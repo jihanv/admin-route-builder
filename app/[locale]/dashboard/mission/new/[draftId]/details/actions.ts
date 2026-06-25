@@ -4,22 +4,33 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { revalidatePath } from "next/cache";
 
-const missionDetailsSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(1, "Mission title is required.")
-    .max(120, "Mission title must be 120 characters or less."),
-  description: z
-    .string()
-    .trim()
-    .max(1000, "Description must be 1000 characters or less."),
-  startDate: z
-    .string()
-    .trim()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must use YYYY-MM-DD format.")
-    .or(z.literal("")),
-});
+const missionDetailsSchema = z
+  .object({
+    title: z
+      .string()
+      .trim()
+      .min(1, "Mission title is required.")
+      .max(120, "Mission title must be 120 characters or less."),
+    description: z
+      .string()
+      .trim()
+      .max(1000, "Description must be 1000 characters or less."),
+    startDate: z
+      .string()
+      .trim()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must use YYYY-MM-DD format.")
+      .or(z.literal("")),
+    endDate: z
+      .string()
+      .trim()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "End date must use YYYY-MM-DD format.")
+      .or(z.literal("")),
+  })
+  .refine(
+    (data) => !data.startDate || !data.endDate || data.endDate > data.startDate,
+    { message: "End date must be after start date.", path: ["endDate"] },
+  );
+
 const draftIdSchema = z.string().trim().min(1).max(128);
 
 export async function updateMissionDetailsAction(
