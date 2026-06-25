@@ -51,6 +51,7 @@ export default async function MissionDetailsPage({
   const draftTitle = draft?.title ?? "Untitled Route";
   const draftDescription = draft?.description ?? "";
   const draftStartDate = draft?.startDate ?? "";
+  const draftEndDate = draft?.endDate ?? "";
 
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
@@ -77,6 +78,8 @@ export default async function MissionDetailsPage({
         />
         <label className="block text-sm font-medium">Start date</label>
         <DatePicker name="startDate" defaultValue={draftStartDate} />
+        <label className="block text-sm font-medium">End date</label>
+        <DatePicker name="endDate" defaultValue={draftEndDate} />
         <Button type="submit">Save Details</Button>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
