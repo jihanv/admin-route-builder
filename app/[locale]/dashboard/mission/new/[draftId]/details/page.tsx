@@ -2,10 +2,9 @@ import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { DatePicker } from "@/components/DatePicker";
+import { DateRangePicker } from "@/components/DateRangePicker";
 
 export default async function MissionDetailsPage({
   params,
@@ -76,11 +75,13 @@ export default async function MissionDetailsPage({
           defaultValue={draftDescription}
           placeholder="Describe the mission route for participants."
         />
-        <label className="block text-sm font-medium">Start date</label>
-        <DatePicker name="startDate" defaultValue={draftStartDate} />
-        <label className="block text-sm font-medium">End date</label>
-        <DatePicker name="endDate" defaultValue={draftEndDate} />
-        <Button type="submit">Save Details</Button>
+        <label className="block text-sm font-medium">Mission dates</label>
+        <DateRangePicker
+          startName="startDate"
+          endName="endDate"
+          defaultStartValue={draftStartDate}
+          defaultEndValue={draftEndDate}
+        />
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
     </section>
