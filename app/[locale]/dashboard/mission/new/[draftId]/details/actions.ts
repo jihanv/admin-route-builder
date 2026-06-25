@@ -70,6 +70,7 @@ export async function updateMissionDetailsAction(
     title: formData.get("title"),
     description: formData.get("description") ?? "",
     startDate: formData.get("startDate") ?? "",
+    endDate: formData.get("endDate") ?? "",
   });
 
   if (!result.success) {
@@ -84,6 +85,7 @@ export async function updateMissionDetailsAction(
     title: result.data.title,
     description: result.data.description,
     startDate: result.data.startDate,
+    endDate: result.data.endDate,
     updatedAt: new Date().toISOString(),
   });
 
