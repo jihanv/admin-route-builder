@@ -31,6 +31,7 @@ export function DatePicker({
         <PopoverContent className="w-auto p-0">
           <Calendar
             mode="single"
+            timeZone="Asia/Tokyo"
             selected={selectedDateObject}
             onSelect={(date) =>
               setSelectedDate(date?.toLocaleDateString("en-CA") ?? "")
