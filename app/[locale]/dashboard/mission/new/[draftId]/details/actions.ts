@@ -3,6 +3,7 @@ import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const missionDetailsSchema = z
   .object({
@@ -91,5 +92,5 @@ export async function updateMissionDetailsAction(
 
   revalidatePath(`/dashboard/mission/new/${draftIdResult.data}/details`);
 
-  console.log("Mission details updated:", draftIdResult.data);
+  redirect(`/dashboard/mission/new/${draftIdResult.data}/details?saved=1`);
 }
