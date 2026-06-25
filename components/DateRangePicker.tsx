@@ -49,7 +49,7 @@ export function DateRangePicker({
         readOnly
       />
 
-      <div className="inline-block rounded-lg border bg-card p-3">
+      <div className="w-fit max-w-full overflow-x-auto rounded-lg border bg-card p-3">
         <p className="mb-3 text-sm text-muted-foreground">{buttonLabel}</p>
         <Calendar
           mode="range"

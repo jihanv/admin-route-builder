@@ -68,22 +68,24 @@ export default async function MissionDetailsPage({
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <label className="block text-sm font-medium">Mission title</label>
-        <Input name="title" defaultValue={draftTitle} />
-        <label className="block text-sm font-medium">Description</label>
-        <Textarea
-          name="description"
-          defaultValue={draftDescription}
-          placeholder="Describe the mission route for participants."
-        />
-        <label className="block text-sm font-medium">Mission dates</label>
-        <DateRangePicker
-          startName="startDate"
-          endName="endDate"
-          defaultStartValue={draftStartDate}
-          defaultEndValue={draftEndDate}
-        />
-        <Button type="submit">Save Details</Button>
+        <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
+          <label className="block text-sm font-medium">Mission title</label>
+          <Input name="title" defaultValue={draftTitle} />
+          <label className="block text-sm font-medium">Description</label>
+          <Textarea
+            name="description"
+            defaultValue={draftDescription}
+            placeholder="Describe the mission route for participants."
+          />
+          <label className="block text-sm font-medium">Mission dates</label>
+          <DateRangePicker
+            startName="startDate"
+            endName="endDate"
+            defaultStartValue={draftStartDate}
+            defaultEndValue={draftEndDate}
+          />
+          <Button type="submit">Save Details</Button>
+        </fieldset>
       </form>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
     </section>
