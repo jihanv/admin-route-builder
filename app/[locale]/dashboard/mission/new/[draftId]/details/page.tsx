@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { Button } from "@/components/ui/button";
+import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 
 export default async function MissionDetailsPage({
   params,
@@ -56,6 +57,7 @@ export default async function MissionDetailsPage({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
+      <MissionDetailsSaveToast />
       {!canEditDraft && (
         <p className="rounded-md border bg-card p-3 text-sm text-muted-foreground">
           You can view this mission draft, but only the creator can edit it.

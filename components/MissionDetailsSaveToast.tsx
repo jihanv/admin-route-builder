@@ -9,7 +9,7 @@ export function MissionDetailsSaveToast() {
 
   useEffect(() => {
     if (searchParams.get("saved") === "1")
-      toast.success("Mission details saved.");
+      toast.success("Mission details saved.", { id: "mission-details-saved" });
   }, [searchParams]);
 
   return null;
