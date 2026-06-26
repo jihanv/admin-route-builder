@@ -66,6 +66,7 @@ export function RouteBuilderMap({
   const [snappedDistanceMeters, setSnappedDistanceMeters] = useState<
     number | null
   >(null);
+  const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(null);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -177,6 +178,7 @@ export function RouteBuilderMap({
       }
       return;
     }
+    const routePointsKey = getRoutePointsKey(points);
 
     try {
       const { Route } = (await google.maps.importLibrary(
@@ -211,6 +213,8 @@ export function RouteBuilderMap({
       setSnappedRoutePath(
         routePath.map((point) => ({ lat: point.lat, lng: point.lng })),
       );
+
+      setSnappedRouteKey(routePointsKey);
     } catch (error) {
       console.error("Route snap failed:", error);
       toast.error(
