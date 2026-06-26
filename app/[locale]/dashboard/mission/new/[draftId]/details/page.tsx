@@ -53,6 +53,7 @@ export default async function MissionDetailsPage({
   const draftDescription = draft?.description ?? "";
   const draftStartDate = draft?.startDate ?? "";
   const draftEndDate = draft?.endDate ?? "";
+  const draftGoalDistanceMeters = draft?.goalDistanceMeters ?? 0;
 
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
@@ -85,6 +86,12 @@ export default async function MissionDetailsPage({
             maxLength={1000}
             placeholder="Describe the mission route for participants."
           />
+          <div className="rounded-md border bg-background p-3 text-sm">
+            Route distance:{" "}
+            <span className="font-medium">
+              {draftGoalDistanceMeters} meters
+            </span>
+          </div>
           <label className="block text-sm font-medium">Mission dates</label>
           <DateRangePicker
             startName="startDate"
