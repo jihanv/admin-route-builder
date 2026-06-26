@@ -14,6 +14,13 @@ export function MissionDetailsSaveToast() {
       toast.success("Mission details saved.", { id: "mission-details-saved" });
       router.replace(pathname, { scroll: false });
     }
+
+    if (searchParams.get("error") === "validation") {
+      toast.error("Please check the mission details and try again.", {
+        id: "mission-details-validation-error",
+      });
+      router.replace(pathname, { scroll: false });
+    }
   }, [pathname, router, searchParams]);
 
   return null;

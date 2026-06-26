@@ -79,7 +79,9 @@ export async function updateMissionDetailsAction(
       "Mission details validation failed:",
       z.treeifyError(result.error),
     );
-    return;
+    redirect(
+      `/dashboard/mission/new/${draftIdResult.data}/details?error=validation`,
+    );
   }
 
   await draftRef.update({
