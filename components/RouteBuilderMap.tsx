@@ -173,12 +173,13 @@ export function RouteBuilderMap({
 
   const calculateSnappedRoute = async (points: RoutePoint[]) => {
     if (points.length < 2) {
-      if (points.length < 2) {
-        setSnappedRoutePath([]);
-        return;
-      }
+      setSnappedRoutePath([]);
+      setSnappedDistanceMeters(null);
+      setSnappedRouteKey(null);
       return;
     }
+    return;
+
     const routePointsKey = getRoutePointsKey(points);
 
     try {
