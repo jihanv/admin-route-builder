@@ -25,6 +25,24 @@ import { saveRouteDraft } from "@/lib/routeDraftApi";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
 
+function getStraightLineDistanceMeters(points: RoutePoint[]) {
+  return points.slice(1).reduce((total, point, index) => {
+    const previous = points[index];
+    const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+    const earthRadiusMeters = 6371000;
+    const latChange = toRadians(point.latitude - previous.latitude);
+    const lngChange = toRadians(point.longitude - previous.longitude);
+    const startLat = toRadians(previous.latitude);
+    const endLat = toRadians(point.latitude);
+    const a =
+      Math.sin(latChange / 2) ** 2 +
+      Math.cos(startLat) * Math.cos(endLat) * Math.sin(lngChange / 2) ** 2;
+    return (
+      total + 2 * earthRadiusMeters * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    );
+  }, 0);
+}
+
 export function RouteBuilderMap({
   onDraftSaved,
   onRouteChanged,
@@ -39,6 +57,9 @@ export function RouteBuilderMap({
   const [snappedRoutePath, setSnappedRoutePath] = useState<
     { lat: number; lng: number }[]
   >([]);
+  const [snappedDistanceMeters, setSnappedDistanceMeters] = useState<
+    number | null
+  >(null);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -83,6 +104,11 @@ export function RouteBuilderMap({
     snapToRoads && snappedRoutePath.length > 0
       ? snappedRoutePath
       : routePoints.map(toGooglePoint);
+
+  const routeDistanceMeters =
+    snapToRoads && snappedDistanceMeters !== null
+      ? snappedDistanceMeters
+      : getStraightLineDistanceMeters(routePoints);
 
   const snapTooltipMessage = !isMapsApiLoaded
     ? "Loading Google Maps tools..."
@@ -134,7 +160,10 @@ export function RouteBuilderMap({
 
   const calculateSnappedRoute = async (points: RoutePoint[]) => {
     if (points.length < 2) {
-      setSnappedRoutePath([]);
+      if (points.length < 2) {
+        setSnappedRoutePath([]);
+        return;
+      }
       return;
     }
 
@@ -154,12 +183,12 @@ export function RouteBuilderMap({
         destination,
         intermediates,
         travelMode: "WALKING",
-        fields: ["path"],
+        fields: ["path", "distanceMeters"],
       };
 
       const { routes } = await Route.computeRoutes(request);
       const routePath = routes?.[0]?.path ?? [];
-
+      setSnappedDistanceMeters(routes?.[0]?.distanceMeters ?? null);
       if (routePath.length === 0) {
         toast.error(
           "Could not calculate a walking route. Showing straight line instead.",
@@ -229,6 +258,9 @@ export function RouteBuilderMap({
             {isSaving ? "Saving..." : "Save Draft"}
           </Button>
         </div>
+        <p className="text-sm font-medium text-muted-foreground">
+          Distance: {Math.round(routeDistanceMeters)} m
+        </p>
         <div className="flex items-center justify-between gap-3 rounded-md border bg-primary/10 px-4 py-2">
           <span className="text-sm font-medium text-foreground">
             Snap to Roads
