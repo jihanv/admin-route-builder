@@ -68,7 +68,7 @@ export function RouteBuilderMap({
   >(null);
   const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(null);
   const [isSnappingRoute, setIsSnappingRoute] = useState(false);
-
+  const snapRequestIdRef = useRef(0);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -195,6 +195,10 @@ export function RouteBuilderMap({
     }
 
     const routePointsKey = getRoutePointsKey(points);
+
+    const requestId = snapRequestIdRef.current + 1;
+    snapRequestIdRef.current = requestId;
+
     setIsSnappingRoute(true);
     try {
       const { Route } = (await google.maps.importLibrary(
@@ -216,6 +220,10 @@ export function RouteBuilderMap({
       };
 
       const { routes } = await Route.computeRoutes(request);
+
+      if (requestId !== snapRequestIdRef.current) {
+        return;
+      }
       const routePath = routes?.[0]?.path ?? [];
       setSnappedDistanceMeters(routes?.[0]?.distanceMeters ?? null);
       if (routePath.length === 0) {
