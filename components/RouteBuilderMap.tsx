@@ -286,7 +286,7 @@ export function RouteBuilderMap({
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
             onClick={handleResetRoute}
-            disabled={routePoints.length === 0 || isSaving}
+            disabled={routePoints.length === 0 || isSaving || isSnappingRoute}
           >
             Reset
           </Button>
