@@ -114,8 +114,11 @@ export function RouteBuilderMap({
   const hasCurrentSnappedRoute =
     snappedRouteKey === currentRouteKey && snappedRoutePath.length > 0;
 
+  const shouldShowPendingSnappedRoute =
+    snapToRoads && isSnappingRoute && snappedRoutePath.length > 0;
+
   const displayRoutePath =
-    snapToRoads && hasCurrentSnappedRoute
+    snapToRoads && (hasCurrentSnappedRoute || shouldShowPendingSnappedRoute)
       ? snappedRoutePath
       : routePoints.map(toGooglePoint);
 
@@ -124,8 +127,9 @@ export function RouteBuilderMap({
       ? snappedDistanceMeters
       : getStraightLineDistanceMeters(routePoints);
 
-  const routeDistanceLabel =
-    routeDistanceMeters >= 1000
+  const routeDistanceLabel = isSnappingRoute
+    ? "Calculating..."
+    : routeDistanceMeters >= 1000
       ? `${(routeDistanceMeters / 1000).toFixed(2)} km`
       : `${Math.round(routeDistanceMeters)} m`;
 
@@ -152,7 +156,6 @@ export function RouteBuilderMap({
     ];
 
     setRoutePoints(nextRoutePoints);
-    setSnappedRoutePath([]);
     setSnappedDistanceMeters(null);
     setSnappedRouteKey(null);
 
@@ -175,6 +178,8 @@ export function RouteBuilderMap({
     const nextRoutePoints = routePoints.slice(0, -1);
 
     setRoutePoints(nextRoutePoints);
+    setSnappedDistanceMeters(null);
+    setSnappedRouteKey(null);
 
     if (!snapToRoads) return;
     if (nextRoutePoints.length < 2) setSnapToRoads(false);
