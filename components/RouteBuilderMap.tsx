@@ -228,8 +228,12 @@ export function RouteBuilderMap({
     setSnapToRoads(checked);
 
     if (!checked) {
-      setSnappedRoutePath([]);
+      return;
+    }
 
+    const currentRouteKey = getRoutePointsKey(routePoints);
+
+    if (snappedRouteKey === currentRouteKey && snappedRoutePath.length > 0) {
       return;
     }
 
