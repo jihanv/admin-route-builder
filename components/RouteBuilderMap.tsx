@@ -83,6 +83,7 @@ export function RouteBuilderMap({
       const response = await saveRouteDraft({
         id: draftId,
         title: "Untitled Route",
+        goalDistanceMeters: Math.round(routeDistanceMeters),
         routePoints,
       });
 
