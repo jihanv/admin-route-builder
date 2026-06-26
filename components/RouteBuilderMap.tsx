@@ -155,7 +155,8 @@ export function RouteBuilderMap({
     markRouteUnsaved();
     setRoutePoints([]);
     setSnappedRoutePath([]);
-
+    setSnappedDistanceMeters(null);
+    setSnappedRouteKey(null);
     setSnapToRoads(false);
   };
 
