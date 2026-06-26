@@ -67,6 +67,8 @@ export function RouteBuilderMap({
     number | null
   >(null);
   const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(null);
+  const [isSnappingRoute, setIsSnappingRoute] = useState(false);
+
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -129,7 +131,7 @@ export function RouteBuilderMap({
       : "Use Google walking paths where available.";
 
   const isSnapToggleDisabled =
-    isSaving || !isMapsApiLoaded || routePoints.length < 2;
+    isSaving || isSnappingRoute || !isMapsApiLoaded || routePoints.length < 2;
 
   const handleMapClick = async (event: MapMouseEvent) => {
     if (isSaving) {
@@ -178,10 +180,9 @@ export function RouteBuilderMap({
       setSnappedRouteKey(null);
       return;
     }
-    return;
 
     const routePointsKey = getRoutePointsKey(points);
-
+    setIsSnappingRoute(true);
     try {
       const { Route } = (await google.maps.importLibrary(
         "routes",
@@ -227,6 +228,8 @@ export function RouteBuilderMap({
       setSnappedRoutePath([]);
       setSnappedDistanceMeters(null);
       setSnappedRouteKey(null);
+    } finally {
+      setIsSnappingRoute(false);
     }
   };
 
