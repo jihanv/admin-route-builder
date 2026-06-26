@@ -208,6 +208,8 @@ export function RouteBuilderMap({
           "Could not calculate a walking route. Showing straight line instead.",
         );
         setSnappedRoutePath([]);
+        setSnappedDistanceMeters(null);
+        setSnappedRouteKey(null);
         return;
       }
 
@@ -222,6 +224,8 @@ export function RouteBuilderMap({
         "Could not calculate a walking route. Showing straight line instead.",
       );
       setSnappedRoutePath([]);
+      setSnappedDistanceMeters(null);
+      setSnappedRouteKey(null);
     }
   };
 
