@@ -1,16 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export function MissionDetailsSaveToast() {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("saved") === "1")
+    if (searchParams.get("saved") === "1") {
       toast.success("Mission details saved.", { id: "mission-details-saved" });
-  }, [searchParams]);
+      router.replace(pathname, { scroll: false });
+    }
+  }, [pathname, router, searchParams]);
 
   return null;
 }
