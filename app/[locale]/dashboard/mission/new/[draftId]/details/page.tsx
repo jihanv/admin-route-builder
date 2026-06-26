@@ -72,11 +72,17 @@ export default async function MissionDetailsPage({
       >
         <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
           <label className="block text-sm font-medium">Mission title</label>
-          <Input name="title" defaultValue={draftTitle} />
+          <Input
+            name="title"
+            defaultValue={draftTitle}
+            required
+            maxLength={120}
+          />
           <label className="block text-sm font-medium">Description</label>
           <Textarea
             name="description"
             defaultValue={draftDescription}
+            maxLength={1000}
             placeholder="Describe the mission route for participants."
           />
           <label className="block text-sm font-medium">Mission dates</label>
