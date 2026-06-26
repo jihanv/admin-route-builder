@@ -43,6 +43,12 @@ function getStraightLineDistanceMeters(points: RoutePoint[]) {
   }, 0);
 }
 
+function getRoutePointsKey(points: RoutePoint[]) {
+  return points
+    .map((point) => `${point.latitude},${point.longitude}`)
+    .join("|");
+}
+
 export function RouteBuilderMap({
   onDraftSaved,
   onRouteChanged,
@@ -109,6 +115,11 @@ export function RouteBuilderMap({
     snapToRoads && snappedDistanceMeters !== null
       ? snappedDistanceMeters
       : getStraightLineDistanceMeters(routePoints);
+
+  const routeDistanceLabel =
+    routeDistanceMeters >= 1000
+      ? `${(routeDistanceMeters / 1000).toFixed(2)} km`
+      : `${Math.round(routeDistanceMeters)} m`;
 
   const snapTooltipMessage = !isMapsApiLoaded
     ? "Loading Google Maps tools..."
@@ -258,9 +269,10 @@ export function RouteBuilderMap({
             {isSaving ? "Saving..." : "Save Draft"}
           </Button>
         </div>
-        <p className="text-sm font-medium text-muted-foreground">
-          Distance: {Math.round(routeDistanceMeters)} m
-        </p>
+        <div className="rounded-md border bg-background px-3 py-2 text-sm font-medium text-primary">
+          Distance:{" "}
+          <span className="text-muted-foreground">{routeDistanceLabel}</span>
+        </div>
         <div className="flex items-center justify-between gap-3 rounded-md border bg-primary/10 px-4 py-2">
           <span className="text-sm font-medium text-foreground">
             Snap to Roads
