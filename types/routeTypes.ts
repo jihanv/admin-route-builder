@@ -46,4 +46,5 @@ export type RouteDraft = {
   createdAt?: string;
   updatedAt?: string;
   status?: "draft";
+  snapToRoads?: boolean;
 };
