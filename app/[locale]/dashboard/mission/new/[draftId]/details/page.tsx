@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function MissionDetailsPage({
   params,
@@ -86,12 +88,20 @@ export default async function MissionDetailsPage({
             maxLength={1000}
             placeholder="Describe the mission route for participants."
           />
-          <div className="rounded-md border bg-background p-3 text-sm">
+          <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-sm">
             Route distance:{" "}
             <span className="font-medium">
               {draftGoalDistanceMeters} meters
             </span>
+            {canEditDraft && (
+              <Button asChild>
+                <Link href={`/dashboard/mission/new/${draftId}/route`}>
+                  Edit Route
+                </Link>
+              </Button>
+            )}
           </div>
+
           <label className="block text-sm font-medium">Mission dates</label>
           <DateRangePicker
             startName="startDate"

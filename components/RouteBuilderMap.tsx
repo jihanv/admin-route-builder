@@ -53,6 +53,7 @@ type RouteBuilderMapProps = {
   initialDraftId?: string;
   initialRoutePoints?: RoutePoint[];
   initialGoalDistanceMeters?: number;
+  initialSnapToRoads?: boolean;
   onDraftSaved?: (draftId: string) => void;
   onRouteChanged?: () => void;
 };
@@ -61,6 +62,7 @@ export function RouteBuilderMap({
   initialDraftId,
   initialRoutePoints,
   initialGoalDistanceMeters,
+  initialSnapToRoads,
   onDraftSaved,
   onRouteChanged,
 }: RouteBuilderMapProps) {
@@ -69,7 +71,7 @@ export function RouteBuilderMap({
   const [routePoints, setRoutePoints] = useState<RoutePoint[]>(
     initialRoutePoints ?? [],
   );
-  const [snapToRoads, setSnapToRoads] = useState(false);
+  const [snapToRoads, setSnapToRoads] = useState(initialSnapToRoads ?? false);
   const [snappedRoutePath, setSnappedRoutePath] = useState<
     { lat: number; lng: number }[]
   >([]);
@@ -79,6 +81,7 @@ export function RouteBuilderMap({
   const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(null);
   const [isSnappingRoute, setIsSnappingRoute] = useState(false);
   const snapRequestIdRef = useRef(0);
+  const hasCalculatedInitialSnapRef = useRef(false);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(initialDraftId ?? null);
   const [isSaving, setIsSaving] = useState(false);
@@ -296,6 +299,15 @@ export function RouteBuilderMap({
       onLoad={async () => {
         await google.maps.importLibrary("routes");
         setIsMapsApiLoaded(true);
+
+        if (
+          initialSnapToRoads &&
+          routePoints.length >= 2 &&
+          !hasCalculatedInitialSnapRef.current
+        ) {
+          hasCalculatedInitialSnapRef.current = true;
+          await calculateSnappedRoute(routePoints);
+        }
       }}
     >
       <div className="mb-3 flex flex-col gap-3 rounded-lg border bg-card p-3 text-card-foreground sm:flex-row sm:items-center sm:justify-between">

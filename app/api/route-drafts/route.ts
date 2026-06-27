@@ -9,6 +9,7 @@ const routeDraftRequestSchema = z.object({
   description: z.string().optional(),
   startDate: z.string().optional(),
   goalDistanceMeters: z.number().optional(),
+  snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
 });
 
@@ -51,6 +52,7 @@ export async function POST(request: Request) {
     description: parseResult.data.description ?? "",
     startDate: parseResult.data.startDate ?? "",
     goalDistanceMeters: parseResult.data.goalDistanceMeters ?? 0,
+    snapToRoads: parseResult.data.snapToRoads === true,
     routePoints: parseResult.data.routePoints ?? [],
     milestones: [],
     createdByAdminId: userId,
