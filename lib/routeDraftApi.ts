@@ -2,7 +2,12 @@ import type { RouteDraft } from "@/types/routeTypes";
 
 type SaveRouteDraftInput = Pick<
   RouteDraft,
-  "title" | "description" | "startDate" | "goalDistanceMeters" | "routePoints"
+  | "title"
+  | "description"
+  | "startDate"
+  | "goalDistanceMeters"
+  | "routePoints"
+  | "snapToRoads"
 > & { id?: string | null };
 
 export async function saveRouteDraft(draft: SaveRouteDraftInput) {

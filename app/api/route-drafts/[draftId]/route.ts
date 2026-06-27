@@ -9,6 +9,7 @@ const routeDraftPatchSchema = z.object({
   description: z.string().optional(),
   startDate: z.string().optional(),
   goalDistanceMeters: z.number().optional(),
+  snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
 });
 

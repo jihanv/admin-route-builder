@@ -94,6 +94,7 @@ export function RouteBuilderMap({
         id: draftId,
         title: "Untitled Route",
         goalDistanceMeters: Math.round(routeDistanceMeters),
+        snapToRoads,
         routePoints,
       });
 
