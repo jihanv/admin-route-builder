@@ -6,3 +6,12 @@ export const routePointSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
 });
+
+export const missionMilestoneSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  distanceMeters: z.number(),
+  position: routePointSchema,
+  imageUrls: z.array(z.string()),
+});

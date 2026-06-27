@@ -20,7 +20,6 @@ export type MissionMilestone = {
   position: RoutePoint;
   imageUrls: string[];
 };
-
 export type Mission = {
   id: string;
   title: string;
