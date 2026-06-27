@@ -49,16 +49,26 @@ function getRoutePointsKey(points: RoutePoint[]) {
     .join("|");
 }
 
-export function RouteBuilderMap({
-  onDraftSaved,
-  onRouteChanged,
-}: {
+type RouteBuilderMapProps = {
+  initialDraftId?: string;
+  initialRoutePoints?: RoutePoint[];
+  initialGoalDistanceMeters?: number;
   onDraftSaved?: (draftId: string) => void;
   onRouteChanged?: () => void;
-}) {
+};
+
+export function RouteBuilderMap({
+  initialDraftId,
+  initialRoutePoints,
+  initialGoalDistanceMeters,
+  onDraftSaved,
+  onRouteChanged,
+}: RouteBuilderMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
-  const [routePoints, setRoutePoints] = useState<RoutePoint[]>([]);
+  const [routePoints, setRoutePoints] = useState<RoutePoint[]>(
+    initialRoutePoints ?? [],
+  );
   const [snapToRoads, setSnapToRoads] = useState(false);
   const [snappedRoutePath, setSnappedRoutePath] = useState<
     { lat: number; lng: number }[]
@@ -70,7 +80,7 @@ export function RouteBuilderMap({
   const [isSnappingRoute, setIsSnappingRoute] = useState(false);
   const snapRequestIdRef = useRef(0);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
-  const [draftId, setDraftId] = useState<string | null>(null);
+  const [draftId, setDraftId] = useState<string | null>(initialDraftId ?? null);
   const [isSaving, setIsSaving] = useState(false);
   const isMobile = useIsMobile();
   const markRouteUnsaved = () => onRouteChanged?.();
@@ -112,6 +122,12 @@ export function RouteBuilderMap({
   });
 
   const currentRouteKey = getRoutePointsKey(routePoints);
+  const initialRouteKey = getRoutePointsKey(initialRoutePoints ?? []);
+  const isUsingInitialSavedDistance =
+    initialGoalDistanceMeters !== undefined &&
+    routePoints.length > 0 &&
+    currentRouteKey === initialRouteKey;
+
   const hasCurrentSnappedRoute =
     snappedRouteKey === currentRouteKey && snappedRoutePath.length > 0;
 
@@ -123,8 +139,9 @@ export function RouteBuilderMap({
       ? snappedRoutePath
       : routePoints.map(toGooglePoint);
 
-  const routeDistanceMeters =
-    snapToRoads && hasCurrentSnappedRoute && snappedDistanceMeters !== null
+  const routeDistanceMeters = isUsingInitialSavedDistance
+    ? initialGoalDistanceMeters
+    : snapToRoads && hasCurrentSnappedRoute && snappedDistanceMeters !== null
       ? snappedDistanceMeters
       : getStraightLineDistanceMeters(routePoints);
 
@@ -295,7 +312,7 @@ export function RouteBuilderMap({
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
             onClick={handleUndoRoutePoint}
-            disabled={routePoints.length === 0 || isSaving}
+            disabled={routePoints.length === 0 || isSaving || isSnappingRoute}
           >
             Undo
           </Button>
@@ -303,7 +320,7 @@ export function RouteBuilderMap({
             className="bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground min-w-28"
             variant="outline"
             onClick={handleSaveDraft}
-            disabled={routePoints.length === 0 || isSaving}
+            disabled={routePoints.length === 0 || isSaving || isSnappingRoute}
           >
             {isSaving ? "Saving..." : "Save Draft"}
           </Button>
