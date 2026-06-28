@@ -8,6 +8,7 @@ type SaveRouteDraftInput = Pick<
   | "goalDistanceMeters"
   | "routePoints"
   | "snapToRoads"
+  | "milestones"
 > & { id?: string | null };
 
 export async function saveRouteDraft(draft: SaveRouteDraftInput) {
