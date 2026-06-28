@@ -1,7 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { routePointSchema } from "@/lib/routeDraftSchemas";
+import {
+  missionMilestoneSchema,
+  routePointSchema,
+} from "@/lib/routeDraftSchemas";
 import { adminDb } from "@/lib/firebaseAdmin";
 
 const routeDraftPatchSchema = z.object({
@@ -11,6 +14,7 @@ const routeDraftPatchSchema = z.object({
   goalDistanceMeters: z.number().optional(),
   snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
+  milestones: z.array(missionMilestoneSchema).optional(),
 });
 
 export async function PATCH(
