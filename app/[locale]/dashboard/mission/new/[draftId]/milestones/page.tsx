@@ -1,9 +1,10 @@
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
-import type { MissionMilestone } from "@/types/routeTypes";
+import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { MilestoneList } from "@/components/MilestoneList";
 import { MilestoneForm } from "@/components/MilestoneForm";
+import { MilestonePickerMap } from "@/components/MilestonePickerMap";
 
 type MilestonesPageProps = {
   params: Promise<{ draftId: string }>;
@@ -39,6 +40,10 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
     ? (draft.milestones as MissionMilestone[])
     : [];
 
+  const routePoints = Array.isArray(draft?.routePoints)
+    ? (draft.routePoints as RoutePoint[])
+    : [];
+
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="milestones" />
@@ -47,6 +52,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         This draft currently has {milestones.length} milestones.
       </p>
       <MilestoneForm />
+      <MilestonePickerMap routePoints={routePoints} />
       <MilestoneList milestones={milestones} />
     </section>
   );
