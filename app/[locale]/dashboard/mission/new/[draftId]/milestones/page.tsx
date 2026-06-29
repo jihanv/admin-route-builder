@@ -43,7 +43,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
   const routePoints = Array.isArray(draft?.routePoints)
     ? (draft.routePoints as RoutePoint[])
     : [];
-
+  const snapToRoads = draft?.snapToRoads === true;
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="milestones" />
@@ -52,7 +52,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         This draft currently has {milestones.length} milestones.
       </p>
       <MilestoneForm />
-      <MilestonePickerMap routePoints={routePoints} />
+      <MilestonePickerMap routePoints={routePoints} snapToRoads={snapToRoads} />
       <MilestoneList milestones={milestones} />
     </section>
   );
