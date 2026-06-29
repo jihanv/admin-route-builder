@@ -2,17 +2,24 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { APIProvider, Map, Polyline } from "@vis.gl/react-google-maps";
-import type { RoutePoint } from "@/types/routeTypes";
+import {
+  APIProvider,
+  AdvancedMarker,
+  Map,
+  Polyline,
+  type MapMouseEvent,
+} from "@vis.gl/react-google-maps";
+import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 
 type MilestonePickerMapProps = {
   routePoints: RoutePoint[];
   snapToRoads: boolean;
+  milestones: MissionMilestone[];
 };
-
 export function MilestonePickerMap({
   routePoints,
   snapToRoads,
+  milestones,
 }: MilestonePickerMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
@@ -26,6 +33,15 @@ export function MilestonePickerMap({
     [routePoints],
   );
   const [displayRoutePath, setDisplayRoutePath] = useState(routePath);
+  const [selectedPosition, setSelectedPosition] = useState<RoutePoint | null>(
+    null,
+  );
+
+  const handleMapClick = (event: MapMouseEvent) => {
+    const position = event.detail.latLng;
+    if (!position) return;
+    setSelectedPosition({ latitude: position.lat, longitude: position.lng });
+  };
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   useEffect(() => {
     if (!isMapsApiLoaded || !snapToRoads || routePath.length < 2) {
@@ -64,7 +80,25 @@ export function MilestonePickerMap({
         defaultCenter={routePath[0] ?? { lat: 35.647756, lng: 139.741834 }}
         defaultZoom={12}
         mapId={mapId}
+        onClick={handleMapClick}
       >
+        {milestones.map((milestone) => (
+          <AdvancedMarker
+            key={milestone.id}
+            position={{
+              lat: milestone.position.latitude,
+              lng: milestone.position.longitude,
+            }}
+          />
+        ))}
+        {selectedPosition && (
+          <AdvancedMarker
+            position={{
+              lat: selectedPosition.latitude,
+              lng: selectedPosition.longitude,
+            }}
+          />
+        )}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
     </APIProvider>

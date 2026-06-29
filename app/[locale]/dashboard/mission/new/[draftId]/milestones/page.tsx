@@ -52,7 +52,11 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         This draft currently has {milestones.length} milestones.
       </p>
       <MilestoneForm />
-      <MilestonePickerMap routePoints={routePoints} snapToRoads={snapToRoads} />
+      <MilestonePickerMap
+        routePoints={routePoints}
+        snapToRoads={snapToRoads}
+        milestones={milestones}
+      />{" "}
       <MilestoneList milestones={milestones} />
     </section>
   );
