@@ -7,6 +7,7 @@ import {
   AdvancedMarker,
   Map,
   Polyline,
+  useMap,
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
@@ -97,6 +98,7 @@ export function MilestonePickerMap({
         mapId={mapId}
         onClick={handleMapClick}
       >
+        <RouteBoundsFitter routePath={displayRoutePath} />
         {milestones.map((milestone) => (
           <AdvancedMarker
             key={milestone.id}
@@ -118,4 +120,22 @@ export function MilestonePickerMap({
       </Map>
     </APIProvider>
   );
+}
+
+function RouteBoundsFitter({
+  routePath,
+}: {
+  routePath: { lat: number; lng: number }[];
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || routePath.length < 2) return;
+
+    const bounds = new google.maps.LatLngBounds();
+    routePath.forEach((point) => bounds.extend(point));
+    map.fitBounds(bounds, 48);
+  }, [map, routePath]);
+
+  return null;
 }
