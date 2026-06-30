@@ -39,8 +39,23 @@ export function MilestonePickerMap({
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
-    if (!position) return;
-    setSelectedPosition({ latitude: position.lat, longitude: position.lng });
+    if (!position || displayRoutePath.length === 0) return;
+
+    const clickedPoint = { lat: position.lat, lng: position.lng };
+    const closestPoint = displayRoutePath.reduce((closest, point) => {
+      const closestDistance =
+        (closest.lat - clickedPoint.lat) ** 2 +
+        (closest.lng - clickedPoint.lng) ** 2;
+      const pointDistance =
+        (point.lat - clickedPoint.lat) ** 2 +
+        (point.lng - clickedPoint.lng) ** 2;
+      return pointDistance < closestDistance ? point : closest;
+    });
+
+    setSelectedPosition({
+      latitude: closestPoint.lat,
+      longitude: closestPoint.lng,
+    });
   };
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   useEffect(() => {

@@ -3,7 +3,6 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { MilestoneList } from "@/components/MilestoneList";
-import { MilestoneForm } from "@/components/MilestoneForm";
 import { MilestonePickerMap } from "@/components/MilestonePickerMap";
 
 type MilestonesPageProps = {
@@ -51,7 +50,6 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
       <p className="text-sm text-muted-foreground">
         This draft currently has {milestones.length} milestones.
       </p>
-      <MilestoneForm />
       <MilestonePickerMap
         routePoints={routePoints}
         snapToRoads={snapToRoads}
