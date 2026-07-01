@@ -34,9 +34,7 @@ export function MilestonePickerMap({
     [routePoints],
   );
   const [displayRoutePath, setDisplayRoutePath] = useState(routePath);
-  const [selectedPosition, setSelectedPosition] = useState<RoutePoint | null>(
-    null,
-  );
+  const [selectedPositions, setSelectedPositions] = useState<RoutePoint[]>([]);
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
@@ -53,10 +51,10 @@ export function MilestonePickerMap({
       return pointDistance < closestDistance ? point : closest;
     });
 
-    setSelectedPosition({
-      latitude: closestPoint.lat,
-      longitude: closestPoint.lng,
-    });
+    setSelectedPositions((currentPositions) => [
+      ...currentPositions,
+      { latitude: closestPoint.lat, longitude: closestPoint.lng },
+    ]);
   };
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   useEffect(() => {
@@ -108,16 +106,22 @@ export function MilestonePickerMap({
             }}
           />
         ))}
-        {selectedPosition && (
+        {selectedPositions.map((position, index) => (
           <AdvancedMarker
+            key={`selected-${position.latitude}-${position.longitude}-${index}`}
             position={{
-              lat: selectedPosition.latitude,
-              lng: selectedPosition.longitude,
+              lat: position.latitude,
+              lng: position.longitude,
             }}
           />
-        )}
+        ))}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
+      {selectedPositions.length > 0 && (
+        <p className="mt-2 text-sm text-muted-foreground">
+          Selected milestone points: {selectedPositions.length}
+        </p>
+      )}
     </APIProvider>
   );
 }
