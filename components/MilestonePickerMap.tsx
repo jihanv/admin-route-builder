@@ -112,6 +112,28 @@ export function MilestonePickerMap({
         mapId={mapId}
         onClick={handleMapClick}
       >
+        {displayRoutePath.length > 0 && (
+          <AdvancedMarker position={displayRoutePath[0]}>
+            <div className="flex flex-col items-center">
+              <div className="bg-emerald-600 px-2 py-1 text-[10px] font-bold text-white shadow-md [clip-path:polygon(0_0,100%_0,100%_75%,50%_100%,0_75%)]">
+                START
+              </div>
+              <div className="h-6 w-1 bg-slate-500 shadow-sm" />
+            </div>
+          </AdvancedMarker>
+        )}
+        {displayRoutePath.length > 1 && (
+          <AdvancedMarker
+            position={displayRoutePath[displayRoutePath.length - 1]}
+          >
+            <div className="flex flex-col items-center">
+              <div className="bg-red-600 px-2 py-1 text-[10px] font-bold text-white shadow-md [clip-path:polygon(0_0,100%_0,100%_75%,50%_100%,0_75%)]">
+                END
+              </div>
+              <div className="h-6 w-1 bg-slate-500 shadow-sm" />
+            </div>
+          </AdvancedMarker>
+        )}
         <RouteBoundsFitter routePath={displayRoutePath} />
         {milestones.map((milestone) => (
           <AdvancedMarker
