@@ -130,8 +130,11 @@ export function MilestonePickerMap({
               lng: position.longitude,
             }}
           >
-            <div className="flex size-8 items-center justify-center rounded-full border-2 border-background bg-primary text-sm font-bold text-primary-foreground shadow-md">
-              {String.fromCharCode(65 + index)}
+            <div className="relative h-16 w-10">
+              <div className="absolute bottom-0 left-0 h-16 w-1 rounded-full bg-foreground shadow-md" />
+              <div className="absolute left-1 top-1 flex h-6 min-w-7 items-center justify-center rounded-r-md bg-primary px-2 text-xs font-bold text-primary-foreground shadow-md">
+                {String.fromCharCode(65 + index)}
+              </div>
             </div>
           </AdvancedMarker>
         ))}
