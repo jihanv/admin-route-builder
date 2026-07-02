@@ -17,6 +17,11 @@ type MilestonePickerMapProps = {
   snapToRoads: boolean;
   milestones: MissionMilestone[];
 };
+
+type SelectedMilestonePosition = RoutePoint & {
+  routePathIndex: number;
+};
+
 export function MilestonePickerMap({
   routePoints,
   snapToRoads,
@@ -34,27 +39,38 @@ export function MilestonePickerMap({
     [routePoints],
   );
   const [displayRoutePath, setDisplayRoutePath] = useState(routePath);
-  const [selectedPositions, setSelectedPositions] = useState<RoutePoint[]>([]);
+  const [selectedPositions, setSelectedPositions] = useState<
+    SelectedMilestonePosition[]
+  >([]);
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
     if (!position || displayRoutePath.length === 0) return;
 
     const clickedPoint = { lat: position.lat, lng: position.lng };
-    const closestPoint = displayRoutePath.reduce((closest, point) => {
-      const closestDistance =
-        (closest.lat - clickedPoint.lat) ** 2 +
-        (closest.lng - clickedPoint.lng) ** 2;
-      const pointDistance =
-        (point.lat - clickedPoint.lat) ** 2 +
-        (point.lng - clickedPoint.lng) ** 2;
-      return pointDistance < closestDistance ? point : closest;
-    });
+    const closestRoutePoint = displayRoutePath.reduce(
+      (closest, point, index) => {
+        const closestDistance =
+          (closest.point.lat - clickedPoint.lat) ** 2 +
+          (closest.point.lng - clickedPoint.lng) ** 2;
+        const pointDistance =
+          (point.lat - clickedPoint.lat) ** 2 +
+          (point.lng - clickedPoint.lng) ** 2;
+        return pointDistance < closestDistance ? { point, index } : closest;
+      },
+      { point: displayRoutePath[0], index: 0 },
+    );
 
-    setSelectedPositions((currentPositions) => [
-      ...currentPositions,
-      { latitude: closestPoint.lat, longitude: closestPoint.lng },
-    ]);
+    setSelectedPositions((currentPositions) =>
+      [
+        ...currentPositions,
+        {
+          latitude: closestRoutePoint.point.lat,
+          longitude: closestRoutePoint.point.lng,
+          routePathIndex: closestRoutePoint.index,
+        },
+      ].sort((a, b) => a.routePathIndex - b.routePathIndex),
+    );
   };
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   useEffect(() => {
@@ -113,7 +129,11 @@ export function MilestonePickerMap({
               lat: position.latitude,
               lng: position.longitude,
             }}
-          />
+          >
+            <div className="flex size-8 items-center justify-center rounded-full border-2 border-background bg-primary text-sm font-bold text-primary-foreground shadow-md">
+              {String.fromCharCode(65 + index)}
+            </div>
+          </AdvancedMarker>
         ))}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
