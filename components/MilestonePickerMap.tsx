@@ -39,7 +39,7 @@ export function MilestonePickerMap({
     [routePoints],
   );
   const [displayRoutePath, setDisplayRoutePath] = useState(routePath);
-  const [selectedPositions, setSelectedPositions] = useState<
+  const [localSelectedPositions, setLocalSelectedPositions] = useState<
     SelectedMilestonePosition[]
   >([]);
 
@@ -61,7 +61,7 @@ export function MilestonePickerMap({
       { point: displayRoutePath[0], index: 0 },
     );
 
-    setSelectedPositions((currentPositions) =>
+    setLocalSelectedPositions((currentPositions) =>
       [
         ...currentPositions,
         {
@@ -144,7 +144,7 @@ export function MilestonePickerMap({
             }}
           />
         ))}
-        {selectedPositions.map((position, index) => (
+        {localSelectedPositions.map((position, index) => (
           <AdvancedMarker
             key={`selected-${position.latitude}-${position.longitude}-${index}`}
             position={{
@@ -162,9 +162,9 @@ export function MilestonePickerMap({
         ))}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
-      {selectedPositions.length > 0 && (
+      {localSelectedPositions.length > 0 && (
         <p className="mt-2 text-sm text-muted-foreground">
-          Selected milestone points: {selectedPositions.length}
+          Selected milestone points: {localSelectedPositions.length}
         </p>
       )}
     </APIProvider>
