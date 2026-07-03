@@ -16,9 +16,13 @@ type MilestonePickerMapProps = {
   routePoints: RoutePoint[];
   snapToRoads: boolean;
   milestones: MissionMilestone[];
+  selectedPositions?: SelectedMilestonePosition[];
+  onSelectedPositionsChange?: React.Dispatch<
+    React.SetStateAction<SelectedMilestonePosition[]>
+  >;
 };
 
-type SelectedMilestonePosition = RoutePoint & {
+export type SelectedMilestonePosition = RoutePoint & {
   routePathIndex: number;
 };
 
@@ -26,6 +30,8 @@ export function MilestonePickerMap({
   routePoints,
   snapToRoads,
   milestones,
+  selectedPositions,
+  onSelectedPositionsChange,
 }: MilestonePickerMapProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? "";
@@ -42,6 +48,9 @@ export function MilestonePickerMap({
   const [localSelectedPositions, setLocalSelectedPositions] = useState<
     SelectedMilestonePosition[]
   >([]);
+  const visibleSelectedPositions = selectedPositions ?? localSelectedPositions;
+  const updateSelectedPositions =
+    onSelectedPositionsChange ?? setLocalSelectedPositions;
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
@@ -144,7 +153,7 @@ export function MilestonePickerMap({
             }}
           />
         ))}
-        {localSelectedPositions.map((position, index) => (
+        {visibleSelectedPositions.map((position, index) => (
           <AdvancedMarker
             key={`selected-${position.latitude}-${position.longitude}-${index}`}
             position={{
@@ -162,9 +171,9 @@ export function MilestonePickerMap({
         ))}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
-      {localSelectedPositions.length > 0 && (
+      {visibleSelectedPositions.length > 0 && (
         <p className="mt-2 text-sm text-muted-foreground">
-          Selected milestone points: {localSelectedPositions.length}
+          Selected milestone points: {visibleSelectedPositions.length}
         </p>
       )}
     </APIProvider>
