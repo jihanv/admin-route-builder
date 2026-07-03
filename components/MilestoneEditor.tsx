@@ -1,7 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { MilestoneList } from "@/components/MilestoneList";
-import { MilestonePickerMap } from "@/components/MilestonePickerMap";
+import {
+  MilestonePickerMap,
+  type SelectedMilestonePosition,
+} from "@/components/MilestonePickerMap";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 
 type MilestoneEditorProps = {
@@ -15,12 +19,18 @@ export function MilestoneEditor({
   snapToRoads,
   milestones,
 }: MilestoneEditorProps) {
+  const [selectedPositions, setSelectedPositions] = useState<
+    SelectedMilestonePosition[]
+  >([]);
+
   return (
     <>
       <MilestonePickerMap
         routePoints={routePoints}
         snapToRoads={snapToRoads}
         milestones={milestones}
+        selectedPositions={selectedPositions}
+        onSelectedPositionsChange={setSelectedPositions}
       />
       <MilestoneList milestones={milestones} />
     </>
