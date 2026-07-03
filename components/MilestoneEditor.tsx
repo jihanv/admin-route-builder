@@ -32,6 +32,17 @@ export function MilestoneEditor({
         selectedPositions={selectedPositions}
         onSelectedPositionsChange={setSelectedPositions}
       />
+      <p className="text-sm text-muted-foreground">
+        Selected new milestone points: {selectedPositions.length}
+      </p>
+      <ol className="space-y-1 text-sm">
+        {selectedPositions.map((position, index) => (
+          <li key={`${position.latitude}-${position.longitude}-${index}`}>
+            {String.fromCharCode(65 + index)}. {position.latitude.toFixed(6)},{" "}
+            {position.longitude.toFixed(6)}
+          </li>
+        ))}
+      </ol>
       <MilestoneList milestones={milestones} />
     </>
   );

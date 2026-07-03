@@ -70,7 +70,7 @@ export function MilestonePickerMap({
       { point: displayRoutePath[0], index: 0 },
     );
 
-    setLocalSelectedPositions((currentPositions) =>
+    updateSelectedPositions((currentPositions) =>
       [
         ...currentPositions,
         {
@@ -171,11 +171,11 @@ export function MilestonePickerMap({
         ))}
         <Polyline path={displayRoutePath} strokeWeight={4} />{" "}
       </Map>
-      {visibleSelectedPositions.length > 0 && (
+      {/* {visibleSelectedPositions.length > 0 && (
         <p className="mt-2 text-sm text-muted-foreground">
           Selected milestone points: {visibleSelectedPositions.length}
         </p>
-      )}
+      )} */}
     </APIProvider>
   );
 }
