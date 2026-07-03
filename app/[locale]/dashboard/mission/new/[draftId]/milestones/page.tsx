@@ -2,8 +2,7 @@ import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
-import { MilestoneList } from "@/components/MilestoneList";
-import { MilestonePickerMap } from "@/components/MilestonePickerMap";
+import { MilestoneEditor } from "@/components/MilestoneEditor";
 
 type MilestonesPageProps = {
   params: Promise<{ draftId: string }>;
@@ -50,12 +49,11 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
       <p className="text-sm text-muted-foreground">
         This draft currently has {milestones.length} milestones.
       </p>
-      <MilestonePickerMap
+      <MilestoneEditor
         routePoints={routePoints}
         snapToRoads={snapToRoads}
         milestones={milestones}
-      />{" "}
-      <MilestoneList milestones={milestones} />
+      />
     </section>
   );
 }
