@@ -24,6 +24,7 @@ type MilestonePickerMapProps = {
 
 export type SelectedMilestonePosition = RoutePoint & {
   routePathIndex: number;
+  temporaryId: string;
 };
 
 export function MilestonePickerMap({
@@ -77,6 +78,7 @@ export function MilestonePickerMap({
           latitude: closestRoutePoint.point.lat,
           longitude: closestRoutePoint.point.lng,
           routePathIndex: closestRoutePoint.index,
+          temporaryId: crypto.randomUUID(),
         },
       ].sort((a, b) => a.routePathIndex - b.routePathIndex),
     );
@@ -155,7 +157,7 @@ export function MilestonePickerMap({
         ))}
         {visibleSelectedPositions.map((position, index) => (
           <AdvancedMarker
-            key={`selected-${position.latitude}-${position.longitude}-${index}`}
+            key={position.temporaryId}
             position={{
               lat: position.latitude,
               lng: position.longitude,

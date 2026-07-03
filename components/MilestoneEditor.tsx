@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MilestoneList } from "@/components/MilestoneList";
+import { Button } from "@/components/ui/button";
 import {
   MilestonePickerMap,
   type SelectedMilestonePosition,
@@ -43,6 +44,11 @@ export function MilestoneEditor({
           </li>
         ))}
       </ol>
+      {selectedPositions.length > 0 && (
+        <Button onClick={() => setSelectedPositions([])}>
+          Clear selected points
+        </Button>
+      )}
       <MilestoneList milestones={milestones} />
     </>
   );
