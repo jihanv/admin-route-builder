@@ -36,19 +36,38 @@ export function MilestoneEditor({
       <p className="text-sm text-muted-foreground">
         Selected new milestone points: {selectedPositions.length}
       </p>
-      <ol className="space-y-1 text-sm">
-        {selectedPositions.map((position, index) => (
-          <li key={`${position.latitude}-${position.longitude}-${index}`}>
-            {String.fromCharCode(65 + index)}. {position.latitude.toFixed(6)},{" "}
-            {position.longitude.toFixed(6)}
-          </li>
-        ))}
-      </ol>
       {selectedPositions.length > 0 && (
         <Button onClick={() => setSelectedPositions([])}>
           Clear selected points
         </Button>
       )}
+      <ol className="w-full max-w-md space-y-2 text-sm">
+        {selectedPositions.map((position, index) => (
+          <li
+            key={position.temporaryId}
+            className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-lg border bg-card px-3 py-2 text-card-foreground shadow-sm"
+          >
+            <span className="font-mono text-muted-foreground">
+              {String.fromCharCode(65 + index)}. {position.latitude.toFixed(6)},{" "}
+              {position.longitude.toFixed(6)}
+            </span>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() =>
+                setSelectedPositions((currentPositions) =>
+                  currentPositions.filter(
+                    (item) => item.temporaryId !== position.temporaryId,
+                  ),
+                )
+              }
+            >
+              Remove
+            </Button>
+          </li>
+        ))}
+      </ol>
+
       <MilestoneList milestones={milestones} />
     </>
   );
