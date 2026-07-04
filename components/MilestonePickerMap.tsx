@@ -93,9 +93,13 @@ export function MilestonePickerMap({
   const getDistanceMetersToRoutePathIndex = (routePathIndex: number) => {
     if (!spherical) return 0;
 
-    return Math.round(
+    const distanceMeters = Math.round(
       spherical.computeLength(displayRoutePath.slice(0, routePathIndex + 1)),
     );
+
+    return goalDistanceMeters > 0
+      ? Math.min(distanceMeters, goalDistanceMeters)
+      : distanceMeters;
   };
 
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
