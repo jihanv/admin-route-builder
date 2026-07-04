@@ -1,7 +1,6 @@
 "use client";
 import type { DateRange } from "react-day-picker";
-import { useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,19 +36,29 @@ export function DateRangePicker({
     date?.toLocaleDateString("en-CA", { timeZone: "Asia/Tokyo" }) ?? "";
   const selectedStartDate = formatDateForJapan(dateRange?.from);
   const selectedEndDate = formatDateForJapan(dateRange?.to);
+  const startInputRef = useRef<HTMLInputElement>(null);
+  const endInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    startInputRef.current?.dispatchEvent(
+      new Event("change", { bubbles: true }),
+    );
+    endInputRef.current?.dispatchEvent(new Event("change", { bubbles: true }));
+  }, [selectedStartDate, selectedEndDate]);
   return (
     <div>
       <input
+        ref={startInputRef}
         type="hidden"
         name={startName}
-        value={formatDateForJapan(dateRange?.from)}
+        value={selectedStartDate}
         readOnly
       />
       <input
+        ref={endInputRef}
         type="hidden"
         name={endName}
-        value={formatDateForJapan(dateRange?.to)}
+        value={selectedEndDate}
         readOnly
       />
 
