@@ -38,10 +38,6 @@ export function DateRangePicker({
   const selectedStartDate = formatDateForJapan(dateRange?.from);
   const selectedEndDate = formatDateForJapan(dateRange?.to);
 
-  // const buttonLabel = dateRange?.from
-  //   ? `${formatDateForJapan(dateRange.from)}${dateRange.to ? ` - ${formatDateForJapan(dateRange.to)}` : ""}`
-  //   : "Pick a date range";
-
   return (
     <div>
       <input
@@ -78,11 +74,11 @@ export function DateRangePicker({
         </PopoverContent>
       </Popover>
       <div className="mt-2 grid gap-1 text-base text-muted-foreground sm:grid-cols-2">
-        <p className="rounded-md border bg-background px-3 py-2">
+        <p>
           <span className="font-semibold text-foreground">Start Date:</span>{" "}
           {selectedStartDate || "Not selected yet"}
         </p>
-        <p className="rounded-md border bg-background px-3 py-2">
+        <p>
           <span className="font-semibold text-foreground">End Date:</span>{" "}
           {selectedEndDate || "Not selected yet"}
         </p>
