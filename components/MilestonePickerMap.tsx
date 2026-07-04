@@ -14,6 +14,7 @@ import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 
 type MilestonePickerMapProps = {
   routePoints: RoutePoint[];
+  goalDistanceMeters: number;
   snapToRoads: boolean;
   milestones: MissionMilestone[];
   selectedPositions?: SelectedMilestonePosition[];
@@ -29,6 +30,7 @@ export type SelectedMilestonePosition = RoutePoint & {
 };
 
 export function MilestonePickerMap({
+  goalDistanceMeters,
   routePoints,
   snapToRoads,
   milestones,

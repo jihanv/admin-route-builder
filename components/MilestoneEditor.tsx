@@ -8,17 +8,24 @@ import {
 } from "@/components/MilestonePickerMap";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 type MilestoneEditorProps = {
+  goalDistanceMeters: number;
+
   draftId: string;
   routePoints: RoutePoint[];
   snapToRoads: boolean;
   milestones: MissionMilestone[];
 };
 
+function formatDistance(distanceMeters: number) {
+  return `${distanceMeters} meters`;
+}
+
 export function MilestoneEditor({
   draftId,
   routePoints,
   snapToRoads,
   milestones,
+  goalDistanceMeters,
 }: MilestoneEditorProps) {
   const [selectedPositions, setSelectedPositions] = useState<
     SelectedMilestonePosition[]
@@ -28,6 +35,7 @@ export function MilestoneEditor({
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
       <div className="min-w-0">
         <MilestonePickerMap
+          goalDistanceMeters={goalDistanceMeters}
           routePoints={routePoints}
           snapToRoads={snapToRoads}
           milestones={milestones}
@@ -55,6 +63,9 @@ export function MilestoneEditor({
               <div>
                 <p className="font-medium">
                   Milestone {String.fromCharCode(65 + index)}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {formatDistance(position.distanceMeters)} from start
                 </p>
               </div>
               <Button

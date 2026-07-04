@@ -42,6 +42,10 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
     ? (draft.routePoints as RoutePoint[])
     : [];
   const snapToRoads = draft?.snapToRoads === true;
+  const goalDistanceMeters =
+    typeof draft?.goalDistanceMeters === "number"
+      ? draft.goalDistanceMeters
+      : 0;
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="milestones" />
@@ -54,6 +58,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         routePoints={routePoints}
         snapToRoads={snapToRoads}
         milestones={milestones}
+        goalDistanceMeters={goalDistanceMeters}
       />
     </section>
   );
