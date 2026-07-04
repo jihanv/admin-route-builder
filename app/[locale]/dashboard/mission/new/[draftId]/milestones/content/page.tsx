@@ -1,6 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
+import { MilestoneContentEditor } from "@/components/MilestoneContentEditor";
+
 export default async function MilestoneContentPage({
   params,
 }: {
@@ -40,18 +42,7 @@ export default async function MilestoneContentPage({
         This draft has {milestones.length} milestone positions ready for
         content.
       </p>
-      <div className="space-y-3">
-        {milestones.map((milestone, index) => (
-          <div key={milestone.id} className="rounded-lg border bg-card p-4">
-            <h2 className="font-semibold">
-              Milestone {String.fromCharCode(65 + index)}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {milestone.distanceMeters} meters from start
-            </p>
-          </div>
-        ))}
-      </div>
+      <MilestoneContentEditor milestones={milestones} />
     </section>
   );
 }
