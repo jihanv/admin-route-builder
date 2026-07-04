@@ -9,12 +9,8 @@ import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitBut
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
+import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 
 export default async function MissionDetailsPage({
   params,
@@ -122,26 +118,11 @@ export default async function MissionDetailsPage({
         </fieldset>
       </form>
       <div className="flex justify-end">
-        {canContinueToMilestones ? (
-          <Button asChild>
-            <Link href={`/dashboard/mission/new/${draftId}/milestones`}>
-              Next: Add milestones
-            </Link>
-          </Button>
-        ) : (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="inline-flex">
-                  <Button disabled>Next: Add milestones</Button>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                Save mission details before adding milestones.
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        )}
+        <MissionDetailsNextButton
+          href={`/dashboard/mission/new/${draftId}/milestones`}
+          canContinue={canContinueToMilestones}
+          formId="mission-details-form"
+        />
       </div>
       <p className="text-base text-muted-foreground">Draft ID: {draftId}</p>
     </section>
