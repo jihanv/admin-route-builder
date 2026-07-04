@@ -93,7 +93,7 @@ export function MilestoneEditor({
         >
           Clear selected points
         </Button>
-        <ol className="max-h-88 w-full space-y-2 overflow-y-auto pr-2 text-sm">
+        <ol className="min-h-0 w-full flex-1 space-y-2 overflow-y-auto pr-2 text-sm">
           {selectedPositions.map((position, index) => (
             <li
               key={position.temporaryId}
@@ -123,6 +123,16 @@ export function MilestoneEditor({
             </li>
           ))}
         </ol>
+        <Button
+          onClick={handleContinueToContent}
+          disabled={
+            selectedPositions.length === 0 || isSavingMilestonePositions
+          }
+        >
+          {isSavingMilestonePositions
+            ? "Saving milestone positions..."
+            : "Next: Add milestone content"}
+        </Button>
 
         {/* <MilestoneList milestones={milestones} /> */}
       </aside>
