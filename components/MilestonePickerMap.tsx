@@ -194,15 +194,6 @@ export function MilestonePickerMap({
           </AdvancedMarker>
         )}
         <RouteBoundsFitter routePath={displayRoutePath} />
-        {milestones.map((milestone) => (
-          <AdvancedMarker
-            key={milestone.id}
-            position={{
-              lat: milestone.position.latitude,
-              lng: milestone.position.longitude,
-            }}
-          />
-        ))}
         {visibleSelectedPositions.map((position, index) => (
           <AdvancedMarker
             key={position.temporaryId}

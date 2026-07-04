@@ -31,7 +31,14 @@ export function MilestoneEditor({
 }: MilestoneEditorProps) {
   const [selectedPositions, setSelectedPositions] = useState<
     SelectedMilestonePosition[]
-  >([]);
+  >(() =>
+    milestones.map((milestone) => ({
+      ...milestone.position,
+      distanceMeters: milestone.distanceMeters,
+      routePathIndex: milestone.distanceMeters,
+      temporaryId: milestone.id,
+    })),
+  );
   const router = useRouter();
   const [isSavingMilestonePositions, setIsSavingMilestonePositions] =
     useState(false);
