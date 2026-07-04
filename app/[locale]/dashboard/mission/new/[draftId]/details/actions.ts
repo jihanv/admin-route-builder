@@ -90,6 +90,7 @@ export async function updateMissionDetailsAction(
     startDate: result.data.startDate,
     endDate: result.data.endDate,
     updatedAt: new Date().toISOString(),
+    detailsSavedAt: new Date().toISOString(),
   });
 
   revalidatePath(`/dashboard/mission/new/${draftIdResult.data}/details`);
