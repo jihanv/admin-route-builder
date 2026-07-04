@@ -46,9 +46,9 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="milestones" />
       <h1 className="text-2xl font-semibold text-primary">Milestones</h1>
-      <p className="text-sm text-muted-foreground">
+      {/* <p className="text-sm text-muted-foreground">
         This draft currently has {milestones.length} milestones.
-      </p>
+      </p> */}
       <MilestoneEditor
         routePoints={routePoints}
         snapToRoads={snapToRoads}

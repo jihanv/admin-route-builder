@@ -117,7 +117,7 @@ export function MilestonePickerMap({
   return (
     <APIProvider apiKey={apiKey} onLoad={() => setIsMapsApiLoaded(true)}>
       <Map
-        className="h-80 w-full overflow-hidden rounded-lg border"
+        className="h-100 w-full overflow-hidden rounded-lg border"
         defaultCenter={routePath[0] ?? { lat: 35.647756, lng: 139.741834 }}
         defaultZoom={12}
         mapId={mapId}
