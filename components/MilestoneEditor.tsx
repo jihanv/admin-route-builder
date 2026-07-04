@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { MilestoneList } from "@/components/MilestoneList";
 import { Button } from "@/components/ui/button";
 import {
   MilestonePickerMap,
@@ -22,9 +21,7 @@ export function MilestoneEditor({
   const [selectedPositions, setSelectedPositions] = useState<
     SelectedMilestonePosition[]
   >([]);
-  const [milestoneTitles, setMilestoneTitles] = useState<
-    Record<string, string>
-  >({});
+
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
       <div className="min-w-0">
