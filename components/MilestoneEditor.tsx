@@ -46,22 +46,28 @@ export function MilestoneEditor({
   const handleContinueToContent = async () => {
     setIsSavingMilestonePositions(true);
 
-    const newMilestones = selectedPositions.map((position) => ({
-      id: position.temporaryId,
-      title: "",
-      description: "",
-      distanceMeters: position.distanceMeters,
-      position: {
-        latitude: position.latitude,
-        longitude: position.longitude,
-      },
-      imageUrls: [],
-    }));
+    const nextMilestones = selectedPositions.map((position) => {
+      const existingMilestone = milestones.find(
+        (milestone) => milestone.id === position.temporaryId,
+      );
+
+      return {
+        id: position.temporaryId,
+        title: existingMilestone?.title ?? "",
+        description: existingMilestone?.description ?? "",
+        distanceMeters: position.distanceMeters,
+        position: {
+          latitude: position.latitude,
+          longitude: position.longitude,
+        },
+        imageUrls: existingMilestone?.imageUrls ?? [],
+      };
+    });
 
     try {
       const response = await saveRouteDraft({
         id: draftId,
-        milestones: [...milestones, ...newMilestones],
+        milestones: nextMilestones,
       });
 
       if (!response.ok) {
