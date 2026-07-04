@@ -9,6 +9,12 @@ import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitBut
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default async function MissionDetailsPage({
   params,
@@ -122,7 +128,18 @@ export default async function MissionDetailsPage({
             </Link>
           </Button>
         ) : (
-          <Button disabled>Next: Add milestones</Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="inline-flex">
+                  <Button disabled>Next: Add milestones</Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                Save mission details before adding milestones.
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
       <p className="text-base text-muted-foreground">Draft ID: {draftId}</p>
