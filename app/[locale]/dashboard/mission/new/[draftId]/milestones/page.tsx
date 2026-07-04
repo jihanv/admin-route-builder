@@ -50,6 +50,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         This draft currently has {milestones.length} milestones.
       </p> */}
       <MilestoneEditor
+        draftId={draftId}
         routePoints={routePoints}
         snapToRoads={snapToRoads}
         milestones={milestones}

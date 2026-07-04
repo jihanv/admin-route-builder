@@ -8,12 +8,14 @@ import {
 } from "@/components/MilestonePickerMap";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 type MilestoneEditorProps = {
+  draftId: string;
   routePoints: RoutePoint[];
   snapToRoads: boolean;
   milestones: MissionMilestone[];
 };
 
 export function MilestoneEditor({
+  draftId,
   routePoints,
   snapToRoads,
   milestones,
