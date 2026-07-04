@@ -89,6 +89,11 @@ export function MilestonePickerMap({
       ].sort((a, b) => a.routePathIndex - b.routePathIndex),
     );
   };
+  const getVisibleRouteDistanceMeters = () => {
+    if (!spherical || displayRoutePath.length < 2) return 0;
+
+    return Math.round(spherical.computeLength(displayRoutePath));
+  };
 
   const getDistanceMetersToRoutePathIndex = (routePathIndex: number) => {
     if (!spherical) return 0;
