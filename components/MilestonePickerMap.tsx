@@ -25,6 +25,7 @@ type MilestonePickerMapProps = {
 export type SelectedMilestonePosition = RoutePoint & {
   routePathIndex: number;
   temporaryId: string;
+  distanceMeters: number;
 };
 
 export function MilestonePickerMap({
@@ -55,7 +56,7 @@ export function MilestonePickerMap({
 
   const handleMapClick = (event: MapMouseEvent) => {
     const position = event.detail.latLng;
-    if (!position || displayRoutePath.length === 0) return;
+    if (!position || displayRoutePath.length === 0 || !spherical) return;
 
     const clickedPoint = { lat: position.lat, lng: position.lng };
     const closestRoutePoint = displayRoutePath.reduce(
@@ -79,6 +80,9 @@ export function MilestonePickerMap({
           longitude: closestRoutePoint.point.lng,
           routePathIndex: closestRoutePoint.index,
           temporaryId: crypto.randomUUID(),
+          distanceMeters: getDistanceMetersToRoutePathIndex(
+            closestRoutePoint.index,
+          ),
         },
       ].sort((a, b) => a.routePathIndex - b.routePathIndex),
     );
@@ -104,7 +108,7 @@ export function MilestonePickerMap({
         "geometry",
       )) as google.maps.GeometryLibrary;
 
-      setSpherical(spherical);
+      setSpherical(() => spherical);
     }
 
     void loadGeometryLibrary();
