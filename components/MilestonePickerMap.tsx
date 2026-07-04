@@ -101,10 +101,18 @@ export function MilestonePickerMap({
     const distanceMeters = Math.round(
       spherical.computeLength(displayRoutePath.slice(0, routePathIndex + 1)),
     );
+    const visibleRouteDistanceMeters = getVisibleRouteDistanceMeters();
 
-    return goalDistanceMeters > 0
-      ? Math.min(distanceMeters, goalDistanceMeters)
-      : distanceMeters;
+    if (goalDistanceMeters <= 0 || visibleRouteDistanceMeters <= 0) {
+      return distanceMeters;
+    }
+
+    return Math.min(
+      Math.round(
+        (distanceMeters / visibleRouteDistanceMeters) * goalDistanceMeters,
+      ),
+      goalDistanceMeters,
+    );
   };
 
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
