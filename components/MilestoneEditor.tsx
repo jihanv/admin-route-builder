@@ -1,5 +1,7 @@
 "use client";
-
+import { useRouter } from "next/navigation";
+import { saveRouteDraft } from "@/lib/routeDraftApi";
+import { toast } from "sonner";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +32,44 @@ export function MilestoneEditor({
   const [selectedPositions, setSelectedPositions] = useState<
     SelectedMilestonePosition[]
   >([]);
+  const router = useRouter();
+  const [isSavingMilestonePositions, setIsSavingMilestonePositions] =
+    useState(false);
 
+  const handleContinueToContent = async () => {
+    setIsSavingMilestonePositions(true);
+
+    const newMilestones = selectedPositions.map((position) => ({
+      id: position.temporaryId,
+      title: "",
+      description: "",
+      distanceMeters: position.distanceMeters,
+      position: {
+        latitude: position.latitude,
+        longitude: position.longitude,
+      },
+      imageUrls: [],
+    }));
+
+    try {
+      const response = await saveRouteDraft({
+        id: draftId,
+        milestones: [...milestones, ...newMilestones],
+      });
+
+      if (!response.ok) {
+        toast.error("Could not save milestone positions.");
+        return;
+      }
+
+      router.push(`/dashboard/mission/new/${draftId}/milestones/content`);
+    } catch (error) {
+      console.error("Save milestone positions failed:", error);
+      toast.error("Could not save milestone positions.");
+    } finally {
+      setIsSavingMilestonePositions(false);
+    }
+  };
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
       <div className="min-w-0">
