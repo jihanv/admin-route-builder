@@ -24,7 +24,7 @@ export default async function MissionDetailsPage({
     return (
       <section className="p-8">
         <h1 className="text-2xl font-semibold text-primary">Access denied</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-base text-muted-foreground">
           You do not have permission to view this mission draft.
         </p>
       </section>
@@ -64,7 +64,7 @@ export default async function MissionDetailsPage({
     <section className="space-y-6 p-8">
       <MissionDetailsSaveToast />
       {!canEditDraft && (
-        <p className="rounded-md border bg-card p-3 text-sm text-muted-foreground">
+        <p className="rounded-md border bg-card p-3 text-base text-muted-foreground">
           You can view this mission draft, but only the creator can edit it.
         </p>
       )}
@@ -76,21 +76,21 @@ export default async function MissionDetailsPage({
         className="space-y-3 rounded-lg border bg-card p-4"
       >
         <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
-          <label className="block text-sm font-medium">Mission title</label>
+          <label className="block text-base font-medium">Mission title</label>
           <Input
             name="title"
             defaultValue={draftTitle}
             required
             maxLength={120}
           />
-          <label className="block text-sm font-medium">Description</label>
+          <label className="block text-base font-medium">Description</label>
           <Textarea
             name="description"
             defaultValue={draftDescription}
             maxLength={1000}
             placeholder="Describe the mission route for participants."
           />
-          <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-sm">
+          <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
             Route distance:{" "}
             <span className="font-medium">
               {draftGoalDistanceMeters} meters
@@ -104,7 +104,7 @@ export default async function MissionDetailsPage({
             )}
           </div>
 
-          <label className="block text-sm font-medium">Mission dates</label>
+          <label className="block text-base font-medium">Mission dates</label>
           <DateRangePicker
             startName="startDate"
             endName="endDate"
@@ -125,7 +125,7 @@ export default async function MissionDetailsPage({
           <Button disabled>Next: Add milestones</Button>
         )}
       </div>
-      <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
+      <p className="text-base text-muted-foreground">Draft ID: {draftId}</p>
     </section>
   );
 }

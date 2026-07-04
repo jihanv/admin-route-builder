@@ -2,12 +2,35 @@
 
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-export function MissionDetailsSubmitButton() {
+type MissionDetailsSubmitButtonProps = {
+  disabledReason?: string;
+};
+
+export function MissionDetailsSubmitButton({
+  disabledReason,
+}: MissionDetailsSubmitButtonProps) {
   const { pending } = useFormStatus();
+  const isDisabled = pending || Boolean(disabledReason);
+
   return (
-    <Button type="submit" disabled={pending} className="min-w-28">
-      {pending ? "Saving..." : "Save Details"}
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className="w-fit">
+            <Button type="submit" disabled={isDisabled} className="min-w-28">
+              {pending ? "Saving..." : "Save Details"}
+            </Button>
+          </span>
+        </TooltipTrigger>
+        {disabledReason && <TooltipContent>{disabledReason}</TooltipContent>}
+      </Tooltip>
+    </TooltipProvider>
   );
 }
