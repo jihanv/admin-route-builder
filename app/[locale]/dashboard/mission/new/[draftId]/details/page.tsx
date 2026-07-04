@@ -56,6 +56,8 @@ export default async function MissionDetailsPage({
   const draftStartDate = draft?.startDate ?? "";
   const draftEndDate = draft?.endDate ?? "";
   const draftGoalDistanceMeters = draft?.goalDistanceMeters ?? 0;
+  const detailsSavedAt = draft?.detailsSavedAt ?? "";
+  const canContinueToMilestones = canEditDraft && Boolean(detailsSavedAt);
 
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
@@ -112,6 +114,17 @@ export default async function MissionDetailsPage({
           <MissionDetailsSubmitButton />
         </fieldset>
       </form>
+      <div className="flex justify-end">
+        {canContinueToMilestones ? (
+          <Button asChild>
+            <Link href={`/dashboard/mission/new/${draftId}/milestones`}>
+              Next: Add milestones
+            </Link>
+          </Button>
+        ) : (
+          <Button disabled>Next: Add milestones</Button>
+        )}
+      </div>
       <p className="text-sm text-muted-foreground">Draft ID: {draftId}</p>
     </section>
   );
