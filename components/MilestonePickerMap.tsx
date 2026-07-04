@@ -83,6 +83,15 @@ export function MilestonePickerMap({
       ].sort((a, b) => a.routePathIndex - b.routePathIndex),
     );
   };
+
+  const getDistanceMetersToRoutePathIndex = (routePathIndex: number) => {
+    if (!spherical) return 0;
+
+    return Math.round(
+      spherical.computeLength(displayRoutePath.slice(0, routePathIndex + 1)),
+    );
+  };
+
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [spherical, setSpherical] = useState<
     google.maps.GeometryLibrary["spherical"] | null
