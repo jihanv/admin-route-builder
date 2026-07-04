@@ -84,6 +84,22 @@ export function MilestonePickerMap({
     );
   };
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
+  const [spherical, setSpherical] = useState<
+    google.maps.GeometryLibrary["spherical"] | null
+  >(null);
+  useEffect(() => {
+    if (!isMapsApiLoaded) return;
+
+    async function loadGeometryLibrary() {
+      const { spherical } = (await google.maps.importLibrary(
+        "geometry",
+      )) as google.maps.GeometryLibrary;
+
+      setSpherical(spherical);
+    }
+
+    void loadGeometryLibrary();
+  }, [isMapsApiLoaded]);
   useEffect(() => {
     if (!isMapsApiLoaded || !snapToRoads || routePath.length < 2) {
       return;
