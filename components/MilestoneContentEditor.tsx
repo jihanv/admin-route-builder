@@ -18,6 +18,14 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
+  const [imageUrlsByMilestoneId] = useState<Record<string, string>>(() =>
+    Object.fromEntries(
+      milestones.map((milestone) => [
+        milestone.id,
+        milestone.imageUrls[0] ?? "",
+      ]),
+    ),
+  );
   const handleSaveMilestoneContent: ComponentProps<"form">["onSubmit"] = async (
     event,
   ) => {
@@ -25,13 +33,18 @@ export function MilestoneContentEditor({
     setIsSaving(true);
 
     const formData = new FormData(event.currentTarget);
-    const nextMilestones = milestones.map((milestone) => ({
-      ...milestone,
-      title: String(formData.get(`title-${milestone.id}`) ?? "").trim(),
-      description: String(
-        formData.get(`description-${milestone.id}`) ?? "",
-      ).trim(),
-    }));
+    const nextMilestones = milestones.map((milestone) => {
+      const imageUrl = imageUrlsByMilestoneId[milestone.id]?.trim();
+
+      return {
+        ...milestone,
+        title: String(formData.get(`title-${milestone.id}`) ?? "").trim(),
+        description: String(
+          formData.get(`description-${milestone.id}`) ?? "",
+        ).trim(),
+        imageUrls: imageUrl ? [imageUrl] : [],
+      };
+    });
 
     try {
       const response = await saveRouteDraft({
