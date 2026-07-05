@@ -5,7 +5,7 @@ import type { MissionMilestone } from "@/types/routeTypes";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { saveRouteDraft } from "@/lib/routeDraftApi";
+import { saveRouteDraft, uploadMilestoneImage } from "@/lib/routeDraftApi";
 import { toast } from "sonner";
 
 type MilestoneContentEditorProps = {
@@ -71,20 +71,44 @@ export function MilestoneContentEditor({
     setIsSaving(true);
 
     const formData = new FormData(event.currentTarget);
-    const nextMilestones = milestones.map((milestone) => {
-      const imageUrl = imageUrlsByMilestoneId[milestone.id]?.trim();
-
-      return {
-        ...milestone,
-        title: String(formData.get(`title-${milestone.id}`) ?? "").trim(),
-        description: String(
-          formData.get(`description-${milestone.id}`) ?? "",
-        ).trim(),
-        imageUrls: imageUrl ? [imageUrl] : [],
-      };
-    });
 
     try {
+      const uploadedImageUrlsByMilestoneId = { ...imageUrlsByMilestoneId };
+
+      for (const milestone of milestones) {
+        const imageFile = imageFilesByMilestoneId[milestone.id];
+
+        if (!imageFile) continue;
+
+        const uploadResponse = await uploadMilestoneImage(draftId, imageFile);
+        const uploadResult = (await uploadResponse.json()) as {
+          imageUrl?: string;
+          error?: string;
+        };
+
+        if (!uploadResponse.ok || !uploadResult.imageUrl) {
+          toast.error(
+            uploadResult.error ?? "Could not upload milestone image.",
+          );
+          return;
+        }
+
+        uploadedImageUrlsByMilestoneId[milestone.id] = uploadResult.imageUrl;
+      }
+
+      const nextMilestones = milestones.map((milestone) => {
+        const imageUrl = uploadedImageUrlsByMilestoneId[milestone.id]?.trim();
+
+        return {
+          ...milestone,
+          title: String(formData.get(`title-${milestone.id}`) ?? "").trim(),
+          description: String(
+            formData.get(`description-${milestone.id}`) ?? "",
+          ).trim(),
+          imageUrls: imageUrl ? [imageUrl] : [],
+        };
+      });
+
       const response = await saveRouteDraft({
         id: draftId,
         milestones: nextMilestones,
@@ -95,6 +119,8 @@ export function MilestoneContentEditor({
         return;
       }
 
+      setImageUrlsByMilestoneId(uploadedImageUrlsByMilestoneId);
+      setImageFilesByMilestoneId({});
       toast.success("Milestone content saved.");
     } catch (error) {
       console.error("Save milestone content failed:", error);
