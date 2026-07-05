@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { saveRouteDraft, uploadMilestoneImage } from "@/lib/routeDraftApi";
 import { toast } from "sonner";
+import Image from "next/image";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -37,10 +38,10 @@ export function MilestoneContentEditor({
   const previewUrlsRef = useRef<string[]>([]);
 
   useEffect(() => {
+    const previewUrls = previewUrlsRef.current;
+
     return () => {
-      previewUrlsRef.current.forEach((previewUrl) =>
-        URL.revokeObjectURL(previewUrl),
-      );
+      previewUrls.forEach((previewUrl) => URL.revokeObjectURL(previewUrl));
     };
   }, []);
 
@@ -172,12 +173,21 @@ export function MilestoneContentEditor({
                 htmlFor={`imageFile-${milestone.id}`}
                 className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
               >
-                {imagePreviewUrlsByMilestoneId[milestone.id] ? (
-                  <img
-                    src={imagePreviewUrlsByMilestoneId[milestone.id]}
-                    alt={`Preview for milestone ${String.fromCharCode(65 + index)}`}
-                    className="max-h-48 w-full rounded-md object-cover"
-                  />
+                {imagePreviewUrlsByMilestoneId[milestone.id] ||
+                imageUrlsByMilestoneId[milestone.id] ? (
+                  <div className="relative h-48 w-full overflow-hidden rounded-md">
+                    <Image
+                      src={
+                        imagePreviewUrlsByMilestoneId[milestone.id] ||
+                        imageUrlsByMilestoneId[milestone.id]
+                      }
+                      alt={`Preview for milestone ${String.fromCharCode(65 + index)}`}
+                      fill
+                      sizes="20rem"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
                 ) : (
                   <>
                     <span className="font-medium">Choose an image</span>
