@@ -2,6 +2,8 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MilestoneContentEditor } from "@/components/MilestoneContentEditor";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function MilestoneContentPage({
   params,
@@ -42,7 +44,12 @@ export default async function MilestoneContentPage({
         This draft has {milestones.length} milestone positions ready for
         content.
       </p>
-      <MilestoneContentEditor milestones={milestones} />
+      <Button asChild>
+        <Link href={`/dashboard/mission/new/${draftId}/milestones`}>
+          Back to milestone positions
+        </Link>
+      </Button>
+      <MilestoneContentEditor draftId={draftId} milestones={milestones} />
     </section>
   );
 }
