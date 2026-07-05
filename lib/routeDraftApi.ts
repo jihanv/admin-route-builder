@@ -21,3 +21,14 @@ export async function saveRouteDraft(draft: SaveRouteDraftInput) {
     body: JSON.stringify(draft),
   });
 }
+
+export async function uploadMilestoneImage(draftId: string, imageFile: File) {
+  const formData = new FormData();
+
+  formData.append("imageFile", imageFile);
+
+  return fetch(`/api/route-drafts/${draftId}/milestone-images`, {
+    method: "POST",
+    body: formData,
+  });
+}
