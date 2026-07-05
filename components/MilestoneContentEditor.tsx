@@ -80,29 +80,33 @@ export function MilestoneContentEditor({
           <p className="text-sm text-muted-foreground">
             {milestone.distanceMeters} meters from start
           </p>
-          <div className="mt-3 space-y-1">
-            <label className="text-sm font-medium">Title</label>
-            <Input
-              name={`title-${milestone.id}`}
-              defaultValue={milestone.title}
-              placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
-            />
-          </div>
-          <div className="mt-3 space-y-1">
-            <label className="text-sm font-medium">Description</label>
-            <Textarea
-              name={`description-${milestone.id}`}
-              defaultValue={milestone.description}
-              placeholder="Write the message users will see when they reach this milestone."
-            />
-          </div>
-          <div className="mt-3 space-y-1">
-            <label className="text-sm font-medium">Image URL</label>
-            <div className="mt-3 space-y-2">
+          <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+            <div className="flex h-full flex-col gap-3">
+              <div className="space-y-1">
+                <label className="text-sm font-medium">Title</label>
+                <Input
+                  name={`title-${milestone.id}`}
+                  defaultValue={milestone.title}
+                  placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
+                />
+              </div>
+
+              <div className="flex flex-1 flex-col gap-1">
+                <label className="text-sm font-medium">Description</label>
+                <Textarea
+                  className="min-h-32 flex-1"
+                  name={`description-${milestone.id}`}
+                  defaultValue={milestone.description}
+                  placeholder="Write the message users will see when they reach this milestone."
+                />
+              </div>
+            </div>
+
+            <div className="flex h-full flex-col gap-2">
               <label className="text-sm font-medium">Milestone image</label>
               <label
                 htmlFor={`imageFile-${milestone.id}`}
-                className="flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
+                className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
               >
                 <span className="font-medium">Choose an image</span>
                 <span className="mt-1 text-sm text-muted-foreground">
