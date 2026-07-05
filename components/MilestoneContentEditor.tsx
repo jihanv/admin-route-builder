@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentProps } from "react";
+import { useEffect, useRef, useState, type ComponentProps } from "react";
 import type { MissionMilestone } from "@/types/routeTypes";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,7 +18,9 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
-  const [imageUrlsByMilestoneId] = useState<Record<string, string>>(() =>
+  const [imageUrlsByMilestoneId, setImageUrlsByMilestoneId] = useState<
+    Record<string, string>
+  >(() =>
     Object.fromEntries(
       milestones.map((milestone) => [
         milestone.id,
@@ -26,6 +28,42 @@ export function MilestoneContentEditor({
       ]),
     ),
   );
+  const [imageFilesByMilestoneId, setImageFilesByMilestoneId] = useState<
+    Record<string, File>
+  >({});
+
+  const [imagePreviewUrlsByMilestoneId, setImagePreviewUrlsByMilestoneId] =
+    useState<Record<string, string>>({});
+  const previewUrlsRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    return () => {
+      previewUrlsRef.current.forEach((previewUrl) =>
+        URL.revokeObjectURL(previewUrl),
+      );
+    };
+  }, []);
+
+  const handleMilestoneImageChange = (
+    milestoneId: string,
+    imageFile?: File,
+  ) => {
+    if (!imageFile) return;
+
+    const previewUrl = URL.createObjectURL(imageFile);
+    previewUrlsRef.current.push(previewUrl);
+
+    setImageFilesByMilestoneId((currentFiles) => ({
+      ...currentFiles,
+      [milestoneId]: imageFile,
+    }));
+
+    setImagePreviewUrlsByMilestoneId((currentPreviewUrls) => ({
+      ...currentPreviewUrls,
+      [milestoneId]: previewUrl,
+    }));
+  };
+
   const handleSaveMilestoneContent: ComponentProps<"form">["onSubmit"] = async (
     event,
   ) => {
@@ -108,10 +146,20 @@ export function MilestoneContentEditor({
                 htmlFor={`imageFile-${milestone.id}`}
                 className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
               >
-                <span className="font-medium">Choose an image</span>
-                <span className="mt-1 text-sm text-muted-foreground">
-                  PNG or JPG. Upload saving will be added later.
-                </span>
+                {imagePreviewUrlsByMilestoneId[milestone.id] ? (
+                  <img
+                    src={imagePreviewUrlsByMilestoneId[milestone.id]}
+                    alt={`Preview for milestone ${String.fromCharCode(65 + index)}`}
+                    className="max-h-48 w-full rounded-md object-cover"
+                  />
+                ) : (
+                  <>
+                    <span className="font-medium">Choose an image</span>
+                    <span className="mt-1 text-sm text-muted-foreground">
+                      PNG or JPG. Upload happens when you save.
+                    </span>
+                  </>
+                )}
               </label>
               <Input
                 id={`imageFile-${milestone.id}`}
@@ -119,6 +167,12 @@ export function MilestoneContentEditor({
                 type="file"
                 accept="image/*"
                 className="sr-only"
+                onChange={(event) =>
+                  handleMilestoneImageChange(
+                    milestone.id,
+                    event.target.files?.[0],
+                  )
+                }
               />
             </div>
           </div>
