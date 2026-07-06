@@ -46,6 +46,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid route draft" }, { status: 400 });
 
   const now = new Date().toISOString();
+  const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
 
   const draftRef = await adminDb.collection("routeDrafts").add({
     title: parseResult.data.title ?? "Untitled Route",
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
     createdByAdminId: userId,
     createdAt: now,
     updatedAt: now,
+    expiresAt,
     status: "draft",
   });
 
