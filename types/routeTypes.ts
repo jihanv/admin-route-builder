@@ -3,6 +3,12 @@ export type RoutePoint = {
   longitude: number;
 };
 
+export type RouteBuilderState = {
+  routePoints: RoutePoint[];
+  goalDistanceMeters: number;
+  snapToRoads: boolean;
+};
+
 export type AdminMissionRoute = {
   id: string;
   title: string;
