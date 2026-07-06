@@ -210,6 +210,13 @@ export function MilestoneContentEditor({
                   )
                 }
               />
+              {imagePreviewUrlsByMilestoneId[milestone.id] ? (
+                <p className="text-sm text-muted-foreground">
+                  New image selected. It will upload when you save.
+                </p>
+              ) : imageUrlsByMilestoneId[milestone.id] ? (
+                <p className="text-sm text-muted-foreground">Saved image</p>
+              ) : null}
             </div>
           </div>
         </div>
