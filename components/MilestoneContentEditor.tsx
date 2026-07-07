@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import { saveRouteDraft, uploadMilestoneImage } from "@/lib/routeDraftApi";
 import { toast } from "sonner";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -19,6 +25,16 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
+  const [titlesByMilestoneId, setTitlesByMilestoneId] = useState<
+    Record<string, string>
+  >(() =>
+    Object.fromEntries(
+      milestones.map((milestone) => [milestone.id, milestone.title]),
+    ),
+  );
+  const hasEmptyMilestoneTitle = Object.values(titlesByMilestoneId).some(
+    (title) => !title.trim(),
+  );
   const [imageUrlsByMilestoneId, setImageUrlsByMilestoneId] = useState<
     Record<string, string>
   >(() =>
@@ -152,8 +168,15 @@ export function MilestoneContentEditor({
                 <label className="text-sm font-medium">Title</label>
                 <Input
                   name={`title-${milestone.id}`}
-                  defaultValue={milestone.title}
+                  value={titlesByMilestoneId[milestone.id] ?? ""}
+                  onChange={(event) =>
+                    setTitlesByMilestoneId((currentTitles) => ({
+                      ...currentTitles,
+                      [milestone.id]: event.target.value,
+                    }))
+                  }
                   placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
+                  required
                 />
               </div>
 
@@ -222,9 +245,27 @@ export function MilestoneContentEditor({
           </div>
         </div>
       ))}
-      <Button type="submit" disabled={isSaving}>
-        {isSaving ? "Saving milestone content..." : "Save milestone content"}
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="inline-block">
+              <Button
+                type="submit"
+                disabled={isSaving || hasEmptyMilestoneTitle}
+              >
+                {isSaving
+                  ? "Saving milestone content..."
+                  : "Save milestone content"}
+              </Button>
+            </span>
+          </TooltipTrigger>
+          {hasEmptyMilestoneTitle ? (
+            <TooltipContent>
+              Fill in every milestone title before saving.
+            </TooltipContent>
+          ) : null}
+        </Tooltip>
+      </TooltipProvider>
     </form>
   );
 }

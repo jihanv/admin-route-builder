@@ -43,7 +43,6 @@ export function AdminSidebar() {
                   label: "Current Missions",
                   href: "/dashboard/mission/current",
                 },
-                { label: "Draft Missions", href: "/dashboard/mission/drafts" },
               ]}
             />
             <AdminSidebarMenuGroup
