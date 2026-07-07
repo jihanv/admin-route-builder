@@ -183,6 +183,7 @@ export function MilestoneContentEditor({
                   }
                   placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
                   aria-invalid={!titlesByMilestoneId[milestone.id]?.trim()}
+                  aria-describedby={`title-status-${milestone.id}`}
                 />
                 <p
                   className={`h-5 text-sm ${
