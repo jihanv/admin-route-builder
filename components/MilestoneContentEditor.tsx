@@ -184,6 +184,17 @@ export function MilestoneContentEditor({
                   placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
                   required
                 />
+                <p
+                  className={`h-5 text-sm ${
+                    titlesByMilestoneId[milestone.id]?.trim()
+                      ? "text-green-600"
+                      : "text-destructive"
+                  }`}
+                >
+                  {titlesByMilestoneId[milestone.id]?.trim()
+                    ? "✓ Title added."
+                    : "Title is required."}
+                </p>
               </div>
 
               <div className="flex flex-1 flex-col gap-1">
