@@ -37,9 +37,11 @@ export async function POST(
     return NextResponse.json({ error: "Missing image file" }, { status: 400 });
   }
 
-  if (!imageFile.type.startsWith("image/")) {
+  const allowedImageTypes = ["image/png", "image/jpeg", "image/webp"];
+
+  if (!allowedImageTypes.includes(imageFile.type)) {
     return NextResponse.json(
-      { error: "File must be an image" },
+      { error: "File must be a PNG, JPG, or WebP image" },
       { status: 400 },
     );
   }
