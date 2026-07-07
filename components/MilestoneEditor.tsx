@@ -98,7 +98,7 @@ export function MilestoneEditor({
 
       <aside className="flex h-100 flex-col gap-4 overflow-hidden rounded-xl border bg-card p-4 shadow-sm">
         <p className="text-sm text-muted-foreground">
-          Selected new milestone points: {selectedPositions.length}
+          Selected milestone points: {selectedPositions.length}
         </p>
         <Button
           onClick={() => setSelectedPositions([])}

@@ -38,12 +38,15 @@ export type RouteDraft = {
   title?: string;
   description?: string;
   startDate?: string;
+  endDate?: string;
   goalDistanceMeters?: number;
   routePoints?: RoutePoint[];
   milestones?: MissionMilestone[];
   createdByAdminId?: string;
   createdAt?: string;
+  detailsSavedAt?: string;
   updatedAt?: string;
+  expiresAt?: Date;
   status?: "draft";
   snapToRoads?: boolean;
 };
