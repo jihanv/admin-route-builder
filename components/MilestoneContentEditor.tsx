@@ -85,6 +85,12 @@ export function MilestoneContentEditor({
     event,
   ) => {
     event.preventDefault();
+
+    if (hasEmptyMilestoneTitle) {
+      toast.error("Fill in every milestone title before saving.");
+      return;
+    }
+
     setIsSaving(true);
 
     const formData = new FormData(event.currentTarget);
