@@ -221,7 +221,12 @@ export function MilestoneContentEditor({
             </div>
 
             <div className="flex h-full flex-col gap-2">
-              <label className="text-sm font-medium">Milestone image</label>
+              <label
+                htmlFor={`imageFile-${milestone.id}`}
+                className="text-sm font-medium"
+              >
+                Milestone image
+              </label>
               <label
                 htmlFor={`imageFile-${milestone.id}`}
                 className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
@@ -254,7 +259,7 @@ export function MilestoneContentEditor({
                 id={`imageFile-${milestone.id}`}
                 name={`imageFile-${milestone.id}`}
                 type="file"
-                accept="image/*"
+                accept="image/png,image/jpeg,image/webp"
                 className="sr-only"
                 onChange={(event) =>
                   handleMilestoneImageChange(
