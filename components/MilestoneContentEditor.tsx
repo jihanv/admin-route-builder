@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { resizeMilestoneImageFile } from "@/lib/milestoneImageResize";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -61,13 +62,14 @@ export function MilestoneContentEditor({
     };
   }, []);
 
-  const handleMilestoneImageChange = (
+  const handleMilestoneImageChange = async (
     milestoneId: string,
     imageFile?: File,
   ) => {
     if (!imageFile) return;
 
-    const previewUrl = URL.createObjectURL(imageFile);
+    const resizedImageFile = await resizeMilestoneImageFile(imageFile);
+    const previewUrl = URL.createObjectURL(resizedImageFile);
     previewUrlsRef.current.push(previewUrl);
 
     setImageFilesByMilestoneId((currentFiles) => ({
