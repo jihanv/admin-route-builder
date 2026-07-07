@@ -29,6 +29,12 @@ export type SelectedMilestonePosition = RoutePoint & {
   distanceMeters: number;
 };
 
+type MapPoint = { lat: number; lng: number };
+
+function getSquaredDistance(pointA: MapPoint, pointB: MapPoint) {
+  return (pointA.lat - pointB.lat) ** 2 + (pointA.lng - pointB.lng) ** 2;
+}
+
 export function MilestonePickerMap({
   goalDistanceMeters,
   routePoints,
@@ -63,12 +69,8 @@ export function MilestonePickerMap({
     const clickedPoint = { lat: position.lat, lng: position.lng };
     const closestRoutePoint = displayRoutePath.reduce(
       (closest, point, index) => {
-        const closestDistance =
-          (closest.point.lat - clickedPoint.lat) ** 2 +
-          (closest.point.lng - clickedPoint.lng) ** 2;
-        const pointDistance =
-          (point.lat - clickedPoint.lat) ** 2 +
-          (point.lng - clickedPoint.lng) ** 2;
+        const closestDistance = getSquaredDistance(closest.point, clickedPoint);
+        const pointDistance = getSquaredDistance(point, clickedPoint);
         return pointDistance < closestDistance ? { point, index } : closest;
       },
       { point: displayRoutePath[0], index: 0 },
