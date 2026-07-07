@@ -132,7 +132,7 @@ export function MilestonePickerMap({
             closestRoutePoint.routePathIndex,
           ),
         },
-      ].sort((a, b) => a.routePathIndex - b.routePathIndex),
+      ].sort((a, b) => a.distanceMeters - b.distanceMeters),
     );
   };
   const getVisibleRouteDistanceMeters = () => {
