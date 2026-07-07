@@ -277,6 +277,7 @@ export function RouteBuilderMap({
   };
 
   const handleSnapToRoadsChange = async (checked: boolean) => {
+    markRouteUnsaved();
     setSnapToRoads(checked);
 
     if (!checked) {
