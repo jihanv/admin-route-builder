@@ -122,6 +122,7 @@ export function MilestoneContentEditor({
 
       setImageUrlsByMilestoneId(uploadedImageUrlsByMilestoneId);
       setImageFilesByMilestoneId({});
+      setImagePreviewUrlsByMilestoneId({});
       toast.success("Milestone content saved.");
     } catch (error) {
       console.error("Save milestone content failed:", error);
