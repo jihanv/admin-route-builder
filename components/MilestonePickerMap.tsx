@@ -60,6 +60,8 @@ function getClosestPointOnSegment(
   };
 }
 
+getClosestPointOnSegment;
+
 export function MilestonePickerMap({
   goalDistanceMeters,
   routePoints,
@@ -125,9 +127,20 @@ export function MilestonePickerMap({
   const getDistanceMetersToRoutePathIndex = (routePathIndex: number) => {
     if (!spherical) return 0;
 
-    const distanceMeters = Math.round(
-      spherical.computeLength(displayRoutePath.slice(0, routePathIndex + 1)),
+    const segmentStartIndex = Math.floor(routePathIndex);
+    const segmentProgress = routePathIndex - segmentStartIndex;
+    const segmentStart = displayRoutePath[segmentStartIndex];
+    const segmentEnd = displayRoutePath[segmentStartIndex + 1];
+
+    const distanceBeforeSegment = spherical.computeLength(
+      displayRoutePath.slice(0, segmentStartIndex + 1),
     );
+    const segmentDistance = segmentEnd
+      ? spherical.computeDistanceBetween(segmentStart, segmentEnd) *
+        segmentProgress
+      : 0;
+    const distanceMeters = Math.round(distanceBeforeSegment + segmentDistance);
+
     const visibleRouteDistanceMeters = getVisibleRouteDistanceMeters();
 
     if (goalDistanceMeters <= 0 || visibleRouteDistanceMeters <= 0) {
