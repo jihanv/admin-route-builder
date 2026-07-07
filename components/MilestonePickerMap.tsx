@@ -35,6 +35,31 @@ function getSquaredDistance(pointA: MapPoint, pointB: MapPoint) {
   return (pointA.lat - pointB.lat) ** 2 + (pointA.lng - pointB.lng) ** 2;
 }
 
+function getClosestPointOnSegment(
+  clickedPoint: MapPoint,
+  segmentStart: MapPoint,
+  segmentEnd: MapPoint,
+) {
+  const segmentLat = segmentEnd.lat - segmentStart.lat;
+  const segmentLng = segmentEnd.lng - segmentStart.lng;
+  const segmentLengthSquared = segmentLat ** 2 + segmentLng ** 2;
+
+  const progress =
+    segmentLengthSquared === 0
+      ? 0
+      : ((clickedPoint.lat - segmentStart.lat) * segmentLat +
+          (clickedPoint.lng - segmentStart.lng) * segmentLng) /
+        segmentLengthSquared;
+
+  const clampedProgress = Math.max(0, Math.min(1, progress));
+
+  return {
+    lat: segmentStart.lat + clampedProgress * segmentLat,
+    lng: segmentStart.lng + clampedProgress * segmentLng,
+    progress: clampedProgress,
+  };
+}
+
 export function MilestonePickerMap({
   goalDistanceMeters,
   routePoints,
