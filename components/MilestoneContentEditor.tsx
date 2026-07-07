@@ -171,7 +171,12 @@ export function MilestoneContentEditor({
           <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
             <div className="flex h-full flex-col gap-3">
               <div className="space-y-1">
-                <label className="text-sm font-medium">Title</label>
+                <label
+                  htmlFor={`title-${milestone.id}`}
+                  className="text-sm font-medium"
+                >
+                  Title
+                </label>
                 <Input
                   name={`title-${milestone.id}`}
                   value={titlesByMilestoneId[milestone.id] ?? ""}
@@ -186,6 +191,7 @@ export function MilestoneContentEditor({
                   aria-describedby={`title-status-${milestone.id}`}
                 />
                 <p
+                  id={`title-status-${milestone.id}`}
                   className={`h-5 text-sm ${
                     titlesByMilestoneId[milestone.id]?.trim()
                       ? "text-green-600"
@@ -199,7 +205,12 @@ export function MilestoneContentEditor({
               </div>
 
               <div className="flex flex-1 flex-col gap-1">
-                <label className="text-sm font-medium">Description</label>
+                <label
+                  className="text-sm font-medium"
+                  htmlFor={`description-${milestone.id}`}
+                >
+                  Description
+                </label>
                 <Textarea
                   className="min-h-32 flex-1"
                   name={`description-${milestone.id}`}
