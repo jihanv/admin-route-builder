@@ -10,13 +10,12 @@ import {
   useMap,
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
+import type { RoutePoint } from "@/types/routeTypes";
 
 type MilestonePickerMapProps = {
   routePoints: RoutePoint[];
   goalDistanceMeters: number;
   snapToRoads: boolean;
-  milestones: MissionMilestone[];
   selectedPositions?: SelectedMilestonePosition[];
   onSelectedPositionsChange?: React.Dispatch<
     React.SetStateAction<SelectedMilestonePosition[]>
@@ -87,7 +86,6 @@ export function MilestonePickerMap({
   goalDistanceMeters,
   routePoints,
   snapToRoads,
-  milestones,
   selectedPositions,
   onSelectedPositionsChange,
 }: MilestonePickerMapProps) {

@@ -90,7 +90,6 @@ export function MilestoneEditor({
           goalDistanceMeters={goalDistanceMeters}
           routePoints={routePoints}
           snapToRoads={snapToRoads}
-          milestones={milestones}
           selectedPositions={selectedPositions}
           onSelectedPositionsChange={setSelectedPositions}
         />
