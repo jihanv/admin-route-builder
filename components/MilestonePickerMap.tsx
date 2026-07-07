@@ -60,7 +60,28 @@ function getClosestPointOnSegment(
   };
 }
 
-getClosestPointOnSegment;
+function getClosestPointOnRoute(clickedPoint: MapPoint, routePath: MapPoint[]) {
+  return routePath.slice(0, -1).reduce(
+    (closest, segmentStart, index) => {
+      const segmentEnd = routePath[index + 1];
+      const point = getClosestPointOnSegment(
+        clickedPoint,
+        segmentStart,
+        segmentEnd,
+      );
+      const distance = getSquaredDistance(point, clickedPoint);
+
+      return distance < closest.distance
+        ? { point, routePathIndex: index + point.progress, distance }
+        : closest;
+    },
+    {
+      point: routePath[0],
+      routePathIndex: 0,
+      distance: getSquaredDistance(routePath[0], clickedPoint),
+    },
+  );
+}
 
 export function MilestonePickerMap({
   goalDistanceMeters,
@@ -94,13 +115,9 @@ export function MilestonePickerMap({
     if (!position || displayRoutePath.length === 0 || !spherical) return;
 
     const clickedPoint = { lat: position.lat, lng: position.lng };
-    const closestRoutePoint = displayRoutePath.reduce(
-      (closest, point, index) => {
-        const closestDistance = getSquaredDistance(closest.point, clickedPoint);
-        const pointDistance = getSquaredDistance(point, clickedPoint);
-        return pointDistance < closestDistance ? { point, index } : closest;
-      },
-      { point: displayRoutePath[0], index: 0 },
+    const closestRoutePoint = getClosestPointOnRoute(
+      clickedPoint,
+      displayRoutePath,
     );
 
     updateSelectedPositions((currentPositions) =>
@@ -109,10 +126,10 @@ export function MilestonePickerMap({
         {
           latitude: closestRoutePoint.point.lat,
           longitude: closestRoutePoint.point.lng,
-          routePathIndex: closestRoutePoint.index,
+          routePathIndex: closestRoutePoint.routePathIndex,
           temporaryId: crypto.randomUUID(),
           distanceMeters: getDistanceMetersToRoutePathIndex(
-            closestRoutePoint.index,
+            closestRoutePoint.routePathIndex,
           ),
         },
       ].sort((a, b) => a.routePathIndex - b.routePathIndex),
