@@ -74,7 +74,7 @@ export function MilestoneContentEditor({
 
     setImageFilesByMilestoneId((currentFiles) => ({
       ...currentFiles,
-      [milestoneId]: imageFile,
+      [milestoneId]: resizedImageFile,
     }));
 
     setImagePreviewUrlsByMilestoneId((currentPreviewUrls) => ({
