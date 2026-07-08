@@ -15,6 +15,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { resizeMilestoneImageFile } from "@/lib/milestoneImageResize";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -161,151 +167,168 @@ export function MilestoneContentEditor({
   };
 
   return (
-    <form
-      id={`milestone-content-form-${draftId}`}
-      className="space-y-3"
-      onSubmit={handleSaveMilestoneContent}
-    >
-      {milestones.map((milestone, index) => (
-        <div key={milestone.id} className="rounded-lg border bg-card p-4">
-          <h2 className="font-semibold">
-            Milestone {String.fromCharCode(65 + index)}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {milestone.distanceMeters} meters from start
-          </p>
-          <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
-            <div className="flex h-full flex-col gap-3">
-              <div className="space-y-1">
+    <>
+      <Dialog open={isSaving}>
+        <DialogContent className="text-center">
+          <div
+            role="status"
+            aria-label="Saving"
+            className="mx-auto size-8 animate-spin rounded-full border-4 border-muted border-t-primary"
+          />
+          <DialogTitle>Saving milestone content</DialogTitle>
+          <DialogDescription>
+            Please do not close this window while images and milestone content
+            are being saved.
+          </DialogDescription>
+        </DialogContent>
+      </Dialog>
+
+      <form
+        id={`milestone-content-form-${draftId}`}
+        className="space-y-3"
+        onSubmit={handleSaveMilestoneContent}
+      >
+        {milestones.map((milestone, index) => (
+          <div key={milestone.id} className="rounded-lg border bg-card p-4">
+            <h2 className="font-semibold">
+              Milestone {String.fromCharCode(65 + index)}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {milestone.distanceMeters} meters from start
+            </p>
+            <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+              <div className="flex h-full flex-col gap-3">
+                <div className="space-y-1">
+                  <label
+                    htmlFor={`title-${milestone.id}`}
+                    className="text-sm font-medium"
+                  >
+                    Title
+                  </label>
+                  <Input
+                    name={`title-${milestone.id}`}
+                    value={titlesByMilestoneId[milestone.id] ?? ""}
+                    onChange={(event) =>
+                      setTitlesByMilestoneId((currentTitles) => ({
+                        ...currentTitles,
+                        [milestone.id]: event.target.value,
+                      }))
+                    }
+                    placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
+                    aria-invalid={!titlesByMilestoneId[milestone.id]?.trim()}
+                    aria-describedby={`title-status-${milestone.id}`}
+                  />
+                  <p
+                    id={`title-status-${milestone.id}`}
+                    className={`h-5 text-sm ${
+                      titlesByMilestoneId[milestone.id]?.trim()
+                        ? "text-green-600"
+                        : "text-destructive"
+                    }`}
+                  >
+                    {titlesByMilestoneId[milestone.id]?.trim()
+                      ? "✓ Title added."
+                      : "Title is required."}
+                  </p>
+                </div>
+
+                <div className="flex flex-1 flex-col gap-1">
+                  <label
+                    className="text-sm font-medium"
+                    htmlFor={`description-${milestone.id}`}
+                  >
+                    Description
+                  </label>
+                  <Textarea
+                    className="min-h-32 flex-1"
+                    name={`description-${milestone.id}`}
+                    defaultValue={milestone.description}
+                    placeholder="Write the message users will see when they reach this milestone."
+                  />
+                </div>
+              </div>
+
+              <div className="flex h-full flex-col gap-2">
                 <label
-                  htmlFor={`title-${milestone.id}`}
+                  htmlFor={`imageFile-${milestone.id}`}
                   className="text-sm font-medium"
                 >
-                  Title
+                  Milestone image
+                </label>
+                <label
+                  htmlFor={`imageFile-${milestone.id}`}
+                  className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
+                >
+                  {imagePreviewUrlsByMilestoneId[milestone.id] ||
+                  imageUrlsByMilestoneId[milestone.id] ? (
+                    <div className="relative h-48 w-full overflow-hidden rounded-md">
+                      <Image
+                        src={
+                          imagePreviewUrlsByMilestoneId[milestone.id] ||
+                          imageUrlsByMilestoneId[milestone.id]
+                        }
+                        alt={`Preview for milestone ${String.fromCharCode(65 + index)}`}
+                        fill
+                        sizes="20rem"
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <span className="font-medium">Choose an image</span>
+                      <span className="mt-1 text-sm text-muted-foreground">
+                        PNG or JPG. Upload happens when you save.
+                      </span>
+                    </>
+                  )}
                 </label>
                 <Input
-                  name={`title-${milestone.id}`}
-                  value={titlesByMilestoneId[milestone.id] ?? ""}
+                  id={`imageFile-${milestone.id}`}
+                  name={`imageFile-${milestone.id}`}
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="sr-only"
                   onChange={(event) =>
-                    setTitlesByMilestoneId((currentTitles) => ({
-                      ...currentTitles,
-                      [milestone.id]: event.target.value,
-                    }))
+                    handleMilestoneImageChange(
+                      milestone.id,
+                      event.target.files?.[0],
+                    )
                   }
-                  placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
-                  aria-invalid={!titlesByMilestoneId[milestone.id]?.trim()}
-                  aria-describedby={`title-status-${milestone.id}`}
                 />
-                <p
-                  id={`title-status-${milestone.id}`}
-                  className={`h-5 text-sm ${
-                    titlesByMilestoneId[milestone.id]?.trim()
-                      ? "text-green-600"
-                      : "text-destructive"
-                  }`}
-                >
-                  {titlesByMilestoneId[milestone.id]?.trim()
-                    ? "✓ Title added."
-                    : "Title is required."}
-                </p>
+                {imagePreviewUrlsByMilestoneId[milestone.id] ? (
+                  <p className="text-sm text-muted-foreground">
+                    New image selected. It will upload when you save.
+                  </p>
+                ) : imageUrlsByMilestoneId[milestone.id] ? (
+                  <p className="text-sm text-muted-foreground">Saved image</p>
+                ) : null}
               </div>
-
-              <div className="flex flex-1 flex-col gap-1">
-                <label
-                  className="text-sm font-medium"
-                  htmlFor={`description-${milestone.id}`}
-                >
-                  Description
-                </label>
-                <Textarea
-                  className="min-h-32 flex-1"
-                  name={`description-${milestone.id}`}
-                  defaultValue={milestone.description}
-                  placeholder="Write the message users will see when they reach this milestone."
-                />
-              </div>
-            </div>
-
-            <div className="flex h-full flex-col gap-2">
-              <label
-                htmlFor={`imageFile-${milestone.id}`}
-                className="text-sm font-medium"
-              >
-                Milestone image
-              </label>
-              <label
-                htmlFor={`imageFile-${milestone.id}`}
-                className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed bg-background p-6 text-center hover:bg-muted/50"
-              >
-                {imagePreviewUrlsByMilestoneId[milestone.id] ||
-                imageUrlsByMilestoneId[milestone.id] ? (
-                  <div className="relative h-48 w-full overflow-hidden rounded-md">
-                    <Image
-                      src={
-                        imagePreviewUrlsByMilestoneId[milestone.id] ||
-                        imageUrlsByMilestoneId[milestone.id]
-                      }
-                      alt={`Preview for milestone ${String.fromCharCode(65 + index)}`}
-                      fill
-                      sizes="20rem"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <span className="font-medium">Choose an image</span>
-                    <span className="mt-1 text-sm text-muted-foreground">
-                      PNG or JPG. Upload happens when you save.
-                    </span>
-                  </>
-                )}
-              </label>
-              <Input
-                id={`imageFile-${milestone.id}`}
-                name={`imageFile-${milestone.id}`}
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-                className="sr-only"
-                onChange={(event) =>
-                  handleMilestoneImageChange(
-                    milestone.id,
-                    event.target.files?.[0],
-                  )
-                }
-              />
-              {imagePreviewUrlsByMilestoneId[milestone.id] ? (
-                <p className="text-sm text-muted-foreground">
-                  New image selected. It will upload when you save.
-                </p>
-              ) : imageUrlsByMilestoneId[milestone.id] ? (
-                <p className="text-sm text-muted-foreground">Saved image</p>
-              ) : null}
             </div>
           </div>
-        </div>
-      ))}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-block">
-              <Button
-                type="submit"
-                disabled={isSaving || hasEmptyMilestoneTitle}
-              >
-                {isSaving
-                  ? "Saving milestone content..."
-                  : "Save milestone content"}
-              </Button>
-            </span>
-          </TooltipTrigger>
-          {hasEmptyMilestoneTitle ? (
-            <TooltipContent>
-              Fill in every milestone title before saving.
-            </TooltipContent>
-          ) : null}
-        </Tooltip>
-      </TooltipProvider>
-    </form>
+        ))}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="inline-block">
+                <Button
+                  type="submit"
+                  disabled={isSaving || hasEmptyMilestoneTitle}
+                >
+                  {isSaving
+                    ? "Saving milestone content..."
+                    : "Save milestone content"}
+                </Button>
+              </span>
+            </TooltipTrigger>
+            {hasEmptyMilestoneTitle ? (
+              <TooltipContent>
+                Fill in every milestone title before saving.
+              </TooltipContent>
+            ) : null}
+          </Tooltip>
+        </TooltipProvider>
+      </form>
+    </>
   );
 }
