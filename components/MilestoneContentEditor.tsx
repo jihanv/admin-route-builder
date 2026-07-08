@@ -68,7 +68,16 @@ export function MilestoneContentEditor({
   ) => {
     if (!imageFile) return;
 
-    const resizedImageFile = await resizeMilestoneImageFile(imageFile);
+    let resizedImageFile: File;
+
+    try {
+      resizedImageFile = await resizeMilestoneImageFile(imageFile);
+    } catch (error) {
+      console.error("Resize milestone image failed:", error);
+      toast.error("Could not prepare milestone image.");
+      return;
+    }
+
     const previewUrl = URL.createObjectURL(resizedImageFile);
     previewUrlsRef.current.push(previewUrl);
 
