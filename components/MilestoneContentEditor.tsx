@@ -169,7 +169,12 @@ export function MilestoneContentEditor({
   return (
     <>
       <Dialog open={isSaving}>
-        <DialogContent className="text-center">
+        <DialogContent
+          className="text-center"
+          showCloseButton={false}
+          onEscapeKeyDown={(event) => event.preventDefault()}
+          onInteractOutside={(event) => event.preventDefault()}
+        >
           <div
             role="status"
             aria-label="Saving"
