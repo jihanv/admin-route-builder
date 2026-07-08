@@ -68,22 +68,13 @@ export function MilestoneContentEditor({
   ) => {
     if (!imageFile) return;
 
-    let resizedImageFile: File;
+    const previewUrl = URL.createObjectURL(imageFile);
 
-    try {
-      resizedImageFile = await resizeMilestoneImageFile(imageFile);
-    } catch (error) {
-      console.error("Resize milestone image failed:", error);
-      toast.error("Could not prepare milestone image.");
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(resizedImageFile);
     previewUrlsRef.current.push(previewUrl);
 
     setImageFilesByMilestoneId((currentFiles) => ({
       ...currentFiles,
-      [milestoneId]: resizedImageFile,
+      [milestoneId]: imageFile,
     }));
 
     setImagePreviewUrlsByMilestoneId((currentPreviewUrls) => ({
@@ -114,7 +105,11 @@ export function MilestoneContentEditor({
 
         if (!imageFile) continue;
 
-        const uploadResponse = await uploadMilestoneImage(draftId, imageFile);
+        const resizedImageFile = await resizeMilestoneImageFile(imageFile);
+        const uploadResponse = await uploadMilestoneImage(
+          draftId,
+          resizedImageFile,
+        );
         const uploadResult = (await uploadResponse.json()) as {
           imageUrl?: string;
           error?: string;
