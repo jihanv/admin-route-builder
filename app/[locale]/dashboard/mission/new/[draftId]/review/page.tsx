@@ -30,7 +30,14 @@ export default async function ReviewMissionPage({
   if (draft?.createdByAdminId !== userId) {
     return <div>Only the creator can review this mission draft.</div>;
   }
+  const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
+  const hasEmptyMilestoneTitle = milestones.some(
+    (milestone) => !String(milestone.title ?? "").trim(),
+  );
 
+  if (hasEmptyMilestoneTitle) {
+    return <div>All milestone titles must be filled before review.</div>;
+  }
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="review-publish" />
