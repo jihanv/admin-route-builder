@@ -21,6 +21,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -32,6 +33,8 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
+  const [hasSavedMilestoneContent, setHasSavedMilestoneContent] =
+    useState(false);
   const [titlesByMilestoneId, setTitlesByMilestoneId] = useState<
     Record<string, string>
   >(() =>
@@ -74,6 +77,7 @@ export function MilestoneContentEditor({
   ) => {
     if (!imageFile) return;
 
+    setHasSavedMilestoneContent(false);
     const previewUrl = URL.createObjectURL(imageFile);
 
     previewUrlsRef.current.push(previewUrl);
@@ -157,6 +161,7 @@ export function MilestoneContentEditor({
       setImageUrlsByMilestoneId(uploadedImageUrlsByMilestoneId);
       setImageFilesByMilestoneId({});
       setImagePreviewUrlsByMilestoneId({});
+      setHasSavedMilestoneContent(true);
       toast.success("Milestone content saved.");
     } catch (error) {
       console.error("Save milestone content failed:", error);
@@ -213,12 +218,13 @@ export function MilestoneContentEditor({
                   <Input
                     name={`title-${milestone.id}`}
                     value={titlesByMilestoneId[milestone.id] ?? ""}
-                    onChange={(event) =>
+                    onChange={(event) => {
+                      setHasSavedMilestoneContent(false);
                       setTitlesByMilestoneId((currentTitles) => ({
                         ...currentTitles,
                         [milestone.id]: event.target.value,
-                      }))
-                    }
+                      }));
+                    }}
                     placeholder={`Milestone ${String.fromCharCode(65 + index)} title`}
                     aria-invalid={!titlesByMilestoneId[milestone.id]?.trim()}
                     aria-describedby={`title-status-${milestone.id}`}
@@ -245,9 +251,11 @@ export function MilestoneContentEditor({
                     Description
                   </label>
                   <Textarea
+                    id={`description-${milestone.id}`}
                     className="min-h-32 flex-1"
                     name={`description-${milestone.id}`}
                     defaultValue={milestone.description}
+                    onChange={() => setHasSavedMilestoneContent(false)}
                     placeholder="Write the message users will see when they reach this milestone."
                   />
                 </div>
@@ -329,6 +337,30 @@ export function MilestoneContentEditor({
             {hasEmptyMilestoneTitle ? (
               <TooltipContent>
                 Fill in every milestone title before saving.
+              </TooltipContent>
+            ) : null}
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="inline-block">
+                {hasSavedMilestoneContent ? (
+                  <Button asChild>
+                    <Link href={`/dashboard/mission/new/${draftId}/review`}>
+                      Next: Review Mission
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button type="button" disabled>
+                    Next: Review Mission
+                  </Button>
+                )}
+              </span>
+            </TooltipTrigger>
+            {!hasSavedMilestoneContent ? (
+              <TooltipContent>
+                Save milestone content before continuing.
               </TooltipContent>
             ) : null}
           </Tooltip>
