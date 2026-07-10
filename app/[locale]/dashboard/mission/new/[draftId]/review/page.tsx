@@ -34,6 +34,11 @@ export default async function ReviewMissionPage({
     return <div>Only the creator can review this mission draft.</div>;
   }
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
+
+  if (milestones.length === 0) {
+    return <div>Add milestone positions before reviewing this mission.</div>;
+  }
+
   const hasEmptyMilestoneTitle = milestones.some(
     (milestone) => !String(milestone.title ?? "").trim(),
   );
