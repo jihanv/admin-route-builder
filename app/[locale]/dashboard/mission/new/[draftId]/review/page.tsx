@@ -166,6 +166,14 @@ export default async function ReviewMissionPage({
           </div>
         </div>
       </div>
+      <div className="rounded-lg border bg-muted/40 p-4">
+        <Button type="button" disabled>
+          Create Mission
+        </Button>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Final mission creation will be added later.
+        </p>
+      </div>
     </section>
   );
 }
