@@ -33,6 +33,20 @@ export default async function ReviewMissionPage({
   if (draft?.createdByAdminId !== userId) {
     return <div>Only the creator can review this mission draft.</div>;
   }
+
+  if (!draft?.detailsSavedAt) {
+    return <div>Save mission details before reviewing this mission.</div>;
+  }
+
+  const routePoints = Array.isArray(draft?.routePoints)
+    ? draft.routePoints
+    : [];
+
+  if (routePoints.length < 2) {
+    return (
+      <div>Add at least 2 route points before reviewing this mission.</div>
+    );
+  }
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
 
   if (milestones.length === 0) {
