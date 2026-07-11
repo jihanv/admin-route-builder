@@ -69,6 +69,16 @@ export function MilestoneContentEditor({
     Record<string, File>
   >({});
 
+  const [savedContent, setSavedContent] = useState(() => ({
+    titles: titlesByMilestoneId,
+    descriptions: descriptionsByMilestoneId,
+  }));
+  const hasUnsavedChanges =
+    milestones.some(
+      ({ id }) =>
+        titlesByMilestoneId[id] !== savedContent.titles[id] ||
+        descriptionsByMilestoneId[id] !== savedContent.descriptions[id],
+    ) || Object.keys(imageFilesByMilestoneId).length > 0;
   const [imagePreviewUrlsByMilestoneId, setImagePreviewUrlsByMilestoneId] =
     useState<Record<string, string>>({});
   const previewUrlsRef = useRef<string[]>([]);
@@ -165,6 +175,10 @@ export function MilestoneContentEditor({
       }
 
       setImageUrlsByMilestoneId(uploadedImageUrlsByMilestoneId);
+      setSavedContent({
+        titles: { ...titlesByMilestoneId },
+        descriptions: { ...descriptionsByMilestoneId },
+      });
       setImageFilesByMilestoneId({});
       setImagePreviewUrlsByMilestoneId({});
       setHasSavedMilestoneContent(true);
@@ -339,14 +353,12 @@ export function MilestoneContentEditor({
                 <Button
                   type="submit"
                   disabled={
-                    isSaving ||
-                    hasEmptyMilestoneTitle ||
-                    hasSavedMilestoneContent
+                    isSaving || hasEmptyMilestoneTitle || !hasUnsavedChanges
                   }
                 >
                   {isSaving
                     ? "Saving milestone content..."
-                    : hasSavedMilestoneContent
+                    : !hasUnsavedChanges
                       ? "Saved"
                       : "Save milestone content"}
                 </Button>
