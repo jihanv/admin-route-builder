@@ -12,6 +12,7 @@ export default async function ReviewMissionPage({
 }) {
   const { draftId } = await params;
   const { sessionClaims, userId } = await auth();
+
   const adminRole =
     (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
 
@@ -47,6 +48,7 @@ export default async function ReviewMissionPage({
       <div>Add at least 2 route points before reviewing this mission.</div>
     );
   }
+
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
 
   if (milestones.length === 0) {
@@ -60,13 +62,17 @@ export default async function ReviewMissionPage({
   if (hasEmptyMilestoneTitle) {
     return <div>All milestone titles must be filled before review.</div>;
   }
+
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="review-publish" />
+
       <h1 className="text-2xl font-semibold text-primary">Review Mission</h1>
+
       <p className="text-base text-muted-foreground">
         Review the mission draft before creating the final mission.
       </p>
+
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Mission details</h2>
 
@@ -90,12 +96,12 @@ export default async function ReviewMissionPage({
             {String(draft?.endDate ?? "Not set")}
           </p>
 
-          <p>
+          {/* <p>
             <span className="font-medium">Goal distance:</span>{" "}
             {draft?.goalDistanceMeters
               ? `${Number(draft.goalDistanceMeters).toLocaleString()} meters`
               : "Not set"}
-          </p>
+          </p> */}
 
           <Button asChild variant="outline" size="sm">
             <Link href={`/dashboard/mission/new/${draftId}/details`}>
@@ -107,35 +113,28 @@ export default async function ReviewMissionPage({
 
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Route summary</h2>
+
         <div className="mt-3 space-y-2 text-sm">
           <p>
             <span className="font-medium">Route points:</span>{" "}
             {Array.isArray(draft?.routePoints) ? draft.routePoints.length : 0}
           </p>
+
           <p>
             <span className="font-medium">Snap to Roads:</span>{" "}
             {draft?.snapToRoads ? "On" : "Off"}
           </p>
-
-          <Button asChild variant="outline" size="sm">
-            <Link href={`/dashboard/mission/new/${draftId}/route`}>
-              Edit route
-            </Link>
-          </Button>
         </div>
       </div>
 
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Milestone summary</h2>
+
         <div className="mt-3 space-y-2 text-sm">
           <p>
             <span className="font-medium">Milestones:</span> {milestones.length}
           </p>
-          <Button asChild variant="outline" size="sm">
-            <Link href={`/dashboard/mission/new/${draftId}/milestones/content`}>
-              Edit milestone content
-            </Link>
-          </Button>
+
           <div className="space-y-2">
             {milestones.map((milestone, index) => (
               <div
@@ -146,19 +145,24 @@ export default async function ReviewMissionPage({
                   Milestone {String.fromCharCode(65 + index)}:{" "}
                   {String(milestone.title ?? "Untitled milestone")}
                 </p>
+
                 <p className="text-muted-foreground">
                   {Number(milestone.distanceMeters ?? 0).toLocaleString()}{" "}
                   meters from start
                 </p>
+
                 <p className="mt-2 text-muted-foreground">
                   {String(milestone.description ?? "No description.")}
                 </p>
+
                 {Array.isArray(milestone.imageUrls) &&
                 milestone.imageUrls[0] ? (
                   <div className="relative mt-3 h-40 w-full overflow-hidden rounded-md border">
                     <Image
                       src={milestone.imageUrls[0]}
-                      alt={`Image for milestone ${String.fromCharCode(65 + index)}`}
+                      alt={`Image for milestone ${String.fromCharCode(
+                        65 + index,
+                      )}`}
                       fill
                       sizes="24rem"
                       className="object-cover"
@@ -168,13 +172,30 @@ export default async function ReviewMissionPage({
                 ) : null}
               </div>
             ))}
+
+            <Button asChild variant="outline" size="sm">
+              <Link
+                href={`/dashboard/mission/new/${draftId}/milestones/content`}
+              >
+                Edit milestone content
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
+
+      <div className="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        After the mission is created, route points, route distance, milestone
+        positions, and milestone distances should be treated as locked. Only
+        mission text, milestone text, and milestone images should be edited
+        later.
+      </div>
+
       <div className="rounded-lg border bg-muted/40 p-4">
         <Button type="button" disabled>
           Create Mission
         </Button>
+
         <p className="mt-2 text-sm text-muted-foreground">
           Final mission creation will be added later.
         </p>
