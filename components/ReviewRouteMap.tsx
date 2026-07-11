@@ -1,7 +1,7 @@
 /// <reference types="google.maps" />
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   APIProvider,
   AdvancedMarker,
@@ -99,9 +99,13 @@ function RouteBoundsFitter({
   routePath: { lat: number; lng: number }[];
 }) {
   const map = useMap();
+  const fittedRouteKeyRef = useRef("");
 
   useEffect(() => {
     if (!map || routePath.length < 2) return;
+    const routeKey = routePath.map(({ lat, lng }) => `${lat},${lng}`).join("|");
+    if (fittedRouteKeyRef.current === routeKey) return;
+    fittedRouteKeyRef.current = routeKey;
 
     const bounds = new google.maps.LatLngBounds();
     routePath.forEach((point) => bounds.extend(point));
