@@ -118,7 +118,7 @@ export function ReviewRouteMap({
         ))}
         <Polyline
           path={displayRoutePath}
-          strokeColor="#00000"
+          strokeColor="#000000"
           strokeOpacity={1}
           strokeWeight={5}
         />

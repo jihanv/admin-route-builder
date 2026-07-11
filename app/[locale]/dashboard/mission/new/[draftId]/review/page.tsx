@@ -64,6 +64,14 @@ export default async function ReviewMissionPage({
     return <div>All milestone titles must be filled before review.</div>;
   }
 
+  const hasMissingMilestonePosition = milestones.some(
+    (milestone) => !milestone.position,
+  );
+
+  if (hasMissingMilestonePosition) {
+    return <div>All milestones must have saved positions before review.</div>;
+  }
+
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="review-publish" />
