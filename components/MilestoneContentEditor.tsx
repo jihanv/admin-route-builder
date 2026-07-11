@@ -33,8 +33,9 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
-  const [hasSavedMilestoneContent, setHasSavedMilestoneContent] =
-    useState(false);
+  const [hasSavedMilestoneContent, setHasSavedMilestoneContent] = useState(() =>
+    milestones.every((milestone) => milestone.title.trim()),
+  );
   const [titlesByMilestoneId, setTitlesByMilestoneId] = useState<
     Record<string, string>
   >(() =>
