@@ -115,8 +115,6 @@ export function MilestoneContentEditor({
 
     setIsSaving(true);
 
-    const formData = new FormData(event.currentTarget);
-
     try {
       const uploadedImageUrlsByMilestoneId = { ...imageUrlsByMilestoneId };
 
@@ -150,10 +148,8 @@ export function MilestoneContentEditor({
 
         return {
           ...milestone,
-          title: String(formData.get(`title-${milestone.id}`) ?? "").trim(),
-          description: String(
-            formData.get(`description-${milestone.id}`) ?? "",
-          ).trim(),
+          title: titlesByMilestoneId[milestone.id].trim(),
+          description: descriptionsByMilestoneId[milestone.id].trim(),
           imageUrls: imageUrl ? [imageUrl] : [],
         };
       });
