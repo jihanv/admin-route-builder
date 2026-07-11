@@ -33,9 +33,7 @@ export function MilestoneContentEditor({
   milestones,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
-  const [hasSavedMilestoneContent, setHasSavedMilestoneContent] = useState(() =>
-    milestones.every((milestone) => milestone.title.trim()),
-  );
+
   const [titlesByMilestoneId, setTitlesByMilestoneId] = useState<
     Record<string, string>
   >(() =>
@@ -82,7 +80,7 @@ export function MilestoneContentEditor({
   const [imagePreviewUrlsByMilestoneId, setImagePreviewUrlsByMilestoneId] =
     useState<Record<string, string>>({});
   const previewUrlsRef = useRef<string[]>([]);
-
+  const canReview = !hasUnsavedChanges && !hasEmptyMilestoneTitle;
   useEffect(() => {
     const previewUrls = previewUrlsRef.current;
 
@@ -97,7 +95,6 @@ export function MilestoneContentEditor({
   ) => {
     if (!imageFile) return;
 
-    setHasSavedMilestoneContent(false);
     const previewUrl = URL.createObjectURL(imageFile);
 
     previewUrlsRef.current.push(previewUrl);
@@ -181,7 +178,7 @@ export function MilestoneContentEditor({
       });
       setImageFilesByMilestoneId({});
       setImagePreviewUrlsByMilestoneId({});
-      setHasSavedMilestoneContent(true);
+
       toast.success("Milestone content saved.");
     } catch (error) {
       console.error("Save milestone content failed:", error);
@@ -239,7 +236,6 @@ export function MilestoneContentEditor({
                     name={`title-${milestone.id}`}
                     value={titlesByMilestoneId[milestone.id] ?? ""}
                     onChange={(event) => {
-                      setHasSavedMilestoneContent(false);
                       setTitlesByMilestoneId((currentTitles) => ({
                         ...currentTitles,
                         [milestone.id]: event.target.value,
@@ -276,7 +272,6 @@ export function MilestoneContentEditor({
                     name={`description-${milestone.id}`}
                     value={descriptionsByMilestoneId[milestone.id] ?? ""}
                     onChange={(event) => {
-                      setHasSavedMilestoneContent(false);
                       setDescriptionsByMilestoneId((currentDescriptions) => ({
                         ...currentDescriptions,
                         [milestone.id]: event.target.value,
@@ -375,7 +370,7 @@ export function MilestoneContentEditor({
           <Tooltip>
             <TooltipTrigger asChild>
               <span className="inline-block">
-                {hasSavedMilestoneContent ? (
+                {canReview ? (
                   <Button asChild>
                     <Link href={`/dashboard/mission/new/${draftId}/review`}>
                       Next: Review Mission
@@ -388,7 +383,7 @@ export function MilestoneContentEditor({
                 )}
               </span>
             </TooltipTrigger>
-            {!hasSavedMilestoneContent ? (
+            {!canReview ? (
               <TooltipContent>
                 Save milestone content before continuing.
               </TooltipContent>
