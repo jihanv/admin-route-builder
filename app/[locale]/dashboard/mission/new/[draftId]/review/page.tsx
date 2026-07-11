@@ -4,7 +4,6 @@ import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ReviewRouteMap } from "@/components/ReviewRouteMap";
 
 export default async function ReviewMissionPage({
   params,
@@ -122,11 +121,7 @@ export default async function ReviewMissionPage({
 
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Route summary</h2>
-        <ReviewRouteMap
-          routePoints={routePoints}
-          snapToRoads={draft?.snapToRoads === true}
-          milestones={milestones}
-        />
+
         <div className="mt-3 space-y-2 text-sm">
           <p>
             <span className="font-medium">Route points:</span>{" "}
