@@ -327,7 +327,11 @@ export function MilestoneContentEditor({
               <span className="inline-block">
                 <Button
                   type="submit"
-                  disabled={isSaving || hasEmptyMilestoneTitle}
+                  disabled={
+                    isSaving ||
+                    hasEmptyMilestoneTitle ||
+                    hasSavedMilestoneContent
+                  }
                 >
                   {isSaving
                     ? "Saving milestone content..."
