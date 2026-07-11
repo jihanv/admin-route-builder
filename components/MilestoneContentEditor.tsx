@@ -335,7 +335,9 @@ export function MilestoneContentEditor({
                 >
                   {isSaving
                     ? "Saving milestone content..."
-                    : "Save milestone content"}
+                    : hasSavedMilestoneContent
+                      ? "Saved"
+                      : "Save milestone content"}
                 </Button>
               </span>
             </TooltipTrigger>
