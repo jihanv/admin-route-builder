@@ -1,7 +1,7 @@
 /// <reference types="google.maps" />
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   APIProvider,
   AdvancedMarker,
@@ -34,7 +34,7 @@ export function ReviewRouteMap({
   const displayRoutePath =
     snapToRoads && snappedRoutePath.length > 0 ? snappedRoutePath : routePath;
 
-  const calculateSnappedRoute = async () => {
+  const calculateSnappedRoute = useCallback(async () => {
     if (!snapToRoads || routePoints.length < 2) return;
 
     const { Route } = (await google.maps.importLibrary(
@@ -62,7 +62,7 @@ export function ReviewRouteMap({
     setSnappedRoutePath(
       routePath.map((point) => ({ lat: point.lat, lng: point.lng })),
     );
-  };
+  }, [routePoints, snapToRoads]);
 
   return (
     <APIProvider
