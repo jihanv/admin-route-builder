@@ -77,9 +77,11 @@ export function ReviewRouteMap({
         mapId={mapId}
         gestureHandling="cooperative"
       >
-        {routePath[0] ? <AdvancedMarker position={routePath[0]} /> : null}
-        {routePath.length > 1 ? (
-          <AdvancedMarker position={routePath[routePath.length - 1]} />
+        {displayRoutePath[0] ? (
+          <AdvancedMarker position={displayRoutePath[0]} />
+        ) : null}
+        {displayRoutePath.length > 1 ? (
+          <AdvancedMarker position={displayRoutePath.at(-1)!} />
         ) : null}
         <RouteBoundsFitter routePath={displayRoutePath} />
         <Polyline
