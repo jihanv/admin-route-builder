@@ -69,36 +69,41 @@ export default async function ReviewMissionPage({
       </p>
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Mission details</h2>
+
         <div className="mt-3 space-y-2 text-sm">
           <p>
             <span className="font-medium">Title:</span>{" "}
             {String(draft?.title ?? "Untitled mission")}
           </p>
+
           <p className="text-muted-foreground">
             {String(draft?.description ?? "No description.")}
           </p>
+
+          <p>
+            <span className="font-medium">Start date:</span>{" "}
+            {String(draft?.startDate ?? "Not set")}
+          </p>
+
+          <p>
+            <span className="font-medium">End date:</span>{" "}
+            {String(draft?.endDate ?? "Not set")}
+          </p>
+
+          <p>
+            <span className="font-medium">Goal distance:</span>{" "}
+            {draft?.goalDistanceMeters
+              ? `${Number(draft.goalDistanceMeters).toLocaleString()} meters`
+              : "Not set"}
+          </p>
+
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/dashboard/mission/new/${draftId}/details`}>
+              Edit details
+            </Link>
+          </Button>
         </div>
       </div>
-
-      <p>
-        <span className="font-medium">Start date:</span>{" "}
-        {String(draft?.startDate ?? "Not set")}
-      </p>
-      <p>
-        <span className="font-medium">End date:</span>{" "}
-        {String(draft?.endDate ?? "Not set")}
-      </p>
-      <p>
-        <span className="font-medium">Goal distance:</span>{" "}
-        {draft?.goalDistanceMeters
-          ? `${Number(draft.goalDistanceMeters).toLocaleString()} meters`
-          : "Not set"}
-      </p>
-      <Button asChild variant="outline" size="sm">
-        <Link href={`/dashboard/mission/new/${draftId}/details`}>
-          Edit details
-        </Link>
-      </Button>
 
       <div className="rounded-lg border bg-card p-4">
         <h2 className="font-semibold">Route summary</h2>
