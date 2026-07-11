@@ -43,6 +43,15 @@ export function MilestoneContentEditor({
       milestones.map((milestone) => [milestone.id, milestone.title]),
     ),
   );
+
+  const [descriptionsByMilestoneId, setDescriptionsByMilestoneId] = useState<
+    Record<string, string>
+  >(() =>
+    Object.fromEntries(
+      milestones.map((milestone) => [milestone.id, milestone.description]),
+    ),
+  );
+
   const hasEmptyMilestoneTitle = Object.values(titlesByMilestoneId).some(
     (title) => !title.trim(),
   );
@@ -255,8 +264,14 @@ export function MilestoneContentEditor({
                     id={`description-${milestone.id}`}
                     className="min-h-32 flex-1"
                     name={`description-${milestone.id}`}
-                    defaultValue={milestone.description}
-                    onChange={() => setHasSavedMilestoneContent(false)}
+                    value={descriptionsByMilestoneId[milestone.id] ?? ""}
+                    onChange={(event) => {
+                      setHasSavedMilestoneContent(false);
+                      setDescriptionsByMilestoneId((currentDescriptions) => ({
+                        ...currentDescriptions,
+                        [milestone.id]: event.target.value,
+                      }));
+                    }}
                     placeholder="Write the message users will see when they reach this milestone."
                   />
                 </div>
@@ -292,7 +307,7 @@ export function MilestoneContentEditor({
                     <>
                       <span className="font-medium">Choose an image</span>
                       <span className="mt-1 text-sm text-muted-foreground">
-                        PNG or JPG. Upload happens when you save.
+                        PNG, JPG, or WebP. Upload happens when you save.
                       </span>
                     </>
                   )}
