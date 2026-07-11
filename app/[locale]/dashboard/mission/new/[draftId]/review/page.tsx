@@ -117,6 +117,7 @@ export default async function ReviewMissionPage({
         <ReviewRouteMap
           routePoints={routePoints}
           snapToRoads={draft?.snapToRoads === true}
+          milestones={milestones}
         />
         <div className="mt-3 space-y-2 text-sm">
           <p>
