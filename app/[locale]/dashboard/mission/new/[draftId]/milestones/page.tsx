@@ -41,6 +41,11 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
   const routePoints = Array.isArray(draft?.routePoints)
     ? (draft.routePoints as RoutePoint[])
     : [];
+
+  const snappedRoutePoints = Array.isArray(draft?.snappedRoutePoints)
+    ? (draft.snappedRoutePoints as RoutePoint[])
+    : [];
+
   const snapToRoads = draft?.snapToRoads === true;
   const goalDistanceMeters =
     typeof draft?.goalDistanceMeters === "number"
@@ -59,6 +64,7 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
         snapToRoads={snapToRoads}
         milestones={milestones}
         goalDistanceMeters={goalDistanceMeters}
+        snappedRoutePoints={snappedRoutePoints}
       />
     </section>
   );

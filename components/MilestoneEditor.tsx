@@ -16,6 +16,7 @@ type MilestoneEditorProps = {
   routePoints: RoutePoint[];
   snapToRoads: boolean;
   milestones: MissionMilestone[];
+  snappedRoutePoints: RoutePoint[];
 };
 
 function formatDistance(distanceMeters: number) {
@@ -28,6 +29,7 @@ export function MilestoneEditor({
   snapToRoads,
   milestones,
   goalDistanceMeters,
+  snappedRoutePoints,
 }: MilestoneEditorProps) {
   const [selectedPositions, setSelectedPositions] = useState<
     SelectedMilestonePosition[]
@@ -92,6 +94,7 @@ export function MilestoneEditor({
           snapToRoads={snapToRoads}
           selectedPositions={selectedPositions}
           onSelectedPositionsChange={setSelectedPositions}
+          snappedRoutePoints={snappedRoutePoints}
         />
       </div>
 

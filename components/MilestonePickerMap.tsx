@@ -20,6 +20,7 @@ type MilestonePickerMapProps = {
   onSelectedPositionsChange?: React.Dispatch<
     React.SetStateAction<SelectedMilestonePosition[]>
   >;
+  snappedRoutePoints: RoutePoint[];
 };
 
 export type SelectedMilestonePosition = RoutePoint & {
