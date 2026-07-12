@@ -86,6 +86,7 @@ function getClosestPointOnRoute(clickedPoint: MapPoint, routePath: MapPoint[]) {
 export function MilestonePickerMap({
   goalDistanceMeters,
   routePoints,
+  snappedRoutePoints,
   snapToRoads,
   selectedPositions,
   onSelectedPositionsChange,
@@ -101,7 +102,19 @@ export function MilestonePickerMap({
       })),
     [routePoints],
   );
-  const [displayRoutePath, setDisplayRoutePath] = useState(routePath);
+  const savedSnappedRoutePath = useMemo(
+    () =>
+      snappedRoutePoints.map(({ latitude, longitude }) => ({
+        lat: latitude,
+        lng: longitude,
+      })),
+    [snappedRoutePoints],
+  );
+
+  const displayRoutePath =
+    snapToRoads && savedSnappedRoutePath.length >= 2
+      ? savedSnappedRoutePath
+      : routePath;
   const [localSelectedPositions, setLocalSelectedPositions] = useState<
     SelectedMilestonePosition[]
   >([]);
@@ -188,36 +201,7 @@ export function MilestonePickerMap({
 
     void loadGeometryLibrary();
   }, [isMapsApiLoaded]);
-  useEffect(() => {
-    if (!isMapsApiLoaded || !snapToRoads || routePath.length < 2) {
-      return;
-    }
 
-    async function calculateSnappedRoute() {
-      const { Route } = (await google.maps.importLibrary(
-        "routes",
-      )) as google.maps.RoutesLibrary;
-
-      const { routes } = await Route.computeRoutes({
-        origin: routePath[0],
-        destination: routePath[routePath.length - 1],
-        intermediates: routePath.slice(1, -1).map((point) => ({
-          location: point,
-        })),
-        travelMode: "WALKING",
-        fields: ["path"],
-      });
-
-      const snappedPath = routes?.[0]?.path ?? [];
-      setDisplayRoutePath(
-        snappedPath.length > 0
-          ? snappedPath.map((point) => ({ lat: point.lat, lng: point.lng }))
-          : routePath,
-      );
-    }
-
-    void calculateSnappedRoute();
-  }, [isMapsApiLoaded, routePath, snapToRoads]);
   return (
     <APIProvider
       apiKey={apiKey}
