@@ -1,12 +1,6 @@
 "use client";
 import { divIcon } from "leaflet";
-import {
-  CircleMarker,
-  MapContainer,
-  Marker,
-  Polyline,
-  Tooltip,
-} from "react-leaflet";
+import { MapContainer, Marker, Polyline, Tooltip } from "react-leaflet";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { OpenFreeMapLayer } from "@/components/OpenFreeMapLayer";
 
@@ -18,6 +12,20 @@ function createMilestoneFlagIcon(label: string) {
     iconAnchor: [4, 32],
   });
 }
+
+const startLineIcon = divIcon({
+  className: "",
+  html: `<svg width="64" height="42" viewBox="0 0 64 42" aria-label="Start line"><path d="M8 40V4M56 40V4" stroke="#166534" stroke-width="4"/><rect x="8" y="4" width="48" height="16" rx="3" fill="#16a34a"/><text x="32" y="15" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="700" fill="white">START</text><path d="M18 40H46" stroke="#16a34a" stroke-width="4"/></svg>`,
+  iconSize: [64, 42],
+  iconAnchor: [32, 40],
+});
+
+const finishLineIcon = divIcon({
+  className: "",
+  html: `<svg width="64" height="42" viewBox="0 0 64 42" aria-label="Finish line"><path d="M8 40V4M56 40V4" stroke="#111827" stroke-width="4"/><rect x="8" y="4" width="48" height="16" fill="white" stroke="#111827"/><path d="M8 4h8v8H8zm16 0h8v8h-8zm16 0h8v8h-8zM16 12h8v8h-8zm16 0h8v8h-8zm16 0h8v8h-8z" fill="#111827"/><path d="M18 40H46" stroke="#111827" stroke-width="4"/></svg>`,
+  iconSize: [64, 42],
+  iconAnchor: [32, 40],
+});
 
 export default function ReviewRouteMapLeaflet({
   routePoints,
@@ -43,15 +51,13 @@ export default function ReviewRouteMapLeaflet({
     >
       <OpenFreeMapLayer />
       <Polyline positions={routePositions} />
-      <CircleMarker
-        center={[firstPoint.latitude, firstPoint.longitude]}
-        radius={8}
-        pathOptions={{ color: "green", fillOpacity: 1 }}
+      <Marker
+        position={[firstPoint.latitude, firstPoint.longitude]}
+        icon={startLineIcon}
       />
-      <CircleMarker
-        center={[lastPoint.latitude, lastPoint.longitude]}
-        radius={8}
-        pathOptions={{ color: "red", fillOpacity: 1 }}
+      <Marker
+        position={[lastPoint.latitude, lastPoint.longitude]}
+        icon={finishLineIcon}
       />
       {milestones.map((milestone, index) => (
         <Marker
