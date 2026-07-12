@@ -2,9 +2,10 @@
 
 import { RouteBuilderMap } from "@/components/RouteBuilderMap";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { saveRouteDraft } from "@/lib/routeDraftApi";
+import { toast } from "sonner";
 import {
   Tooltip,
   TooltipContent,
@@ -14,6 +15,28 @@ import {
 
 export default function CreateNewMissionPage() {
   const [savedDraftId, setSavedDraftId] = useState<string | null>(null);
+  const [isLockingRoute, setIsLockingRoute] = useState(false);
+
+  const handleContinue = async () => {
+    if (!savedDraftId) return;
+
+    setIsLockingRoute(true);
+
+    try {
+      const response = await saveRouteDraft({
+        id: savedDraftId,
+        routeLockedAt: new Date().toISOString(),
+      });
+
+      if (!response.ok) throw new Error("Route lock failed");
+
+      window.location.assign(`/dashboard/mission/new/${savedDraftId}/details`);
+    } catch (error) {
+      console.error("Route lock failed:", error);
+      toast.error("Could not continue to mission details.");
+      setIsLockingRoute(false);
+    }
+  };
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="route-picker" />
@@ -26,10 +49,8 @@ export default function CreateNewMissionPage() {
       />
       <div className="flex flex-col items-end gap-2">
         {savedDraftId ? (
-          <Button asChild>
-            <Link href={`/dashboard/mission/new/${savedDraftId}/details`}>
-              Next: Mission Details
-            </Link>
+          <Button onClick={handleContinue} disabled={isLockingRoute}>
+            {isLockingRoute ? "Continuing..." : "Next: Mission Details"}
           </Button>
         ) : (
           <TooltipProvider>
