@@ -1,7 +1,23 @@
 "use client";
-import { CircleMarker, MapContainer, Polyline } from "react-leaflet";
+import { divIcon } from "leaflet";
+import {
+  CircleMarker,
+  MapContainer,
+  Marker,
+  Polyline,
+  Tooltip,
+} from "react-leaflet";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { OpenFreeMapLayer } from "@/components/OpenFreeMapLayer";
+
+function createMilestoneFlagIcon(label: string) {
+  return divIcon({
+    className: "",
+    html: `<svg width="30" height="34" viewBox="0 0 30 34"><path d="M4 32V2" stroke="#9a3412" stroke-width="3" stroke-linecap="round"/><path d="M5 3H27L23 10L27 17H5Z" fill="#f97316" stroke="#9a3412"/><text x="15" y="13" text-anchor="middle" font-size="10" font-weight="700" fill="white">${label}</text></svg>`,
+    iconSize: [30, 34],
+    iconAnchor: [4, 32],
+  });
+}
 
 export default function ReviewRouteMapLeaflet({
   routePoints,
@@ -38,12 +54,15 @@ export default function ReviewRouteMapLeaflet({
         pathOptions={{ color: "red", fillOpacity: 1 }}
       />
       {milestones.map((milestone, index) => (
-        <CircleMarker
-          key={index}
-          center={[milestone.position.latitude, milestone.position.longitude]}
-          radius={6}
-          pathOptions={{ color: "orange", fillOpacity: 1 }}
-        />
+        <Marker
+          key={milestone.id}
+          position={[milestone.position.latitude, milestone.position.longitude]}
+          icon={createMilestoneFlagIcon(String.fromCharCode(65 + index))}
+        >
+          <Tooltip>
+            {String.fromCharCode(65 + index)}: {milestone.title}
+          </Tooltip>
+        </Marker>
       ))}
     </MapContainer>
   );
