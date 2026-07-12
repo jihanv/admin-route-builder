@@ -15,6 +15,7 @@ const routeDraftPatchSchema = z.object({
   snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
   snappedRoutePoints: z.array(routePointSchema).optional(),
+  routeLockedAt: z.string().datetime().optional(),
   milestones: z.array(missionMilestoneSchema).optional(),
 });
 

@@ -9,6 +9,7 @@ type SaveRouteDraftInput = Pick<
   | "routePoints"
   | "snappedRoutePoints"
   | "snapToRoads"
+  | "routeLockedAt"
   | "milestones"
 > & { id?: string | null };
 
