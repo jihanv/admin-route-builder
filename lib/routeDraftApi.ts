@@ -7,6 +7,7 @@ type SaveRouteDraftInput = Pick<
   | "startDate"
   | "goalDistanceMeters"
   | "routePoints"
+  | "snappedRoutePoints"
   | "snapToRoads"
   | "milestones"
 > & { id?: string | null };
