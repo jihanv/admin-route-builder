@@ -52,6 +52,7 @@ function getRoutePointsKey(points: RoutePoint[]) {
 type RouteBuilderMapProps = {
   initialDraftId?: string;
   initialRoutePoints?: RoutePoint[];
+  initialSnappedRoutePoints?: RoutePoint[];
   initialGoalDistanceMeters?: number;
   initialSnapToRoads?: boolean;
   onDraftSaved?: (draftId: string) => void;

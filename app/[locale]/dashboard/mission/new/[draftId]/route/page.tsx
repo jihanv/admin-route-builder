@@ -37,7 +37,9 @@ export default async function EditRoutePage({ params }: EditRoutePageProps) {
   const routePoints = Array.isArray(draft?.routePoints)
     ? (draft.routePoints as RoutePoint[])
     : [];
-
+  const snappedRoutePoints = Array.isArray(draft?.snappedRoutePoints)
+    ? (draft.snappedRoutePoints as RoutePoint[])
+    : [];
   const goalDistanceMeters =
     typeof draft?.goalDistanceMeters === "number"
       ? draft.goalDistanceMeters
@@ -56,6 +58,7 @@ export default async function EditRoutePage({ params }: EditRoutePageProps) {
           initialRoutePoints={routePoints}
           initialGoalDistanceMeters={goalDistanceMeters}
           initialSnapToRoads={snapToRoads}
+          initialSnappedRoutePoints={snappedRoutePoints}
         />
         <Button asChild>
           <Link href={`/dashboard/mission/new/${draftId}/details`}>
