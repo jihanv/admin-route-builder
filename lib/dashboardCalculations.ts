@@ -27,3 +27,13 @@ export function calculateTotalDonors(sessions: CheckoutSession[]) {
     .filter((id): id is string => id !== null);
   return new Set(customerIds).size;
 }
+
+export function calculateAverageDonationCents(
+  sessions: CheckoutSession[],
+  refunds: Refund[],
+) {
+  const count = sessions.filter(
+    (s) => s.payment_status === "paid" && s.status === "complete",
+  ).length;
+  return count ? calculateTotalDonationsCents(sessions, refunds) / count : 0;
+}
