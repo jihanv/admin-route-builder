@@ -44,6 +44,10 @@ export default async function ReviewMissionPage({
     ? draft.routePoints
     : [];
 
+  const snappedRoutePoints = Array.isArray(draft?.snappedRoutePoints)
+    ? draft.snappedRoutePoints
+    : [];
+
   if (routePoints.length < 2) {
     return (
       <div>Add at least 2 route points before reviewing this mission.</div>
@@ -135,7 +139,11 @@ export default async function ReviewMissionPage({
           </p>
         </div>
 
-        <ReviewRouteMap routePoints={routePoints} milestones={milestones} />
+        <ReviewRouteMap
+          routePoints={routePoints}
+          snappedRoutePoints={snappedRoutePoints}
+          milestones={milestones}
+        />
       </div>
 
       <div className="rounded-lg border bg-card p-4">
