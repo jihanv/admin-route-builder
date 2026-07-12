@@ -1,12 +1,14 @@
 "use client";
 import { CircleMarker, MapContainer, Polyline } from "react-leaflet";
-import type { RoutePoint } from "@/types/routeTypes";
+import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { OpenFreeMapLayer } from "@/components/OpenFreeMapLayer";
 
 export default function ReviewRouteMapLeaflet({
   routePoints,
+  milestones,
 }: {
   routePoints: RoutePoint[];
+  milestones: MissionMilestone[];
 }) {
   const firstPoint = routePoints[0];
   const routePositions: [number, number][] = routePoints.map((point) => [
@@ -35,6 +37,14 @@ export default function ReviewRouteMapLeaflet({
         radius={8}
         pathOptions={{ color: "red", fillOpacity: 1 }}
       />
+      {milestones.map((milestone, index) => (
+        <CircleMarker
+          key={index}
+          center={[milestone.position.latitude, milestone.position.longitude]}
+          radius={6}
+          pathOptions={{ color: "orange", fillOpacity: 1 }}
+        />
+      ))}
     </MapContainer>
   );
 }

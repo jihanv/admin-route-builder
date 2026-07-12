@@ -11,6 +11,9 @@ type ReviewRouteMapProps = {
   milestones: MissionMilestone[];
 };
 
-export function ReviewRouteMap({ routePoints }: ReviewRouteMapProps) {
-  return <LeafletMap routePoints={routePoints} />;
+export function ReviewRouteMap({
+  routePoints,
+  milestones,
+}: ReviewRouteMapProps) {
+  return <LeafletMap routePoints={routePoints} milestones={milestones} />;
 }
