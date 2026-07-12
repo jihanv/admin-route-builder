@@ -386,7 +386,7 @@ export function RouteBuilderMap({
         )}
         <Map
           mapTypeControl={!isMobile}
-          className="h-100 w-full overflow-hidden rounded-lg border"
+          className="h-80 w-full overflow-hidden rounded-lg border"
           defaultCenter={{ lat: 35.647756, lng: 139.741834 }}
           defaultZoom={12}
           mapId={mapId}
