@@ -41,6 +41,7 @@ export type RouteDraft = {
   endDate?: string;
   goalDistanceMeters?: number;
   routePoints?: RoutePoint[];
+  snappedRoutePoints?: RoutePoint[];
   milestones?: MissionMilestone[];
   createdByAdminId?: string;
   createdAt?: string;
