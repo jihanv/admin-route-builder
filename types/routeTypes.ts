@@ -25,8 +25,11 @@ export type Mission = {
   title: string;
   description: string;
   startDate: string;
+  endDate: string;
   goalDistanceMeters: number;
   routePoints: RoutePoint[];
+  snappedRoutePoints: RoutePoint[];
+  snapToRoads: boolean;
   milestones: MissionMilestone[];
   createdByAdminId: string;
   createdAt: string;
