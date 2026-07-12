@@ -7,7 +7,7 @@ import {
   Polyline,
   useMap,
 } from "@vis.gl/react-google-maps";
-import type { RoutePoint } from "@/types/routeTypes";
+import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 
 function FitRouteBounds({ path }: { path: { lat: number; lng: number }[] }) {
   const map = useMap();
@@ -25,9 +25,11 @@ function FitRouteBounds({ path }: { path: { lat: number; lng: number }[] }) {
 export function ReviewRouteMapGoogle({
   routePoints,
   snappedRoutePoints = [],
+  milestones,
 }: {
   routePoints: RoutePoint[];
   snappedRoutePoints?: RoutePoint[];
+  milestones: MissionMilestone[];
 }) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
   const displayedPoints =
@@ -58,6 +60,20 @@ export function ReviewRouteMapGoogle({
         >
           E
         </AdvancedMarker>
+        {milestones.map((milestone, index) => (
+          <AdvancedMarker
+            key={milestone.id}
+            position={{
+              lat: milestone.position.latitude,
+              lng: milestone.position.longitude,
+            }}
+            title={`Milestone ${String.fromCharCode(65 + index)}: ${milestone.title}`}
+          >
+            <div className="rounded-full bg-orange-500 px-2 py-1 font-bold text-white">
+              {String.fromCharCode(65 + index)}
+            </div>
+          </AdvancedMarker>
+        ))}
         <FitRouteBounds path={routePath} />
       </Map>
     </APIProvider>
