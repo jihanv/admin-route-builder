@@ -1,6 +1,12 @@
 "use client";
 import { useEffect } from "react";
-import { APIProvider, Map, Polyline, useMap } from "@vis.gl/react-google-maps";
+import {
+  AdvancedMarker,
+  APIProvider,
+  Map,
+  Polyline,
+  useMap,
+} from "@vis.gl/react-google-maps";
 import type { RoutePoint } from "@/types/routeTypes";
 
 function FitRouteBounds({ path }: { path: { lat: number; lng: number }[] }) {
@@ -33,6 +39,7 @@ export function ReviewRouteMapGoogle({
   }));
 
   const firstPoint = displayedPoints[0];
+  const lastPoint = displayedPoints[displayedPoints.length - 1];
   if (!firstPoint) return null;
   return (
     <APIProvider apiKey={apiKey}>
@@ -40,7 +47,17 @@ export function ReviewRouteMapGoogle({
         className="h-80 w-full rounded-md"
         defaultCenter={{ lat: firstPoint.latitude, lng: firstPoint.longitude }}
         defaultZoom={12}
+        mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
       >
+        <AdvancedMarker position={routePath[0]} title="Route start">
+          S
+        </AdvancedMarker>
+        <AdvancedMarker
+          position={routePath[routePath.length - 1]}
+          title="Route end"
+        >
+          E
+        </AdvancedMarker>
         <FitRouteBounds path={routePath} />
       </Map>
     </APIProvider>
