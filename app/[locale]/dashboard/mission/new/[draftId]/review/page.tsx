@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
+import { ReviewRouteMap } from "@/components/ReviewRouteMap";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -133,6 +134,8 @@ export default async function ReviewMissionPage({
             {draft?.snapToRoads ? "On" : "Off"}
           </p>
         </div>
+
+        <ReviewRouteMap routePoints={routePoints} milestones={milestones} />
       </div>
 
       <div className="rounded-lg border bg-card p-4">
