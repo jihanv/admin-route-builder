@@ -41,7 +41,6 @@ export function ReviewRouteMapGoogle({
   }));
 
   const firstPoint = displayedPoints[0];
-  const lastPoint = displayedPoints[displayedPoints.length - 1];
   if (!firstPoint) return null;
   return (
     <APIProvider apiKey={apiKey}>
@@ -51,6 +50,7 @@ export function ReviewRouteMapGoogle({
         defaultZoom={12}
         mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
       >
+        <Polyline path={routePath} strokeColor="#2563eb" strokeWeight={4} />
         <AdvancedMarker position={routePath[0]} title="Route start">
           S
         </AdvancedMarker>

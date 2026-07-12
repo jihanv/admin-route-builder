@@ -2,9 +2,13 @@
 import dynamic from "next/dynamic";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 
-const LeafletMap = dynamic(() => import("./ReviewRouteMapLeaflet"), {
-  ssr: false,
-});
+const GoogleMap = dynamic(
+  () =>
+    import("./ReviewRouteMapGoogle").then(
+      (module) => module.ReviewRouteMapGoogle,
+    ),
+  { ssr: false },
+);
 
 type ReviewRouteMapProps = {
   routePoints: RoutePoint[];
@@ -18,7 +22,7 @@ export function ReviewRouteMap({
   milestones,
 }: ReviewRouteMapProps) {
   return (
-    <LeafletMap
+    <GoogleMap
       routePoints={routePoints}
       snappedRoutePoints={snappedRoutePoints}
       milestones={milestones}
