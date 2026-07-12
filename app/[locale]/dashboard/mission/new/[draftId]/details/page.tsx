@@ -7,8 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 
@@ -98,13 +96,9 @@ export default async function MissionDetailsPage({
             <span className="font-medium">
               {draftGoalDistanceMeters} meters
             </span>
-            {canEditDraft && (
-              <Button asChild>
-                <Link href={`/dashboard/mission/new/${draftId}/route`}>
-                  Edit Route
-                </Link>
-              </Button>
-            )}
+            <p className="text-sm text-muted-foreground">
+              The route is locked after it is saved.
+            </p>
           </div>
 
           <label className="block text-base font-medium">Mission dates</label>
