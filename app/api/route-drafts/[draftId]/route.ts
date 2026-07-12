@@ -58,6 +58,20 @@ export async function PATCH(
     );
   }
 
+  const lockedRouteFields = [
+    "goalDistanceMeters",
+    "snapToRoads",
+    "routePoints",
+    "snappedRoutePoints",
+  ] as const;
+
+  const isEditingLockedRoute =
+    Boolean(draft?.routeLockedAt) &&
+    lockedRouteFields.some((field) => parseResult.data[field] !== undefined);
+
+  if (isEditingLockedRoute)
+    return NextResponse.json({ error: "Route is locked" }, { status: 409 });
+
   await draftRef.update({
     ...parseResult.data,
     updatedAt: new Date().toISOString(),
