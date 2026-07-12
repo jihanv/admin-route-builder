@@ -62,6 +62,7 @@ type RouteBuilderMapProps = {
 export function RouteBuilderMap({
   initialDraftId,
   initialRoutePoints,
+  initialSnappedRoutePoints,
   initialGoalDistanceMeters,
   initialSnapToRoads,
   onDraftSaved,
@@ -75,14 +76,22 @@ export function RouteBuilderMap({
   const [snapToRoads, setSnapToRoads] = useState(initialSnapToRoads ?? false);
   const [snappedRoutePath, setSnappedRoutePath] = useState<
     { lat: number; lng: number }[]
-  >([]);
+  >(
+    (initialSnappedRoutePoints ?? []).map(({ latitude, longitude }) => ({
+      lat: latitude,
+      lng: longitude,
+    })),
+  );
   const [snappedDistanceMeters, setSnappedDistanceMeters] = useState<
     number | null
   >(null);
-  const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(null);
+  const [snappedRouteKey, setSnappedRouteKey] = useState<string | null>(
+    (initialSnappedRoutePoints?.length ?? 0) >= 2
+      ? getRoutePointsKey(initialRoutePoints ?? [])
+      : null,
+  );
   const [isSnappingRoute, setIsSnappingRoute] = useState(false);
   const snapRequestIdRef = useRef(0);
-  const hasCalculatedInitialSnapRef = useRef(false);
   const [isMapsApiLoaded, setIsMapsApiLoaded] = useState(false);
   const [draftId, setDraftId] = useState<string | null>(initialDraftId ?? null);
   const [isSaving, setIsSaving] = useState(false);
@@ -305,19 +314,7 @@ export function RouteBuilderMap({
     <APIProvider
       apiKey={apiKey}
       libraries={["routes", "places"]}
-      onLoad={async () => {
-        await google.maps.importLibrary("routes");
-        setIsMapsApiLoaded(true);
-
-        if (
-          initialSnapToRoads &&
-          routePoints.length >= 2 &&
-          !hasCalculatedInitialSnapRef.current
-        ) {
-          hasCalculatedInitialSnapRef.current = true;
-          await calculateSnappedRoute(routePoints);
-        }
-      }}
+      onLoad={() => setIsMapsApiLoaded(true)}
     >
       <div className="mb-3 flex flex-col gap-3 rounded-lg border bg-card p-3 text-card-foreground sm:flex-row sm:items-center sm:justify-between">
         {" "}
