@@ -11,6 +11,7 @@ const routeDraftRequestSchema = z.object({
   goalDistanceMeters: z.number().optional(),
   snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
+  snappedRoutePoints: z.array(routePointSchema).optional(),
 });
 
 export async function GET() {
@@ -55,6 +56,7 @@ export async function POST(request: Request) {
     goalDistanceMeters: parseResult.data.goalDistanceMeters ?? 0,
     snapToRoads: parseResult.data.snapToRoads === true,
     routePoints: parseResult.data.routePoints ?? [],
+    snappedRoutePoints: parseResult.data.snappedRoutePoints ?? [],
     milestones: [],
     createdByAdminId: userId,
     createdAt: now,
