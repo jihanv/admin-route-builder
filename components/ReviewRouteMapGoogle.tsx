@@ -1,6 +1,21 @@
 "use client";
-import { APIProvider, Map, Polyline } from "@vis.gl/react-google-maps";
+import { useEffect } from "react";
+import { APIProvider, Map, Polyline, useMap } from "@vis.gl/react-google-maps";
 import type { RoutePoint } from "@/types/routeTypes";
+
+function FitRouteBounds({ path }: { path: { lat: number; lng: number }[] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || path.length < 2) return;
+    const bounds = new google.maps.LatLngBounds();
+    path.forEach((point) => bounds.extend(point));
+    map.fitBounds(bounds, 48);
+  }, [map, path]);
+
+  return null;
+}
+
 export function ReviewRouteMapGoogle({
   routePoints,
   snappedRoutePoints = [],
@@ -26,7 +41,7 @@ export function ReviewRouteMapGoogle({
         defaultCenter={{ lat: firstPoint.latitude, lng: firstPoint.longitude }}
         defaultZoom={12}
       >
-        <Polyline path={routePath} strokeColor="#2563eb" strokeWeight={4} />
+        <FitRouteBounds path={routePath} />
       </Map>
     </APIProvider>
   );
