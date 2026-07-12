@@ -311,11 +311,7 @@ export function RouteBuilderMap({
   };
 
   return (
-    <APIProvider
-      apiKey={apiKey}
-      libraries={["routes", "places"]}
-      onLoad={() => setIsMapsApiLoaded(true)}
-    >
+    <APIProvider apiKey={apiKey} onLoad={() => setIsMapsApiLoaded(true)}>
       <div className="mb-3 flex flex-col gap-3 rounded-lg border bg-card p-3 text-card-foreground sm:flex-row sm:items-center sm:justify-between">
         {" "}
         <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center">

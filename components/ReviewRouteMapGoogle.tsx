@@ -50,15 +50,25 @@ export function ReviewRouteMapGoogle({
         defaultZoom={12}
         mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
       >
-        <Polyline path={routePath} strokeColor="#2563eb" strokeWeight={4} />
+        <Polyline path={routePath} strokeColor="#000000" strokeWeight={5} />
         <AdvancedMarker position={routePath[0]} title="Route start">
-          S
+          <div className="flex flex-col items-center">
+            <div className="bg-emerald-600 px-2 py-1 text-[10px] font-bold text-white shadow-md [clip-path:polygon(0_0,100%_0,100%_75%,50%_100%,0_75%)]">
+              START
+            </div>
+            <div className="h-6 w-1 bg-slate-500 shadow-sm" />
+          </div>
         </AdvancedMarker>
         <AdvancedMarker
           position={routePath[routePath.length - 1]}
-          title="Route end"
+          title="Route finish"
         >
-          E
+          <div className="flex flex-col items-center">
+            <div className="bg-red-600 px-2 py-1 text-[10px] font-bold text-white shadow-md [clip-path:polygon(0_0,100%_0,100%_75%,50%_100%,0_75%)]">
+              FINISH
+            </div>
+            <div className="h-6 w-1 bg-slate-500 shadow-sm" />
+          </div>
         </AdvancedMarker>
         {milestones.map((milestone, index) => (
           <AdvancedMarker
@@ -69,8 +79,11 @@ export function ReviewRouteMapGoogle({
             }}
             title={`Milestone ${String.fromCharCode(65 + index)}: ${milestone.title}`}
           >
-            <div className="rounded-full bg-orange-500 px-2 py-1 font-bold text-white">
-              {String.fromCharCode(65 + index)}
+            <div className="flex items-start">
+              <div className="h-8 w-1 rounded bg-zinc-700" />
+              <div className="-ml-px rounded-r-sm bg-orange-500 px-2 py-1 text-xs font-bold text-white shadow">
+                {String.fromCharCode(65 + index)}
+              </div>
             </div>
           </AdvancedMarker>
         ))}
