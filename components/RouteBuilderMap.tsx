@@ -99,6 +99,13 @@ export function RouteBuilderMap({
         goalDistanceMeters: Math.round(routeDistanceMeters),
         snapToRoads,
         routePoints,
+        snappedRoutePoints:
+          snapToRoads && hasCurrentSnappedRoute
+            ? snappedRoutePath.map(({ lat, lng }) => ({
+                latitude: lat,
+                longitude: lng,
+              }))
+            : [],
       });
 
       if (!response.ok) {
