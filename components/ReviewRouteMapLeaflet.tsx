@@ -29,13 +29,17 @@ const finishLineIcon = divIcon({
 
 export default function ReviewRouteMapLeaflet({
   routePoints,
+  snappedRoutePoints = [],
   milestones,
 }: {
   routePoints: RoutePoint[];
+  snappedRoutePoints?: RoutePoint[];
   milestones: MissionMilestone[];
 }) {
-  const firstPoint = routePoints[0];
-  const routePositions: [number, number][] = routePoints.map((point) => [
+  const displayedPoints =
+    snappedRoutePoints.length >= 2 ? snappedRoutePoints : routePoints;
+  const firstPoint = displayedPoints[0];
+  const routePositions: [number, number][] = displayedPoints.map((point) => [
     point.latitude,
     point.longitude,
   ]);

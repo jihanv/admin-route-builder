@@ -8,12 +8,20 @@ const LeafletMap = dynamic(() => import("./ReviewRouteMapLeaflet"), {
 
 type ReviewRouteMapProps = {
   routePoints: RoutePoint[];
+  snappedRoutePoints?: RoutePoint[];
   milestones: MissionMilestone[];
 };
 
 export function ReviewRouteMap({
   routePoints,
+  snappedRoutePoints,
   milestones,
 }: ReviewRouteMapProps) {
-  return <LeafletMap routePoints={routePoints} milestones={milestones} />;
+  return (
+    <LeafletMap
+      routePoints={routePoints}
+      snappedRoutePoints={snappedRoutePoints}
+      milestones={milestones}
+    />
+  );
 }
