@@ -1,0 +1,154 @@
+[
+  {
+    "id": "mission-001",
+    "title": "Japan Coast-to-Coast",
+    "description": "A virtual journey across central Japan.",
+    "startDate": "2026-06-01",
+    "endDate": "2026-09-30",
+    "goalDistanceMeters": 500000,
+    "routePoints": [
+      {
+        "latitude": 35.6762,
+        "longitude": 139.6503
+      },
+      {
+        "latitude": 35.1815,
+        "longitude": 136.9066
+      },
+      {
+        "latitude": 34.6937,
+        "longitude": 135.5023
+      }
+    ],
+    "snappedRoutePoints": [
+      {
+        "latitude": 35.6762,
+        "longitude": 139.6503
+      },
+      {
+        "latitude": 35.1815,
+        "longitude": 136.9066
+      },
+      {
+        "latitude": 34.6937,
+        "longitude": 135.5023
+      }
+    ],
+    "snapToRoads": true,
+    "milestones": [],
+    "createdByAdminId": "user_mock_admin_001",
+    "createdAt": "2026-04-10T09:00:00Z",
+    "updatedAt": "2026-05-20T11:30:00Z",
+    "status": "published"
+  },
+  {
+    "id": "mission-002",
+    "title": "Camino Challenge",
+    "description": "A virtual mission along the Camino de Santiago.",
+    "startDate": "2026-04-15",
+    "endDate": "2026-10-15",
+    "goalDistanceMeters": 780000,
+    "routePoints": [
+      {
+        "latitude": 43.1631,
+        "longitude": -1.2377
+      },
+      {
+        "latitude": 42.8125,
+        "longitude": -1.6458
+      },
+      {
+        "latitude": 42.8782,
+        "longitude": -8.5448
+      }
+    ],
+    "snappedRoutePoints": [
+      {
+        "latitude": 43.1631,
+        "longitude": -1.2377
+      },
+      {
+        "latitude": 42.8125,
+        "longitude": -1.6458
+      },
+      {
+        "latitude": 42.8782,
+        "longitude": -8.5448
+      }
+    ],
+    "snapToRoads": true,
+    "milestones": [],
+    "createdByAdminId": "user_mock_admin_001",
+    "createdAt": "2026-02-05T08:45:00Z",
+    "updatedAt": "2026-04-01T16:20:00Z",
+    "status": "published"
+  },
+  {
+    "id": "mission-003",
+    "title": "Rocky Mountain Trek",
+    "description": "An upcoming virtual route through the Rocky Mountains.",
+    "startDate": "2026-08-01",
+    "endDate": "2026-11-30",
+    "goalDistanceMeters": 350000,
+    "routePoints": [
+      {
+        "latitude": 51.1784,
+        "longitude": -115.5708
+      },
+      {
+        "latitude": 51.4254,
+        "longitude": -116.1773
+      }
+    ],
+    "snappedRoutePoints": [
+      {
+        "latitude": 51.1784,
+        "longitude": -115.5708
+      },
+      {
+        "latitude": 51.4254,
+        "longitude": -116.1773
+      }
+    ],
+    "snapToRoads": true,
+    "milestones": [],
+    "createdByAdminId": "user_mock_admin_001",
+    "createdAt": "2026-06-12T10:00:00Z",
+    "updatedAt": "2026-06-30T13:40:00Z",
+    "status": "published"
+  },
+  {
+    "id": "mission-004",
+    "title": "Winter Wellness Walk",
+    "description": "A completed winter walking mission.",
+    "startDate": "2025-11-01",
+    "endDate": "2026-02-28",
+    "goalDistanceMeters": 200000,
+    "routePoints": [
+      {
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      },
+      {
+        "latitude": 45.4215,
+        "longitude": -75.6972
+      }
+    ],
+    "snappedRoutePoints": [
+      {
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      },
+      {
+        "latitude": 45.4215,
+        "longitude": -75.6972
+      }
+    ],
+    "snapToRoads": true,
+    "milestones": [],
+    "createdByAdminId": "user_mock_admin_001",
+    "createdAt": "2025-09-12T09:15:00Z",
+    "updatedAt": "2025-10-18T14:30:00Z",
+    "status": "published"
+  }
+]

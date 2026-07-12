@@ -1,0 +1,588 @@
+{
+  "stripeCustomers": [
+    {
+      "id": "cus_mock_001",
+      "object": "customer",
+      "created": 1584003600,
+      "email": "alice@example.com",
+      "name": "Alice Johnson",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-001"
+      }
+    },
+    {
+      "id": "cus_mock_002",
+      "object": "customer",
+      "created": 1624188600,
+      "email": "sarah@example.com",
+      "name": "Sarah Williams",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-002"
+      }
+    },
+    {
+      "id": "cus_mock_003",
+      "object": "customer",
+      "created": 1642256400,
+      "email": "michael@example.com",
+      "name": "Michael Brown",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-003"
+      }
+    },
+    {
+      "id": "cus_mock_004",
+      "object": "customer",
+      "created": 1691052300,
+      "email": "emily@example.com",
+      "name": "Emily Davis",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-004"
+      }
+    },
+    {
+      "id": "cus_mock_005",
+      "object": "customer",
+      "created": 1708272600,
+      "email": "james@example.com",
+      "name": "James Wilson",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-005"
+      }
+    },
+    {
+      "id": "cus_mock_006",
+      "object": "customer",
+      "created": 1744194300,
+      "email": "olivia@example.com",
+      "name": "Olivia Martinez",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-006"
+      }
+    },
+    {
+      "id": "cus_mock_007",
+      "object": "customer",
+      "created": 1763815200,
+      "email": "grace@example.com",
+      "name": "Grace Lee",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-007"
+      }
+    },
+    {
+      "id": "cus_mock_008",
+      "object": "customer",
+      "created": 1771055700,
+      "email": "daniel@example.com",
+      "name": "Daniel Kim",
+      "livemode": false,
+      "metadata": {
+        "internalDonorId": "donor-008"
+      }
+    }
+  ],
+  "stripeCheckoutSessions": [
+    {
+      "id": "cs_test_mock_001",
+      "object": "checkout.session",
+      "amount_subtotal": 3000,
+      "amount_total": 3000,
+      "created": 1586529000,
+      "currency": "usd",
+      "customer": "cus_mock_001",
+      "customer_details": {
+        "email": "alice@example.com",
+        "name": "Alice Johnson",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_001",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_002",
+      "object": "checkout.session",
+      "amount_subtotal": 3500,
+      "amount_total": 3500,
+      "created": 1625735700,
+      "currency": "usd",
+      "customer": "cus_mock_002",
+      "customer_details": {
+        "email": "sarah@example.com",
+        "name": "Sarah Williams",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_002",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_003",
+      "object": "checkout.session",
+      "amount_subtotal": 4000,
+      "amount_total": 4000,
+      "created": 1653151500,
+      "currency": "usd",
+      "customer": "cus_mock_003",
+      "customer_details": {
+        "email": "michael@example.com",
+        "name": "Michael Brown",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_003",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_004",
+      "object": "checkout.session",
+      "amount_subtotal": 4500,
+      "amount_total": 4500,
+      "created": 1678533600,
+      "currency": "usd",
+      "customer": "cus_mock_001",
+      "customer_details": {
+        "email": "alice@example.com",
+        "name": "Alice Johnson",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_004",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_005",
+      "object": "checkout.session",
+      "amount_subtotal": 5000,
+      "amount_total": 5000,
+      "created": 1725612000,
+      "currency": "usd",
+      "customer": "cus_mock_004",
+      "customer_details": {
+        "email": "emily@example.com",
+        "name": "Emily Davis",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_005",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_006",
+      "object": "checkout.session",
+      "amount_subtotal": 3200,
+      "amount_total": 3200,
+      "created": 1763471400,
+      "currency": "usd",
+      "customer": "cus_mock_005",
+      "customer_details": {
+        "email": "james@example.com",
+        "name": "James Wilson",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-004"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_006",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_007",
+      "object": "checkout.session",
+      "amount_subtotal": 3800,
+      "amount_total": 3800,
+      "created": 1766312700,
+      "currency": "usd",
+      "customer": "cus_mock_006",
+      "customer_details": {
+        "email": "olivia@example.com",
+        "name": "Olivia Martinez",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-004"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_007",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_008",
+      "object": "checkout.session",
+      "amount_subtotal": 4200,
+      "amount_total": 4200,
+      "created": 1767978300,
+      "currency": "usd",
+      "customer": "cus_mock_002",
+      "customer_details": {
+        "email": "sarah@example.com",
+        "name": "Sarah Williams",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-004"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_008",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_009",
+      "object": "checkout.session",
+      "amount_subtotal": 4700,
+      "amount_total": 4700,
+      "created": 1771330500,
+      "currency": "usd",
+      "customer": "cus_mock_007",
+      "customer_details": {
+        "email": "grace@example.com",
+        "name": "Grace Lee",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-004"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_009",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_010",
+      "object": "checkout.session",
+      "amount_subtotal": 3300,
+      "amount_total": 3300,
+      "created": 1773502500,
+      "currency": "usd",
+      "customer": "cus_mock_003",
+      "customer_details": {
+        "email": "michael@example.com",
+        "name": "Michael Brown",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "general"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_010",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_011",
+      "object": "checkout.session",
+      "amount_subtotal": 3900,
+      "amount_total": 3900,
+      "created": 1776592200,
+      "currency": "usd",
+      "customer": "cus_mock_008",
+      "customer_details": {
+        "email": "daniel@example.com",
+        "name": "Daniel Kim",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_011",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_012",
+      "object": "checkout.session",
+      "amount_subtotal": 4400,
+      "amount_total": 4400,
+      "created": 1779560400,
+      "currency": "usd",
+      "customer": "cus_mock_004",
+      "customer_details": {
+        "email": "emily@example.com",
+        "name": "Emily Davis",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_012",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_013",
+      "object": "checkout.session",
+      "amount_subtotal": 5000,
+      "amount_total": 5000,
+      "created": 1781512800,
+      "currency": "usd",
+      "customer": "cus_mock_005",
+      "customer_details": {
+        "email": "james@example.com",
+        "name": "James Wilson",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-001"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_013",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_014",
+      "object": "checkout.session",
+      "amount_subtotal": 3600,
+      "amount_total": 3600,
+      "created": 1782133800,
+      "currency": "usd",
+      "customer": "cus_mock_006",
+      "customer_details": {
+        "email": "olivia@example.com",
+        "name": "Olivia Martinez",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_014",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_015",
+      "object": "checkout.session",
+      "amount_subtotal": 4100,
+      "amount_total": 4100,
+      "created": 1782728700,
+      "currency": "usd",
+      "customer": "cus_mock_002",
+      "customer_details": {
+        "email": "sarah@example.com",
+        "name": "Sarah Williams",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-001"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_015",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_016",
+      "object": "checkout.session",
+      "amount_subtotal": 4600,
+      "amount_total": 4600,
+      "created": 1782993000,
+      "currency": "usd",
+      "customer": "cus_mock_003",
+      "customer_details": {
+        "email": "michael@example.com",
+        "name": "Michael Brown",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-001"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_016",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_017",
+      "object": "checkout.session",
+      "amount_subtotal": 3000,
+      "amount_total": 3000,
+      "created": 1783260600,
+      "currency": "usd",
+      "customer": "cus_mock_001",
+      "customer_details": {
+        "email": "alice@example.com",
+        "name": "Alice Johnson",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_017",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_018",
+      "object": "checkout.session",
+      "amount_subtotal": 3500,
+      "amount_total": 3500,
+      "created": 1783530300,
+      "currency": "usd",
+      "customer": "cus_mock_007",
+      "customer_details": {
+        "email": "grace@example.com",
+        "name": "Grace Lee",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-001"
+      },
+      "mode": "payment",
+      "payment_intent": null,
+      "payment_status": "unpaid",
+      "status": "expired"
+    },
+    {
+      "id": "cs_test_mock_019",
+      "object": "checkout.session",
+      "amount_subtotal": 4800,
+      "amount_total": 4800,
+      "created": 1783675800,
+      "currency": "usd",
+      "customer": "cus_mock_008",
+      "customer_details": {
+        "email": "daniel@example.com",
+        "name": "Daniel Kim",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_019",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_020",
+      "object": "checkout.session",
+      "amount_subtotal": 4300,
+      "amount_total": 4300,
+      "created": 1783857480,
+      "currency": "usd",
+      "customer": "cus_mock_004",
+      "customer_details": {
+        "email": "emily@example.com",
+        "name": "Emily Davis",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-001"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_020",
+      "payment_status": "paid",
+      "status": "complete"
+    },
+    {
+      "id": "cs_test_mock_021",
+      "object": "checkout.session",
+      "amount_subtotal": 3700,
+      "amount_total": 3700,
+      "created": 1783858500,
+      "currency": "usd",
+      "customer": "cus_mock_006",
+      "customer_details": {
+        "email": "olivia@example.com",
+        "name": "Olivia Martinez",
+        "phone": null
+      },
+      "livemode": false,
+      "metadata": {
+        "donationType": "mission",
+        "missionId": "mission-002"
+      },
+      "mode": "payment",
+      "payment_intent": "pi_mock_021",
+      "payment_status": "paid",
+      "status": "complete"
+    }
+  ],
+  "stripeRefunds": [
+    {
+      "id": "re_mock_001",
+      "object": "refund",
+      "amount": 3700,
+      "charge": "ch_mock_021",
+      "created": 1783861200,
+      "currency": "usd",
+      "livemode": false,
+      "metadata": {
+        "missionId": "mission-002"
+      },
+      "payment_intent": "pi_mock_021",
+      "reason": "requested_by_customer",
+      "status": "succeeded"
+    }
+  ]
+}

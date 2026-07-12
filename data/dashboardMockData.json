@@ -1,0 +1,337 @@
+{
+  "donors": [
+    {
+      "id": "donor-001",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "createdAt": "2020-03-12T09:00:00Z"
+    },
+    {
+      "id": "donor-002",
+      "name": "Sarah Williams",
+      "email": "sarah@example.com",
+      "createdAt": "2021-06-20T11:30:00Z"
+    },
+    {
+      "id": "donor-003",
+      "name": "Michael Brown",
+      "email": "michael@example.com",
+      "createdAt": "2022-01-15T14:20:00Z"
+    },
+    {
+      "id": "donor-004",
+      "name": "Emily Davis",
+      "email": "emily@example.com",
+      "createdAt": "2023-08-03T08:45:00Z"
+    },
+    {
+      "id": "donor-005",
+      "name": "James Wilson",
+      "email": "james@example.com",
+      "createdAt": "2024-02-18T16:10:00Z"
+    },
+    {
+      "id": "donor-006",
+      "name": "Olivia Martinez",
+      "email": "olivia@example.com",
+      "createdAt": "2025-04-09T10:25:00Z"
+    },
+    {
+      "id": "donor-007",
+      "name": "Grace Lee",
+      "email": "grace@example.com",
+      "createdAt": "2025-11-22T12:40:00Z"
+    },
+    {
+      "id": "donor-008",
+      "name": "Daniel Kim",
+      "email": "daniel@example.com",
+      "createdAt": "2026-02-14T07:55:00Z"
+    }
+  ],
+  "donations": [
+    {
+      "id": "donation-001",
+      "donorId": "donor-001",
+      "missionId": null,
+      "amountCents": 5000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2020-04-10T14:30:00Z"
+    },
+    {
+      "id": "donation-002",
+      "donorId": "donor-002",
+      "missionId": null,
+      "amountCents": 7500,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2021-07-08T09:15:00Z"
+    },
+    {
+      "id": "donation-003",
+      "donorId": "donor-003",
+      "missionId": null,
+      "amountCents": 25000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2022-05-21T16:45:00Z"
+    },
+    {
+      "id": "donation-004",
+      "donorId": "donor-001",
+      "missionId": null,
+      "amountCents": 10000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2023-03-11T11:20:00Z"
+    },
+    {
+      "id": "donation-005",
+      "donorId": "donor-004",
+      "missionId": null,
+      "amountCents": 15000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2024-09-06T08:40:00Z"
+    },
+    {
+      "id": "donation-006",
+      "donorId": "donor-005",
+      "missionId": "mission-004",
+      "amountCents": 30000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2025-11-18T13:10:00Z"
+    },
+    {
+      "id": "donation-007",
+      "donorId": "donor-006",
+      "missionId": "mission-004",
+      "amountCents": 12000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2025-12-21T10:25:00Z"
+    },
+    {
+      "id": "donation-008",
+      "donorId": "donor-002",
+      "missionId": "mission-004",
+      "amountCents": 10000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-01-09T17:05:00Z"
+    },
+    {
+      "id": "donation-009",
+      "donorId": "donor-007",
+      "missionId": "mission-004",
+      "amountCents": 7500,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-02-17T12:15:00Z"
+    },
+    {
+      "id": "donation-010",
+      "donorId": "donor-003",
+      "missionId": null,
+      "amountCents": 25000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-03-14T15:35:00Z"
+    },
+    {
+      "id": "donation-011",
+      "donorId": "donor-008",
+      "missionId": "mission-002",
+      "amountCents": 5000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-04-19T09:50:00Z"
+    },
+    {
+      "id": "donation-012",
+      "donorId": "donor-004",
+      "missionId": "mission-002",
+      "amountCents": 20000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-05-23T18:20:00Z"
+    },
+    {
+      "id": "donation-013",
+      "donorId": "donor-005",
+      "missionId": "mission-001",
+      "amountCents": 50000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-06-15T08:40:00Z"
+    },
+    {
+      "id": "donation-014",
+      "donorId": "donor-006",
+      "missionId": "mission-002",
+      "amountCents": 12000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-06-22T13:10:00Z"
+    },
+    {
+      "id": "donation-015",
+      "donorId": "donor-002",
+      "missionId": "mission-001",
+      "amountCents": 10000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-06-29T10:25:00Z"
+    },
+    {
+      "id": "donation-016",
+      "donorId": "donor-003",
+      "missionId": "mission-001",
+      "amountCents": 25000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-07-02T11:50:00Z"
+    },
+    {
+      "id": "donation-017",
+      "donorId": "donor-001",
+      "missionId": "mission-002",
+      "amountCents": 5000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-07-05T14:10:00Z"
+    },
+    {
+      "id": "donation-018",
+      "donorId": "donor-007",
+      "missionId": "mission-001",
+      "amountCents": 7500,
+      "currency": "usd",
+      "status": "failed",
+      "donatedAt": "2026-07-08T17:05:00Z"
+    },
+    {
+      "id": "donation-019",
+      "donorId": "donor-008",
+      "missionId": "mission-002",
+      "amountCents": 15000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-07-10T09:30:00Z"
+    },
+    {
+      "id": "donation-020",
+      "donorId": "donor-004",
+      "missionId": "mission-001",
+      "amountCents": 30000,
+      "currency": "usd",
+      "status": "succeeded",
+      "donatedAt": "2026-07-12T11:58:00Z"
+    },
+    {
+      "id": "donation-021",
+      "donorId": "donor-006",
+      "missionId": "mission-002",
+      "amountCents": 10000,
+      "currency": "usd",
+      "status": "refunded",
+      "donatedAt": "2026-07-12T12:15:00Z"
+    }
+  ],
+  "missions": [
+    {
+      "id": "mission-001",
+      "title": "Japan Coast-to-Coast",
+      "description": "A virtual journey across central Japan.",
+      "startDate": "2026-06-01",
+      "endDate": "2026-09-30",
+      "goalDistanceMeters": 500000,
+      "routePoints": [
+        { "latitude": 35.6762, "longitude": 139.6503 },
+        { "latitude": 35.1815, "longitude": 136.9066 },
+        { "latitude": 34.6937, "longitude": 135.5023 }
+      ],
+      "snappedRoutePoints": [
+        { "latitude": 35.6762, "longitude": 139.6503 },
+        { "latitude": 35.1815, "longitude": 136.9066 },
+        { "latitude": 34.6937, "longitude": 135.5023 }
+      ],
+      "snapToRoads": true,
+      "milestones": [],
+      "createdByAdminId": "user_mock_admin_001",
+      "createdAt": "2026-04-10T09:00:00Z",
+      "updatedAt": "2026-05-20T11:30:00Z",
+      "status": "published"
+    },
+    {
+      "id": "mission-002",
+      "title": "Camino Challenge",
+      "description": "A virtual mission along the Camino de Santiago.",
+      "startDate": "2026-04-15",
+      "endDate": "2026-10-15",
+      "goalDistanceMeters": 780000,
+      "routePoints": [
+        { "latitude": 43.1631, "longitude": -1.2377 },
+        { "latitude": 42.8125, "longitude": -1.6458 },
+        { "latitude": 42.8782, "longitude": -8.5448 }
+      ],
+      "snappedRoutePoints": [
+        { "latitude": 43.1631, "longitude": -1.2377 },
+        { "latitude": 42.8125, "longitude": -1.6458 },
+        { "latitude": 42.8782, "longitude": -8.5448 }
+      ],
+      "snapToRoads": true,
+      "milestones": [],
+      "createdByAdminId": "user_mock_admin_001",
+      "createdAt": "2026-02-05T08:45:00Z",
+      "updatedAt": "2026-04-01T16:20:00Z",
+      "status": "published"
+    },
+    {
+      "id": "mission-003",
+      "title": "Rocky Mountain Trek",
+      "description": "An upcoming virtual route through the Rocky Mountains.",
+      "startDate": "2026-08-01",
+      "endDate": "2026-11-30",
+      "goalDistanceMeters": 350000,
+      "routePoints": [
+        { "latitude": 51.1784, "longitude": -115.5708 },
+        { "latitude": 51.4254, "longitude": -116.1773 }
+      ],
+      "snappedRoutePoints": [
+        { "latitude": 51.1784, "longitude": -115.5708 },
+        { "latitude": 51.4254, "longitude": -116.1773 }
+      ],
+      "snapToRoads": true,
+      "milestones": [],
+      "createdByAdminId": "user_mock_admin_001",
+      "createdAt": "2026-06-12T10:00:00Z",
+      "updatedAt": "2026-06-30T13:40:00Z",
+      "status": "published"
+    },
+    {
+      "id": "mission-004",
+      "title": "Winter Wellness Walk",
+      "description": "A completed winter walking mission.",
+      "startDate": "2025-11-01",
+      "endDate": "2026-02-28",
+      "goalDistanceMeters": 200000,
+      "routePoints": [
+        { "latitude": 43.6532, "longitude": -79.3832 },
+        { "latitude": 45.4215, "longitude": -75.6972 }
+      ],
+      "snappedRoutePoints": [
+        { "latitude": 43.6532, "longitude": -79.3832 },
+        { "latitude": 45.4215, "longitude": -75.6972 }
+      ],
+      "snapToRoads": true,
+      "milestones": [],
+      "createdByAdminId": "user_mock_admin_001",
+      "createdAt": "2025-09-12T09:15:00Z",
+      "updatedAt": "2025-10-18T14:30:00Z",
+      "status": "published"
+    }
+  ]
+}
