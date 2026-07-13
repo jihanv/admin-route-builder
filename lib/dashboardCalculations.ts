@@ -7,12 +7,16 @@ type CheckoutSession = {
 
 type Refund = { amount: number; status: string };
 
+function isSuccessfulDonationSession(session: CheckoutSession) {
+  return session.payment_status === "paid" && session.status === "complete";
+}
+
 export function calculateTotalDonationsCents(
   sessions: CheckoutSession[],
   refunds: Refund[],
 ) {
   const paid = sessions
-    .filter((s) => s.payment_status === "paid" && s.status === "complete")
+    .filter(isSuccessfulDonationSession)
     .reduce((sum, s) => sum + (s.amount_total ?? 0), 0);
   const refunded = refunds
     .filter((r) => r.status === "succeeded")
@@ -22,7 +26,7 @@ export function calculateTotalDonationsCents(
 
 export function calculateTotalDonors(sessions: CheckoutSession[]) {
   const customerIds = sessions
-    .filter((s) => s.payment_status === "paid" && s.status === "complete")
+    .filter(isSuccessfulDonationSession)
     .map((s) => s.customer)
     .filter((id): id is string => id !== null);
   return new Set(customerIds).size;
@@ -32,8 +36,10 @@ export function calculateAverageDonationCents(
   sessions: CheckoutSession[],
   refunds: Refund[],
 ) {
-  const count = sessions.filter(
-    (s) => s.payment_status === "paid" && s.status === "complete",
-  ).length;
-  return count ? calculateTotalDonationsCents(sessions, refunds) / count : 0;
+  const successfulSessions = sessions.filter(isSuccessfulDonationSession);
+  if (successfulSessions.length === 0) return 0;
+
+  return Math.round(
+    calculateTotalDonationsCents(sessions, refunds) / successfulSessions.length,
+  );
 }
