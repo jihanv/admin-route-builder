@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getDashboardSummary } from "@/lib/dashboardService";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const summary = await getDashboardSummary();
   return (
     <main className="p-8">
       <h1 className="text-2xl font-semibold">REI Mission Builder</h1>
-      <Button asChild className="mt-4">
-        <Link href="/dashboard/mission/new">Create New Mission</Link>
-      </Button>
+      <p className="mt-2 text-sm text-muted-foreground">
+        {summary.activeMissions.length} active missions
+      </p>
     </main>
   );
 }
