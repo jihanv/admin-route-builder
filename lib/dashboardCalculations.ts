@@ -55,7 +55,7 @@ export function calculateAverageDonationCents(
 export function getActiveMissions(
   missions: ActiveMissionInput[],
   asOfDate: Date,
-) {
+): ActiveMissionInput[] {
   return missions.filter((mission) => {
     const startDate = new Date(mission.startDate);
     const endDate = new Date(mission.endDate);
