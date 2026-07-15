@@ -27,12 +27,28 @@ export function calculateTotalDonationsCents(
   sessions: CheckoutSession[],
   refunds: Refund[],
 ) {
-  const paid = sessions
-    .filter(isSuccessfulDonationSession)
-    .reduce((sum, s) => sum + (s.amount_total ?? 0), 0);
+  const successfulSessions = sessions.filter(isSuccessfulDonationSession);
+
+  const paymentIntentIds = new Set(
+    successfulSessions
+      .map((session) => session.payment_intent)
+      .filter((id): id is string => id !== null),
+  );
+
+  const paid = successfulSessions.reduce(
+    (sum, session) => sum + (session.amount_total ?? 0),
+    0,
+  );
+
   const refunded = refunds
-    .filter((r) => r.status === "succeeded")
-    .reduce((sum, r) => sum + r.amount, 0);
+    .filter(
+      (refund) =>
+        refund.status === "succeeded" &&
+        refund.payment_intent !== null &&
+        paymentIntentIds.has(refund.payment_intent),
+    )
+    .reduce((sum, refund) => sum + refund.amount, 0);
+
   return paid - refunded;
 }
 
