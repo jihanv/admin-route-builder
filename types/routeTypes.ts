@@ -27,6 +27,7 @@ export type Mission = {
   startDate: string;
   endDate: string;
   goalDistanceMeters: number;
+  fundraisingGoalCents: number;
   routePoints: RoutePoint[];
   snappedRoutePoints: RoutePoint[];
   snapToRoads: boolean;
@@ -43,6 +44,7 @@ export type RouteDraft = {
   startDate?: string;
   endDate?: string;
   goalDistanceMeters?: number;
+  fundraisingGoalCents?: number;
   routePoints?: RoutePoint[];
   snappedRoutePoints?: RoutePoint[];
   milestones?: MissionMilestone[];
