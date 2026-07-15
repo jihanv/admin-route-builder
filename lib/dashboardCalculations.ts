@@ -5,6 +5,14 @@ type CheckoutSession = {
   status: string;
 };
 
+type ActiveMissionInput = {
+  id: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+};
+
 type Refund = { amount: number; status: string };
 
 function isSuccessfulDonationSession(session: CheckoutSession) {
@@ -42,4 +50,20 @@ export function calculateAverageDonationCents(
   return Math.round(
     calculateTotalDonationsCents(sessions, refunds) / successfulSessions.length,
   );
+}
+
+export function getActiveMissions(
+  missions: ActiveMissionInput[],
+  asOfDate: Date,
+) {
+  return missions.filter((mission) => {
+    const startDate = new Date(mission.startDate);
+    const endDate = new Date(mission.endDate);
+
+    return (
+      mission.status === "published" &&
+      startDate <= asOfDate &&
+      asOfDate <= endDate
+    );
+  });
 }
