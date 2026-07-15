@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { dollarsToCents } from "@/lib/formatters";
 
 const missionDetailsSchema = z
   .object({
@@ -16,6 +17,16 @@ const missionDetailsSchema = z
       .string()
       .trim()
       .max(1000, "Description must be 1000 characters or less."),
+    fundraisingGoalDollars: z
+      .string()
+      .trim()
+      .regex(
+        /^\d+(\.\d{1,2})?$/,
+        "Fundraising goal must have no more than two decimal places.",
+      )
+      .refine((value) => Number(value) > 0, {
+        message: "Fundraising goal must be greater than zero.",
+      }),
     startDate: z
       .string()
       .trim()
@@ -70,6 +81,7 @@ export async function updateMissionDetailsAction(
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description") ?? "",
+    fundraisingGoalDollars: formData.get("fundraisingGoalDollars"),
     startDate: formData.get("startDate") ?? "",
     endDate: formData.get("endDate") ?? "",
   });
@@ -84,9 +96,14 @@ export async function updateMissionDetailsAction(
     );
   }
 
+  const fundraisingGoalCents = dollarsToCents(
+    result.data.fundraisingGoalDollars,
+  );
+
   await draftRef.update({
     title: result.data.title,
     description: result.data.description,
+    fundraisingGoalCents,
     startDate: result.data.startDate,
     endDate: result.data.endDate,
     updatedAt: new Date().toISOString(),

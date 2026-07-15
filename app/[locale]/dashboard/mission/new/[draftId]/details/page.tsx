@@ -56,6 +56,10 @@ export default async function MissionDetailsPage({
   const draftStartDate = draft?.startDate ?? "";
   const draftEndDate = draft?.endDate ?? "";
   const draftGoalDistanceMeters = draft?.goalDistanceMeters ?? 0;
+  const draftFundraisingGoalDollars =
+    typeof draft?.fundraisingGoalCents === "number"
+      ? (draft.fundraisingGoalCents / 100).toFixed(2)
+      : "";
   const detailsSavedAt = draft?.detailsSavedAt ?? "";
   const canContinueToMilestones = canEditDraft && Boolean(detailsSavedAt);
 
@@ -91,6 +95,21 @@ export default async function MissionDetailsPage({
             maxLength={1000}
             placeholder="Describe the mission route for participants."
           />
+          <label className="block text-base font-medium">
+            Fundraising goal (USD)
+          </label>
+          <Input
+            name="fundraisingGoalDollars"
+            type="number"
+            min="1"
+            step="0.01"
+            defaultValue={draftFundraisingGoalDollars}
+            placeholder="5000.00"
+            required
+          />
+          <p className="text-sm text-muted-foreground">
+            Enter the total amount this mission aims to raise.
+          </p>
           <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
             Route distance:{" "}
             <span className="font-medium">

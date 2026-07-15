@@ -4,3 +4,7 @@ export function formatCurrencyFromCents(cents: number, currency = "USD") {
     currency,
   }).format(cents / 100);
 }
+
+export function dollarsToCents(dollars: string): number {
+  return Math.round(Number(dollars) * 100);
+}
