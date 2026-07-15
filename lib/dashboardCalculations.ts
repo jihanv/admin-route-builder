@@ -1,10 +1,10 @@
 type CheckoutSession = {
   amount_total: number | null;
   customer: string | null;
+  payment_intent: string | null;
   payment_status: string;
   status: string;
 };
-
 type ActiveMissionInput = {
   id: string;
   title: string;
@@ -13,7 +13,11 @@ type ActiveMissionInput = {
   status: string;
 };
 
-type Refund = { amount: number; status: string };
+type Refund = {
+  amount: number;
+  payment_intent: string | null;
+  status: string;
+};
 
 function isSuccessfulDonationSession(session: CheckoutSession) {
   return session.payment_status === "paid" && session.status === "complete";
