@@ -11,7 +11,7 @@ export default async function AdminPage() {
     <main className="p-8">
       <h1 className="text-2xl font-semibold">REI Mission Builder</h1>
       <div className="mt-6 grid gap-4 lg:grid-cols-3">
-        <Card>
+        <Card size="sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <CircleDollarSign
@@ -20,17 +20,14 @@ export default async function AdminPage() {
               />
               Total Donations
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Paid donations minus successful refunds
-            </p>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-semibold">
+            <p className="text-2xl font-semibold">
               {formatCurrencyFromCents(summary.totalDonationsCents)}
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card size="sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <Users
@@ -39,15 +36,12 @@ export default async function AdminPage() {
               />
               Total Donors
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Unique donors from successful donations
-            </p>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-semibold">{summary.totalDonors}</p>
+            <p className="text-2xl font-semibold">{summary.totalDonors}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card size="sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
               <HandCoins
@@ -56,13 +50,10 @@ export default async function AdminPage() {
               />
               Average Donation
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Average net amount per successful donation
-            </p>
           </CardHeader>
 
           <CardContent>
-            <p className="text-3xl font-semibold">
+            <p className="text-2xl font-semibold">
               {formatCurrencyFromCents(summary.averageDonationCents)}
             </p>
           </CardContent>
