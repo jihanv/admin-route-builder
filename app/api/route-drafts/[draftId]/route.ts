@@ -7,6 +7,8 @@ import {
   routePointSchema,
 } from "@/lib/routeDraftSchemas";
 import { adminDb } from "@/lib/firebaseAdmin";
+import { deleteMilestoneImageAsset } from "@/lib/deleteMilestoneImageAsset";
+import type { RouteDraftMilestoneImageAsset } from "@/types/routeTypes";
 
 const routeDraftPatchSchema = z.object({
   title: z.string().optional(),
@@ -74,10 +76,41 @@ export async function PATCH(
   if (isEditingLockedRoute)
     return NextResponse.json({ error: "Route is locked" }, { status: 409 });
 
+  const currentImageAssets = Array.isArray(draft?.milestoneImageAssets)
+    ? (draft.milestoneImageAssets as RouteDraftMilestoneImageAsset[])
+    : [];
+
+  const nextImageAssets = parseResult.data.milestoneImageAssets;
+  const oldImagePublicIds: string[] = [];
+
+  if (nextImageAssets) {
+    for (const currentAsset of currentImageAssets) {
+      const nextAsset = nextImageAssets.find(
+        (asset) => asset.milestoneId === currentAsset.milestoneId,
+      );
+
+      const wasRemovedOrReplaced =
+        !nextAsset ||
+        nextAsset.cloudinaryPublicId !== currentAsset.cloudinaryPublicId;
+
+      if (wasRemovedOrReplaced) {
+        oldImagePublicIds.push(currentAsset.cloudinaryPublicId);
+      }
+    }
+  }
+
   await draftRef.update({
     ...parseResult.data,
     updatedAt: new Date().toISOString(),
   });
+
+  for (const publicId of oldImagePublicIds) {
+    try {
+      await deleteMilestoneImageAsset(publicId);
+    } catch (error) {
+      console.error(`Failed to delete old milestone image ${publicId}`, error);
+    }
+  }
 
   return NextResponse.json({ id: draftId });
 }
