@@ -78,32 +78,37 @@ export function calculateDonationTrend(
 ): DonationTrendPoint[] {
   const successfulSessions = sessions.filter(isSuccessfulDonationSession);
 
-  const paymentIntentIds = new Set(
-    successfulSessions
-      .map((session) => session.payment_intent)
-      .filter((id): id is string => id !== null),
-  );
+  const refundedByPaymentIntent = new Map<string, number>();
 
-  const events = [
-    ...successfulSessions.map((session) => ({
-      created: session.created,
-      changeCents: session.amount_total ?? 0,
-    })),
-    ...refunds
-      .filter(
-        (refund) =>
-          refund.status === "succeeded" &&
-          refund.payment_intent !== null &&
-          paymentIntentIds.has(refund.payment_intent),
-      )
-      .map((refund) => ({
-        created: refund.created,
-        changeCents: -refund.amount,
-      })),
-  ].sort(
-    (first, second) =>
-      first.created - second.created || second.changeCents - first.changeCents,
-  );
+  refunds
+    .filter(
+      (refund) =>
+        refund.status === "succeeded" && refund.payment_intent !== null,
+    )
+    .forEach((refund) => {
+      const refundedSoFar =
+        refundedByPaymentIntent.get(refund.payment_intent!) ?? 0;
+
+      refundedByPaymentIntent.set(
+        refund.payment_intent!,
+        refundedSoFar + refund.amount,
+      );
+    });
+
+  const events = successfulSessions
+    .map((session) => {
+      const refundedCents =
+        session.payment_intent === null
+          ? 0
+          : (refundedByPaymentIntent.get(session.payment_intent) ?? 0);
+
+      return {
+        created: session.created,
+        changeCents: Math.max(0, (session.amount_total ?? 0) - refundedCents),
+      };
+    })
+    .filter((event) => event.changeCents > 0)
+    .sort((first, second) => first.created - second.created);
 
   let totalCents = 0;
 
@@ -116,7 +121,6 @@ export function calculateDonationTrend(
     };
   });
 }
-
 export function calculateTotalDonors(sessions: CheckoutSession[]) {
   const customerIds = sessions
     .filter(isSuccessfulDonationSession)
