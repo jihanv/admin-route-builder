@@ -22,6 +22,7 @@ function getFormSnapshot(form: HTMLFormElement) {
   return JSON.stringify({
     title: formData.get("title") ?? "",
     description: formData.get("description") ?? "",
+    fundraisingGoalDollars: formData.get("fundraisingGoalDollars") ?? "",
     startDate: formData.get("startDate") ?? "",
     endDate: formData.get("endDate") ?? "",
   });
