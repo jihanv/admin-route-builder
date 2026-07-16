@@ -20,6 +20,12 @@ export type MissionMilestone = {
   position: RoutePoint;
   imageUrls: string[];
 };
+
+export type RouteDraftMilestoneImageAsset = {
+  milestoneId: string;
+  imageUrl: string;
+  cloudinaryPublicId: string;
+};
 export type Mission = {
   id: string;
   title: string;
@@ -48,6 +54,7 @@ export type RouteDraft = {
   routePoints?: RoutePoint[];
   snappedRoutePoints?: RoutePoint[];
   milestones?: MissionMilestone[];
+  milestoneImageAssets?: RouteDraftMilestoneImageAsset[];
   createdByAdminId?: string;
   createdAt?: string;
   detailsSavedAt?: string;
