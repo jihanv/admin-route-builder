@@ -50,5 +50,6 @@ export async function getDashboardSummary(asOfDate = new Date()) {
     totalDonors,
     averageDonationCents,
     donationTrend,
+    asOfTimestamp: Math.floor(asOfDate.getTime() / 1000),
   };
 }

@@ -29,11 +29,13 @@ const chartConfig = {
 type DonationTrendChartProps = {
   data: DonationTrendPoint[];
   totalDonationsCents: number;
+  asOfTimestamp: number;
 };
 
 export function DonationTrendChart({
   data,
   totalDonationsCents,
+  asOfTimestamp,
 }: DonationTrendChartProps) {
   const [selectedRange, setSelectedRange] = useState<DonationRange>("ALL");
   return (

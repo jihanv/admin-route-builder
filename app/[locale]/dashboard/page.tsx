@@ -129,6 +129,7 @@ export default async function AdminPage() {
             <DonationTrendChart
               data={summary.donationTrend}
               totalDonationsCents={summary.totalDonationsCents}
+              asOfTimestamp={summary.asOfTimestamp}
             />
           </CardContent>
         </Card>
