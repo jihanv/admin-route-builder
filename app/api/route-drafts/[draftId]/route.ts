@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import {
   missionMilestoneSchema,
+  routeDraftMilestoneImageAssetSchema,
   routePointSchema,
 } from "@/lib/routeDraftSchemas";
 import { adminDb } from "@/lib/firebaseAdmin";
@@ -15,8 +16,9 @@ const routeDraftPatchSchema = z.object({
   snapToRoads: z.boolean().optional(),
   routePoints: z.array(routePointSchema).optional(),
   snappedRoutePoints: z.array(routePointSchema).optional(),
-  routeLockedAt: z.string().datetime().optional(),
+  routeLockedAt: z.iso.datetime().optional(),
   milestones: z.array(missionMilestoneSchema).optional(),
+  milestoneImageAssets: z.array(routeDraftMilestoneImageAssetSchema).optional(),
 });
 
 export async function PATCH(

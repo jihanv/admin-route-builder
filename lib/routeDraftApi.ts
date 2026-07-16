@@ -11,6 +11,7 @@ type SaveRouteDraftInput = Pick<
   | "snapToRoads"
   | "routeLockedAt"
   | "milestones"
+  | "milestoneImageAssets"
 > & { id?: string | null };
 
 export async function saveRouteDraft(draft: SaveRouteDraftInput) {
