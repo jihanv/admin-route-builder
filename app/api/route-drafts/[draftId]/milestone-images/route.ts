@@ -65,6 +65,7 @@ export async function POST(
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: `rei-mission-drafts/${draftId}/milestones`,
+        tags: [`rei-route-draft-${draftId}`],
         resource_type: "image",
       },
       (error, result) => {
