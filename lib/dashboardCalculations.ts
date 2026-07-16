@@ -141,16 +141,22 @@ export function getActiveMissions(
   missions: ActiveMissionInput[],
   asOfDate: Date,
 ): ActiveMissionInput[] {
-  return missions.filter((mission) => {
-    const startDate = new Date(mission.startDate);
-    const endDate = new Date(mission.endDate);
+  return missions
+    .filter((mission) => {
+      const startDate = new Date(mission.startDate);
+      const endDate = new Date(mission.endDate);
 
-    return (
-      mission.status === "published" &&
-      startDate <= asOfDate &&
-      asOfDate <= endDate
+      return (
+        mission.status === "published" &&
+        startDate <= asOfDate &&
+        asOfDate <= endDate
+      );
+    })
+    .sort(
+      (firstMission, secondMission) =>
+        new Date(firstMission.endDate).getTime() -
+        new Date(secondMission.endDate).getTime(),
     );
-  });
 }
 
 export function calculateFundraisingPercentage(
