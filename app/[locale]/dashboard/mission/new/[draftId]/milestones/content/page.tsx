@@ -35,7 +35,9 @@ export default async function MilestoneContentPage({
   }
 
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
-
+  const milestoneImageAssets = Array.isArray(draft?.milestoneImageAssets)
+    ? draft.milestoneImageAssets
+    : [];
   return (
     <section className="space-y-6 p-8">
       <MissionBuilderSteps currentStepId="milestones" />
@@ -49,7 +51,11 @@ export default async function MilestoneContentPage({
           Back to milestone positions
         </Link>
       </Button>
-      <MilestoneContentEditor draftId={draftId} milestones={milestones} />
+      <MilestoneContentEditor
+        draftId={draftId}
+        milestones={milestones}
+        milestoneImageAssets={milestoneImageAssets}
+      />
     </section>
   );
 }

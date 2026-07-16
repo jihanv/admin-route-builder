@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentProps } from "react";
-import type { MissionMilestone } from "@/types/routeTypes";
+import type {
+  MissionMilestone,
+  RouteDraftMilestoneImageAsset,
+} from "@/types/routeTypes";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -26,6 +29,7 @@ import Link from "next/link";
 type MilestoneContentEditorProps = {
   draftId: string;
   milestones: MissionMilestone[];
+  milestoneImageAssets: RouteDraftMilestoneImageAsset[];
 };
 
 export function MilestoneContentEditor({
