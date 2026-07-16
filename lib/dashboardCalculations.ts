@@ -9,6 +9,7 @@ type CheckoutSession = {
 type ActiveMissionInput = {
   id: string;
   title: string;
+  fundraisingGoalCents: number;
   startDate: string;
   endDate: string;
   status: string;
