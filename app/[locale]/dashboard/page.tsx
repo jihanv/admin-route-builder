@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { DonationTrendChart } from "@/components/DonationTrendChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboardSummary } from "@/lib/dashboardService";
 import { formatCurrencyFromCents } from "@/lib/formatters";
@@ -59,7 +59,7 @@ export default async function AdminPage() {
           </CardContent>
         </Card>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
@@ -122,6 +122,14 @@ export default async function AdminPage() {
                 ))}
               </div>
             )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <DonationTrendChart
+              data={summary.donationTrend}
+              totalDonationsCents={summary.totalDonationsCents}
+            />
           </CardContent>
         </Card>
       </div>
