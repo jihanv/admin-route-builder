@@ -19,6 +19,58 @@ const rangeOptions = [
 
 type DonationRange = (typeof rangeOptions)[number];
 
+function getRangeStartTimestamp(
+  range: DonationRange,
+  asOfTimestamp: number,
+): number | null {
+  if (range === "ALL") return null;
+
+  const startDate = new Date(asOfTimestamp * 1000);
+
+  if (range === "1D") startDate.setUTCDate(startDate.getUTCDate() - 1);
+  if (range === "1W") startDate.setUTCDate(startDate.getUTCDate() - 7);
+  if (range === "1M") startDate.setUTCMonth(startDate.getUTCMonth() - 1);
+  if (range === "3M") startDate.setUTCMonth(startDate.getUTCMonth() - 3);
+  if (range === "6M") startDate.setUTCMonth(startDate.getUTCMonth() - 6);
+  if (range === "1Y") startDate.setUTCFullYear(startDate.getUTCFullYear() - 1);
+
+  if (range === "YTD") {
+    startDate.setUTCMonth(0, 1);
+    startDate.setUTCHours(0, 0, 0, 0);
+  }
+
+  return Math.floor(startDate.getTime() / 1000);
+}
+
+function getVisibleTrendData(
+  data: DonationTrendPoint[],
+  range: DonationRange,
+  asOfTimestamp: number,
+): DonationTrendPoint[] {
+  const startTimestamp = getRangeStartTimestamp(range, asOfTimestamp);
+
+  if (startTimestamp === null) {
+    return data.filter((point) => point.created <= asOfTimestamp);
+  }
+
+  const earlierPoints = data.filter((point) => point.created < startTimestamp);
+  const pointsInRange = data.filter(
+    (point) =>
+      point.created >= startTimestamp && point.created <= asOfTimestamp,
+  );
+
+  const startingTotal =
+    earlierPoints[earlierPoints.length - 1]?.totalCents ?? 0;
+  const endingTotal =
+    pointsInRange[pointsInRange.length - 1]?.totalCents ?? startingTotal;
+
+  return [
+    { created: startTimestamp, totalCents: startingTotal },
+    ...pointsInRange,
+    { created: asOfTimestamp, totalCents: endingTotal },
+  ];
+}
+
 const chartConfig = {
   totalCents: {
     label: "Net donations",
@@ -38,6 +90,7 @@ export function DonationTrendChart({
   asOfTimestamp,
 }: DonationTrendChartProps) {
   const [selectedRange, setSelectedRange] = useState<DonationRange>("ALL");
+  const visibleData = getVisibleTrendData(data, selectedRange, asOfTimestamp);
   return (
     <div>
       <p className="text-sm font-medium text-muted-foreground">Net donations</p>
@@ -53,7 +106,7 @@ export function DonationTrendChart({
       >
         <AreaChart
           accessibilityLayer
-          data={data}
+          data={visibleData}
           margin={{ top: 8, right: 8, bottom: 0, left: 8 }}
         >
           <defs>
