@@ -1,6 +1,7 @@
 type CheckoutSession = {
   amount_total: number | null;
   customer: string | null;
+  metadata: { missionId?: string };
   payment_intent: string | null;
   payment_status: string;
   status: string;
@@ -50,6 +51,17 @@ export function calculateTotalDonationsCents(
     .reduce((sum, refund) => sum + refund.amount, 0);
 
   return paid - refunded;
+}
+
+export function calculateMissionDonationsCents(
+  missionId: string,
+  sessions: CheckoutSession[],
+  refunds: Refund[],
+) {
+  const missionSessions = sessions.filter(
+    (session) => session.metadata.missionId === missionId,
+  );
+  return calculateTotalDonationsCents(missionSessions, refunds);
 }
 
 export function calculateTotalDonors(sessions: CheckoutSession[]) {
