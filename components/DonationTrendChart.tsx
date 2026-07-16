@@ -1,15 +1,28 @@
 "use client";
 
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
-
+import { useState } from "react";
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import type { DonationTrendPoint } from "@/lib/dashboardCalculations";
 import { formatCurrencyFromCents } from "@/lib/formatters";
 
+const rangeOptions = [
+  "1D",
+  "1W",
+  "1M",
+  "3M",
+  "6M",
+  "YTD",
+  "1Y",
+  "ALL",
+] as const;
+
+type DonationRange = (typeof rangeOptions)[number];
+
 const chartConfig = {
   totalCents: {
     label: "Net donations",
-    color: "var(--color-emerald-600)",
+    color: "var(--primary)",
   },
 } satisfies ChartConfig;
 
@@ -22,6 +35,7 @@ export function DonationTrendChart({
   data,
   totalDonationsCents,
 }: DonationTrendChartProps) {
+  const [selectedRange, setSelectedRange] = useState<DonationRange>("ALL");
   return (
     <div>
       <p className="text-sm font-medium text-muted-foreground">Net donations</p>
@@ -76,6 +90,23 @@ export function DonationTrendChart({
           />
         </AreaChart>
       </ChartContainer>
+      <div className="mt-4 flex flex-wrap gap-1 border-t pt-3">
+        {rangeOptions.map((range) => (
+          <button
+            key={range}
+            type="button"
+            onClick={() => setSelectedRange(range)}
+            aria-pressed={selectedRange === range}
+            className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+              selectedRange === range
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {range}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
