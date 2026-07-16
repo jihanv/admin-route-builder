@@ -100,3 +100,12 @@ export function getActiveMissions(
     );
   });
 }
+
+export function calculateFundraisingPercentage(
+  amountRaisedCents: number,
+  fundraisingGoalCents: number,
+) {
+  if (fundraisingGoalCents <= 0) return 0;
+
+  return Math.round((amountRaisedCents / fundraisingGoalCents) * 100);
+}

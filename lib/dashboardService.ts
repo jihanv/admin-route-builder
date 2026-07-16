@@ -4,6 +4,7 @@ import {
   calculateTotalDonors,
   getActiveMissions,
   calculateMissionDonationsCents,
+  calculateFundraisingPercentage,
 } from "./dashboardCalculations";
 import {
   listMissions,
@@ -20,14 +21,22 @@ export async function getDashboardSummary(asOfDate = new Date()) {
 
   const sessions = checkoutSessionsList.data;
   const activeMissions = getActiveMissions(missions, asOfDate).map(
-    (mission) => ({
-      ...mission,
-      amountRaisedCents: calculateMissionDonationsCents(
+    (mission) => {
+      const amountRaisedCents = calculateMissionDonationsCents(
         mission.id,
         sessions,
         refunds,
-      ),
-    }),
+      );
+
+      return {
+        ...mission,
+        amountRaisedCents,
+        fundraisingPercentage: calculateFundraisingPercentage(
+          amountRaisedCents,
+          mission.fundraisingGoalCents,
+        ),
+      };
+    },
   );
   const totalDonationsCents = calculateTotalDonationsCents(sessions, refunds);
   const totalDonors = calculateTotalDonors(sessions);

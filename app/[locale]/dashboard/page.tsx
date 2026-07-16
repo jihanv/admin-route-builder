@@ -85,18 +85,40 @@ export default async function AdminPage() {
                 No missions are active today.
               </p>
             ) : (
-              <div className="space-y-2">
+              <div className="divide-y">
                 {summary.activeMissions.map((mission) => (
-                  <Button
+                  <Link
                     key={mission.id}
-                    asChild
-                    variant="outline"
-                    className="w-full justify-start"
+                    href="/dashboard/mission/current"
+                    className="grid grid-cols-[2.5rem_1fr_auto] gap-x-3 gap-y-1 py-4"
                   >
-                    <Link href="/dashboard/mission/current">
-                      Mission: {mission.title}
-                    </Link>
-                  </Button>
+                    <span className="row-span-3 flex size-10 items-center justify-center rounded-md bg-orange-100">
+                      <MapPinned
+                        aria-hidden="true"
+                        className="size-5 text-orange-600"
+                      />
+                    </span>
+
+                    <span className="font-medium">{mission.title}</span>
+
+                    <span className="font-semibold">
+                      {mission.fundraisingPercentage}%
+                    </span>
+
+                    <span className="text-sm text-muted-foreground">
+                      {formatCurrencyFromCents(mission.amountRaisedCents)}{" "}
+                      raised
+                    </span>
+
+                    <span className="col-span-2 col-start-2 h-2 overflow-hidden rounded-full bg-muted">
+                      <span
+                        className="block h-full rounded-full bg-primary"
+                        style={{
+                          width: `${Math.min(mission.fundraisingPercentage, 100)}%`,
+                        }}
+                      />
+                    </span>
+                  </Link>
                 ))}
               </div>
             )}
