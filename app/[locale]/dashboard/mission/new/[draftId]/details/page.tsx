@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
-
+import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 
 export default async function MissionDetailsPage({
@@ -98,15 +98,7 @@ export default async function MissionDetailsPage({
           <label className="block text-base font-medium">
             Fundraising goal (USD)
           </label>
-          <Input
-            name="fundraisingGoalDollars"
-            type="number"
-            min="1"
-            step="0.01"
-            defaultValue={draftFundraisingGoalDollars}
-            placeholder="5000.00"
-            required
-          />
+          <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
           <p className="text-sm text-muted-foreground">
             Enter the total amount this mission aims to raise.
           </p>

@@ -78,6 +78,11 @@ export async function updateMissionDetailsAction(
     return;
   }
 
+  console.log(
+    "All fundraising goal values:",
+    formData.getAll("fundraisingGoalDollars"),
+  );
+
   const result = missionDetailsSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description") ?? "",
@@ -96,9 +101,13 @@ export async function updateMissionDetailsAction(
     );
   }
 
-  const fundraisingGoalCents = dollarsToCents(
-    result.data.fundraisingGoalDollars,
-  );
+  const fundraisingGoalDollars = result.data.fundraisingGoalDollars;
+  const fundraisingGoalCents = dollarsToCents(fundraisingGoalDollars);
+
+  console.log({
+    fundraisingGoalDollars,
+    fundraisingGoalCents,
+  });
 
   await draftRef.update({
     title: result.data.title,
