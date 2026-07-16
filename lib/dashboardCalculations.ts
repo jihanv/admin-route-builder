@@ -1,5 +1,6 @@
 type CheckoutSession = {
   amount_total: number | null;
+  created: number;
   customer: string | null;
   metadata: { missionId?: string };
   payment_intent: string | null;
@@ -17,6 +18,7 @@ type ActiveMissionInput = {
 
 type Refund = {
   amount: number;
+  created: number;
   payment_intent: string | null;
   status: string;
 };
@@ -63,6 +65,56 @@ export function calculateMissionDonationsCents(
     (session) => session.metadata.missionId === missionId,
   );
   return calculateTotalDonationsCents(missionSessions, refunds);
+}
+
+export type DonationTrendPoint = {
+  created: number;
+  totalCents: number;
+};
+
+export function calculateDonationTrend(
+  sessions: CheckoutSession[],
+  refunds: Refund[],
+): DonationTrendPoint[] {
+  const successfulSessions = sessions.filter(isSuccessfulDonationSession);
+
+  const paymentIntentIds = new Set(
+    successfulSessions
+      .map((session) => session.payment_intent)
+      .filter((id): id is string => id !== null),
+  );
+
+  const events = [
+    ...successfulSessions.map((session) => ({
+      created: session.created,
+      changeCents: session.amount_total ?? 0,
+    })),
+    ...refunds
+      .filter(
+        (refund) =>
+          refund.status === "succeeded" &&
+          refund.payment_intent !== null &&
+          paymentIntentIds.has(refund.payment_intent),
+      )
+      .map((refund) => ({
+        created: refund.created,
+        changeCents: -refund.amount,
+      })),
+  ].sort(
+    (first, second) =>
+      first.created - second.created || second.changeCents - first.changeCents,
+  );
+
+  let totalCents = 0;
+
+  return events.map((event) => {
+    totalCents += event.changeCents;
+
+    return {
+      created: event.created,
+      totalCents,
+    };
+  });
 }
 
 export function calculateTotalDonors(sessions: CheckoutSession[]) {
