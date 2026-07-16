@@ -2,7 +2,12 @@
 
 import { Area, AreaChart, XAxis, YAxis } from "recharts";
 import { useState } from "react";
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
 import type { DonationTrendPoint } from "@/lib/dashboardCalculations";
 import { formatCurrencyFromCents } from "@/lib/formatters";
 
@@ -133,6 +138,29 @@ export function DonationTrendChart({
 
           <YAxis domain={[0, "auto"]} hide />
 
+          <ChartTooltip
+            content={
+              <ChartTooltipContent
+                hideIndicator
+                labelFormatter={(_, payload) => {
+                  const created = payload[0]?.payload?.created;
+
+                  return typeof created === "number"
+                    ? new Date(created * 1000).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                    : "";
+                }}
+                formatter={(value) => (
+                  <span className="font-mono font-medium">
+                    {formatCurrencyFromCents(Number(value))}
+                  </span>
+                )}
+              />
+            }
+          />
           <Area
             dataKey="totalCents"
             type="linear"
