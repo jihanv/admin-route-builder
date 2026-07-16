@@ -4,6 +4,7 @@ import {
   calculateTotalDonors,
   getActiveMissions,
   calculateMissionDonationsCents,
+  calculateDonationTrend,
   calculateFundraisingPercentage,
 } from "./dashboardCalculations";
 import {
@@ -41,11 +42,13 @@ export async function getDashboardSummary(asOfDate = new Date()) {
   const totalDonationsCents = calculateTotalDonationsCents(sessions, refunds);
   const totalDonors = calculateTotalDonors(sessions);
   const averageDonationCents = calculateAverageDonationCents(sessions, refunds);
+  const donationTrend = calculateDonationTrend(sessions, refunds);
 
   return {
     activeMissions,
     totalDonationsCents,
     totalDonors,
     averageDonationCents,
+    donationTrend,
   };
 }
