@@ -35,9 +35,15 @@ type MilestoneContentEditorProps = {
 export function MilestoneContentEditor({
   draftId,
   milestones,
+  milestoneImageAssets,
 }: MilestoneContentEditorProps) {
   const [isSaving, setIsSaving] = useState(false);
-
+  const [savedImageAssetsByMilestoneId, setSavedImageAssetsByMilestoneId] =
+    useState<Record<string, RouteDraftMilestoneImageAsset>>(() =>
+      Object.fromEntries(
+        milestoneImageAssets.map((asset) => [asset.milestoneId, asset]),
+      ),
+    );
   const [titlesByMilestoneId, setTitlesByMilestoneId] = useState<
     Record<string, string>
   >(() =>
@@ -128,7 +134,9 @@ export function MilestoneContentEditor({
 
     try {
       const uploadedImageUrlsByMilestoneId = { ...imageUrlsByMilestoneId };
-
+      const nextImageAssetsByMilestoneId = {
+        ...savedImageAssetsByMilestoneId,
+      };
       for (const milestone of milestones) {
         const imageFile = imageFilesByMilestoneId[milestone.id];
 
@@ -141,10 +149,15 @@ export function MilestoneContentEditor({
         );
         const uploadResult = (await uploadResponse.json()) as {
           imageUrl?: string;
+          publicId?: string;
           error?: string;
         };
 
-        if (!uploadResponse.ok || !uploadResult.imageUrl) {
+        if (
+          !uploadResponse.ok ||
+          !uploadResult.imageUrl ||
+          !uploadResult.publicId
+        ) {
           toast.error(
             uploadResult.error ?? "Could not upload milestone image.",
           );
@@ -152,6 +165,12 @@ export function MilestoneContentEditor({
         }
 
         uploadedImageUrlsByMilestoneId[milestone.id] = uploadResult.imageUrl;
+
+        nextImageAssetsByMilestoneId[milestone.id] = {
+          milestoneId: milestone.id,
+          imageUrl: uploadResult.imageUrl,
+          cloudinaryPublicId: uploadResult.publicId,
+        };
       }
 
       const nextMilestones = milestones.map((milestone) => {
@@ -168,6 +187,7 @@ export function MilestoneContentEditor({
       const response = await saveRouteDraft({
         id: draftId,
         milestones: nextMilestones,
+        milestoneImageAssets: Object.values(nextImageAssetsByMilestoneId),
       });
 
       if (!response.ok) {
@@ -176,6 +196,7 @@ export function MilestoneContentEditor({
       }
 
       setImageUrlsByMilestoneId(uploadedImageUrlsByMilestoneId);
+      setSavedImageAssetsByMilestoneId(nextImageAssetsByMilestoneId);
       setSavedContent({
         titles: { ...titlesByMilestoneId },
         descriptions: { ...descriptionsByMilestoneId },
