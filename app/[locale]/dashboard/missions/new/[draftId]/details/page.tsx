@@ -9,7 +9,7 @@ import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitBut
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
-
+import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 export default async function MissionDetailsPage({
   params,
 }: {
@@ -82,7 +82,12 @@ export default async function MissionDetailsPage({
         className="space-y-3 rounded-lg border bg-card p-4"
       >
         <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
+          <HeroBannerImageEditor
+            draftId={draftId}
+            savedImageAsset={draftHeroBannerImageAsset}
+          />
           <label className="block text-base font-medium">Mission title</label>
+
           <Input
             name="title"
             defaultValue={draftTitle}
