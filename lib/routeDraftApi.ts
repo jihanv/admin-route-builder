@@ -4,6 +4,7 @@ type SaveRouteDraftInput = Pick<
   RouteDraft,
   | "title"
   | "description"
+  | "heroBannerImageAsset"
   | "startDate"
   | "goalDistanceMeters"
   | "routePoints"
@@ -22,6 +23,16 @@ export async function saveRouteDraft(draft: SaveRouteDraftInput) {
     method,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(draft),
+  });
+}
+
+export async function uploadHeroBannerImage(draftId: string, imageFile: File) {
+  const formData = new FormData();
+  formData.append("imageFile", imageFile);
+
+  return fetch(`/api/route-drafts/${draftId}/hero-banner-image`, {
+    method: "POST",
+    body: formData,
   });
 }
 
