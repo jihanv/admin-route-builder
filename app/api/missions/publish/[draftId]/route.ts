@@ -4,6 +4,7 @@ import { getRouteDraft } from "@/lib/getRouteDraft";
 import { isRouteDraftOwner } from "@/lib/isRouteDraftOwner";
 import { validateDraftForPublish } from "@/lib/validateDraftForPublish";
 import { createMissionFromDraft } from "@/lib/createMissionFromDraft";
+import { publishMissionTransaction } from "@/lib/publishMissionTransaction";
 
 export async function POST(
   _request: Request,
@@ -39,6 +40,8 @@ export async function POST(
   }
 
   const mission = createMissionFromDraft(draftId, draft);
+
+  await publishMissionTransaction(mission);
 
   return NextResponse.json({
     mission,

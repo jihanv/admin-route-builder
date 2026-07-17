@@ -4,6 +4,7 @@ import { adminDb } from "@/lib/firebaseAdmin";
 import type { Mission } from "@/types/routeTypes";
 
 export async function publishMissionTransaction(mission: Mission) {
+  // Create a reference to the location where the document should live
   const missionRef = adminDb.collection("missions").doc(mission.id);
 
   const draftRef = adminDb.collection("routeDrafts").doc(mission.id);
