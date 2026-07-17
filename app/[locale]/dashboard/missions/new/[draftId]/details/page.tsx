@@ -53,6 +53,7 @@ export default async function MissionDetailsPage({
 
   const draftTitle = draft?.title ?? "Untitled Route";
   const draftDescription = draft?.description ?? "";
+  const draftHeroBannerImageAsset = draft?.heroBannerImageAsset;
   const draftStartDate = draft?.startDate ?? "";
   const draftEndDate = draft?.endDate ?? "";
   const draftGoalDistanceMeters = draft?.goalDistanceMeters ?? 0;
