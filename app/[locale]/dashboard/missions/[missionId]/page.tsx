@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { getMission } from "@/lib/getMission";
 
 export default async function MissionPage({
@@ -6,6 +7,14 @@ export default async function MissionPage({
   params: Promise<{ missionId: string }>;
 }) {
   const { missionId } = await params;
+  const { userId, sessionClaims } = await auth();
+  const adminRole =
+    (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
+
+  if (!userId || adminRole !== "admin") {
+    return <div className="p-8">Access denied.</div>;
+  }
+
   const mission = await getMission(missionId);
 
   if (!mission) {
