@@ -47,7 +47,7 @@ export default async function MilestoneContentPage({
         content.
       </p>
       <Button asChild>
-        <Link href={`/dashboard/mission/new/${draftId}/milestones`}>
+        <Link href={`/dashboard/missions/new/${draftId}/milestones`}>
           Back to milestone positions
         </Link>
       </Button>

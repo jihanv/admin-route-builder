@@ -124,7 +124,7 @@ export default async function MissionDetailsPage({
       </form>
       <div className="flex justify-end">
         <MissionDetailsNextButton
-          href={`/dashboard/mission/new/${draftId}/milestones`}
+          href={`/dashboard/missions/new/${draftId}/milestones`}
           canContinue={canContinueToMilestones}
           formId="mission-details-form"
         />

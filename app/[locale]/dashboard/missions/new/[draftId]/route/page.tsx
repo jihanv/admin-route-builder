@@ -61,7 +61,7 @@ export default async function EditRoutePage({ params }: EditRoutePageProps) {
           initialSnappedRoutePoints={snappedRoutePoints}
         />
         <Button asChild>
-          <Link href={`/dashboard/mission/new/${draftId}/details`}>
+          <Link href={`/dashboard/missions/new/${draftId}/details`}>
             Back to Details
           </Link>
         </Button>

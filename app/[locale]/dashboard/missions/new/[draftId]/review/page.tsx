@@ -117,7 +117,7 @@ export default async function ReviewMissionPage({
           </p> */}
 
           <Button asChild variant="outline" size="sm">
-            <Link href={`/dashboard/mission/new/${draftId}/details`}>
+            <Link href={`/dashboard/missions/new/${draftId}/details`}>
               Edit details
             </Link>
           </Button>
@@ -194,7 +194,7 @@ export default async function ReviewMissionPage({
 
             <Button asChild variant="outline" size="sm">
               <Link
-                href={`/dashboard/mission/new/${draftId}/milestones/content`}
+                href={`/dashboard/missions/new/${draftId}/milestones/content`}
               >
                 Edit milestone content
               </Link>

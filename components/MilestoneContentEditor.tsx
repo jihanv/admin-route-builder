@@ -397,7 +397,7 @@ export function MilestoneContentEditor({
               <span className="inline-block">
                 {canReview ? (
                   <Button asChild>
-                    <Link href={`/dashboard/mission/new/${draftId}/review`}>
+                    <Link href={`/dashboard/missions/new/${draftId}/review`}>
                       Next: Review Mission
                     </Link>
                   </Button>

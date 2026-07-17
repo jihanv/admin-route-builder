@@ -30,7 +30,7 @@ export default function CreateNewMissionPage() {
 
       if (!response.ok) throw new Error("Route lock failed");
 
-      window.location.assign(`/dashboard/mission/new/${savedDraftId}/details`);
+      window.location.assign(`/dashboard/missions/new/${savedDraftId}/details`);
     } catch (error) {
       console.error("Route lock failed:", error);
       toast.error("Could not continue to mission details.");

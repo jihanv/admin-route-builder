@@ -92,7 +92,7 @@ export async function updateMissionDetailsAction(
       z.treeifyError(result.error),
     );
     redirect(
-      `/dashboard/mission/new/${draftIdResult.data}/details?error=validation`,
+      `/dashboard/missions/new/${draftIdResult.data}/details?error=validation`,
     );
   }
 
@@ -109,7 +109,7 @@ export async function updateMissionDetailsAction(
     detailsSavedAt: new Date().toISOString(),
   });
 
-  revalidatePath(`/dashboard/mission/new/${draftIdResult.data}/details`);
+  revalidatePath(`/dashboard/missions/new/${draftIdResult.data}/details`);
 
-  redirect(`/dashboard/mission/new/${draftIdResult.data}/details?saved=1`);
+  redirect(`/dashboard/missions/new/${draftIdResult.data}/details?saved=1`);
 }

@@ -77,7 +77,7 @@ export function MilestoneEditor({
         return;
       }
 
-      router.push(`/dashboard/mission/new/${draftId}/milestones/content`);
+      router.push(`/dashboard/missions/new/${draftId}/milestones/content`);
     } catch (error) {
       console.error("Save milestone positions failed:", error);
       toast.error("Could not save milestone positions.");
