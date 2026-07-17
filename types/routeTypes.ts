@@ -26,10 +26,17 @@ export type RouteDraftMilestoneImageAsset = {
   imageUrl: string;
   cloudinaryPublicId: string;
 };
+
+export type HeroBannerImageAsset = {
+  imageUrl: string;
+  cloudinaryPublicId: string;
+};
+
 export type Mission = {
   id: string;
   title: string;
   description: string;
+  heroBannerImageAsset?: HeroBannerImageAsset;
   startDate: string;
   endDate: string;
   goalDistanceMeters: number;
@@ -48,6 +55,7 @@ export type RouteDraft = {
   id?: string;
   title?: string;
   description?: string;
+  heroBannerImageAsset?: HeroBannerImageAsset;
   startDate?: string;
   endDate?: string;
   goalDistanceMeters?: number;
