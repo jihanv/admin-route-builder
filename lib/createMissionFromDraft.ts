@@ -16,6 +16,7 @@ export function createMissionFromDraft(
     snappedRoutePoints: draft.snappedRoutePoints ?? [],
     snapToRoads: draft.snapToRoads ?? false,
     milestones: draft.milestones ?? [],
+    milestoneImageAssets: draft.milestoneImageAssets ?? [],
     createdByAdminId: draft.createdByAdminId ?? "",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

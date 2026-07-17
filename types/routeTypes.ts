@@ -38,6 +38,7 @@ export type Mission = {
   snappedRoutePoints: RoutePoint[];
   snapToRoads: boolean;
   milestones: MissionMilestone[];
+  milestoneImageAssets: RouteDraftMilestoneImageAsset[];
   createdByAdminId: string;
   createdAt: string;
   updatedAt: string;
