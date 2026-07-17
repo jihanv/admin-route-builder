@@ -8,7 +8,7 @@ import {
   routePointSchema,
 } from "@/lib/routeDraftSchemas";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { deleteMilestoneImageAsset } from "@/lib/deleteMilestoneImageAsset";
+import { deleteCloudinaryImageAsset } from "@/lib/deleteCloudinaryImageAsset";
 import type { RouteDraftMilestoneImageAsset } from "@/types/routeTypes";
 
 const routeDraftPatchSchema = z.object({
@@ -108,7 +108,7 @@ export async function PATCH(
 
   for (const publicId of oldImagePublicIds) {
     try {
-      await deleteMilestoneImageAsset(publicId);
+      await deleteCloudinaryImageAsset(publicId);
     } catch (error) {
       console.error(`Failed to delete old milestone image ${publicId}`, error);
     }
