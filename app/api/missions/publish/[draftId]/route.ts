@@ -12,9 +12,12 @@ export async function POST(
 ) {
   const { draftId } = await params;
 
-  const { userId } = await auth();
+  const { userId, sessionClaims } = await auth();
 
-  if (!userId) {
+  const adminRole =
+    (sessionClaims?.metadata as { role?: string } | undefined)?.role ?? null;
+
+  if (!userId || adminRole !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
