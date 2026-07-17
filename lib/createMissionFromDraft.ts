@@ -8,6 +8,9 @@ export function createMissionFromDraft(
     id: draftId,
     title: draft.title ?? "",
     description: draft.description ?? "",
+    ...(draft.heroBannerImageAsset
+      ? { heroBannerImageAsset: draft.heroBannerImageAsset }
+      : {}),
     startDate: draft.startDate ?? "",
     endDate: draft.endDate ?? "",
     goalDistanceMeters: draft.goalDistanceMeters ?? 0,
