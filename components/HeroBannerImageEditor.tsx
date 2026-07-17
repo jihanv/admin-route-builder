@@ -7,19 +7,21 @@ type HeroBannerImageEditorProps = {
   savedImageAsset?: HeroBannerImageAsset;
 };
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
-export function HeroBannerImageEditor(_props: HeroBannerImageEditorProps) {
+export function HeroBannerImageEditor({
+  savedImageAsset,
+}: HeroBannerImageEditorProps) {
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    savedImageAsset?.imageUrl ?? null,
+  );
 
   useEffect(() => {
-    if (!selectedImageFile) return;
-
-    const objectUrl = URL.createObjectURL(selectedImageFile);
-    setPreviewUrl(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedImageFile]);
+    return () => {
+      if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
   return (
     <div className="space-y-2">
       <label
@@ -48,9 +50,11 @@ export function HeroBannerImageEditor(_props: HeroBannerImageEditorProps) {
             type="file"
             accept="image/jpeg,image/png,image/webp"
             className="sr-only"
-            onChange={(event) =>
-              setSelectedImageFile(event.target.files?.[0] ?? null)
-            }
+            onChange={(event) => {
+              const imageFile = event.target.files?.[0] ?? null;
+              setSelectedImageFile(imageFile);
+              setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
+            }}
           />
 
           {selectedImageFile && (
@@ -59,12 +63,15 @@ export function HeroBannerImageEditor(_props: HeroBannerImageEditorProps) {
             </p>
           )}
         </div>
-        <div className="flex min-h-36 overflow-hidden rounded-md border bg-background">
+        <div className="relative flex h-36 overflow-hidden rounded-md border bg-background">
           {previewUrl ? (
-            <img
+            <Image
               src={previewUrl}
               alt="Selected hero banner preview"
-              className="h-36 w-full object-cover"
+              fill
+              sizes="(min-width: 768px) 18rem, 100vw"
+              className="object-cover"
+              unoptimized
             />
           ) : (
             <p className="m-auto text-sm text-muted-foreground">
