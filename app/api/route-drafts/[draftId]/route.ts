@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import {
+  heroBannerImageAssetSchema,
   missionMilestoneSchema,
   routeDraftMilestoneImageAssetSchema,
   routePointSchema,
@@ -13,6 +14,7 @@ import type { RouteDraftMilestoneImageAsset } from "@/types/routeTypes";
 const routeDraftPatchSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
+  heroBannerImageAsset: heroBannerImageAssetSchema.optional(),
   startDate: z.string().optional(),
   goalDistanceMeters: z.number().optional(),
   snapToRoads: z.boolean().optional(),
