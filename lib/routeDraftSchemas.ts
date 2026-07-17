@@ -21,3 +21,8 @@ export const routeDraftMilestoneImageAssetSchema = z.object({
   imageUrl: z.url(),
   cloudinaryPublicId: z.string(),
 });
+
+export const heroBannerImageAssetSchema = z.object({
+  imageUrl: z.url(),
+  cloudinaryPublicId: z.string(),
+});
