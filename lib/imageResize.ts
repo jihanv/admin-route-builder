@@ -46,7 +46,7 @@ function createMilestoneImageBlob(
   });
 }
 
-export async function resizeMilestoneImageFile(imageFile: File) {
+export async function resizeImageFile(imageFile: File) {
   const imageBitmap = await createImageBitmap(imageFile);
   const { width, height } = getMilestoneImageResizeDimensions(
     imageBitmap.width,

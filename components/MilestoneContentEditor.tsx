@@ -17,7 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { resizeMilestoneImageFile } from "@/lib/milestoneImageResize";
+import { resizeImageFile } from "@/lib/imageResize";
 import {
   Dialog,
   DialogContent,
@@ -142,7 +142,7 @@ export function MilestoneContentEditor({
 
         if (!imageFile) continue;
 
-        const resizedImageFile = await resizeMilestoneImageFile(imageFile);
+        const resizedImageFile = await resizeImageFile(imageFile);
         const uploadResponse = await uploadMilestoneImage(
           draftId,
           resizedImageFile,
