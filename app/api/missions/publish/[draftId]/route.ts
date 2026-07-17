@@ -44,7 +44,16 @@ export async function POST(
 
   const mission = createMissionFromDraft(draftId, draft);
 
-  await publishMissionTransaction(mission);
+  try {
+    await publishMissionTransaction(mission);
+  } catch (error) {
+    console.error("Failed to publish mission:", error);
+
+    return NextResponse.json(
+      { error: "Failed to publish mission" },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({
     mission,
