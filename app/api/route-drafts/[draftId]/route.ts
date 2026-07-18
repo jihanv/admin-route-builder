@@ -85,6 +85,20 @@ export async function PATCH(
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 
+  const currentHeroBannerResult = heroBannerImageAssetSchema.safeParse(
+    draft?.heroBannerImageAsset,
+  );
+  const nextHeroBannerAsset = parseResult.data.heroBannerImageAsset;
+
+  if (
+    currentHeroBannerResult.success &&
+    nextHeroBannerAsset &&
+    currentHeroBannerResult.data.cloudinaryPublicId !==
+      nextHeroBannerAsset.cloudinaryPublicId
+  ) {
+    oldImagePublicIds.push(currentHeroBannerResult.data.cloudinaryPublicId);
+  }
+
   if (nextImageAssets) {
     for (const currentAsset of currentImageAssets) {
       const nextAsset = nextImageAssets.find(
