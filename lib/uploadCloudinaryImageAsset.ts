@@ -18,6 +18,7 @@ export async function uploadCloudinaryImageAsset(
       {
         folder: options.folder,
         tags: options.tags,
+        resource_type: "image",
       },
       (error, result) => {
         if (error || !result) {
