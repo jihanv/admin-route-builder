@@ -54,8 +54,10 @@ export async function POST(
       { status: 400 },
     );
   }
-
+  //Reads the file’s contents and gives us its raw binary bytes in an ArrayBuffer
   const arrayBuffer = await imageFile.arrayBuffer();
+
+  // Takes the same raw image bytes and creates a Node.js Buffer
   const buffer = Buffer.from(arrayBuffer);
 
   const uploadResult = await uploadCloudinaryImageAsset({
