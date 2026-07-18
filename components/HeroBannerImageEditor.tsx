@@ -11,7 +11,7 @@ import Image from "next/image";
 export function HeroBannerImageEditor({
   savedImageAsset,
 }: HeroBannerImageEditorProps) {
-  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [selectedImageName, setSelectedImageName] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     savedImageAsset?.imageUrl ?? null,
   );
@@ -27,7 +27,7 @@ export function HeroBannerImageEditor({
   ) => {
     const imageFile = event.target.files?.[0] ?? null;
 
-    setSelectedImageFile(imageFile);
+    setSelectedImageName(imageFile?.name ?? "");
     setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
   };
 
@@ -62,9 +62,9 @@ export function HeroBannerImageEditor({
             onChange={handleHeroBannerImageChange}
           />
 
-          {selectedImageFile && (
+          {selectedImageName && (
             <p className="text-sm text-muted-foreground">
-              Selected: {selectedImageFile.name}
+              Selected: {selectedImageName}
             </p>
           )}
         </div>
