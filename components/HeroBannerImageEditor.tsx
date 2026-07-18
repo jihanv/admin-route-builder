@@ -22,6 +22,16 @@ export function HeroBannerImageEditor({
       if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
+
+  const handleHeroBannerImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const imageFile = event.target.files?.[0] ?? null;
+
+    setSelectedImageFile(imageFile);
+    setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
+  };
+
   return (
     <div className="space-y-2">
       <label
@@ -50,11 +60,7 @@ export function HeroBannerImageEditor({
             type="file"
             accept="image/jpeg,image/png,image/webp"
             className="sr-only"
-            onChange={(event) => {
-              const imageFile = event.target.files?.[0] ?? null;
-              setSelectedImageFile(imageFile);
-              setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
-            }}
+            onChange={handleHeroBannerImageChange}
           />
 
           {selectedImageFile && (
