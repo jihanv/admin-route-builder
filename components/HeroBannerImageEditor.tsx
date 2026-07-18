@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import type { HeroBannerImageAsset } from "@/types/routeTypes";
 
 type HeroBannerImageEditorProps = {
-  draftId: string;
   savedImageAsset?: HeroBannerImageAsset;
 };
 import { Button } from "@/components/ui/button";

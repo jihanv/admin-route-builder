@@ -82,10 +82,7 @@ export default async function MissionDetailsPage({
         className="space-y-3 rounded-lg border bg-card p-4"
       >
         <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
-          <HeroBannerImageEditor
-            draftId={draftId}
-            savedImageAsset={draftHeroBannerImageAsset}
-          />
+          <HeroBannerImageEditor savedImageAsset={draftHeroBannerImageAsset} />
           <label className="block text-base font-medium">Mission title</label>
 
           <Input
@@ -125,7 +122,7 @@ export default async function MissionDetailsPage({
             defaultStartValue={draftStartDate}
             defaultEndValue={draftEndDate}
           />
-          <MissionDetailsSubmitButton />
+          <MissionDetailsSubmitButton saveAction={updateMissionDetails} />
         </fieldset>
       </form>
       <div className="flex justify-end">

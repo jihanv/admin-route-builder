@@ -15,8 +15,19 @@ function getFormText(formData: FormData, name: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
-export function MissionDetailsSubmitButton() {
+type MissionDetailsSubmitButtonProps = {
+  saveAction: (formData: FormData) => Promise<void>;
+};
+
+export function MissionDetailsSubmitButton({
+  saveAction,
+}: MissionDetailsSubmitButtonProps) {
   const { pending } = useFormStatus();
+
+  const handleSave = async (formData: FormData) => {
+    await saveAction(formData);
+  };
+
   const triggerRef = useRef<HTMLSpanElement>(null);
   const [disabledReason, setDisabledReason] = useState("");
 
@@ -62,7 +73,12 @@ export function MissionDetailsSubmitButton() {
       <Tooltip>
         <TooltipTrigger asChild>
           <span ref={triggerRef} className="inline-flex w-fit">
-            <Button type="submit" disabled={isDisabled} className="min-w-28">
+            <Button
+              type="submit"
+              formAction={handleSave}
+              disabled={isDisabled}
+              className="min-w-28"
+            >
               {pending ? "Saving..." : "Save Details"}
             </Button>
           </span>
