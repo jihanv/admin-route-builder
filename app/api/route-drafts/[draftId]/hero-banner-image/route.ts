@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { cloudinary } from "@/lib/cloudinary";
+import { uploadCloudinaryImageAsset } from "@/lib/uploadCloudinaryImageAsset";
 import { adminDb } from "@/lib/firebaseAdmin";
 
 export const runtime = "nodejs";
@@ -58,40 +58,15 @@ export async function POST(
   const arrayBuffer = await imageFile.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const uploadResult = await new Promise<{
-    secure_url: string;
-    public_id: string;
-  }>((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      {
-        folder: `rei-mission-drafts/${draftId}/hero-banner`,
-        tags: [`rei-route-draft-${draftId}`],
-        resource_type: "image",
-      },
-      (error, result) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
-        if (!result?.secure_url || !result.public_id) {
-          reject(new Error("Cloudinary upload did not return an image URL."));
-          return;
-        }
-
-        resolve({
-          secure_url: result.secure_url,
-          public_id: result.public_id,
-        });
-      },
-    );
-
-    uploadStream.end(buffer);
+  const uploadResult = await uploadCloudinaryImageAsset({
+    buffer,
+    folder: `rei-mission-drafts/${draftId}/hero-banner`,
+    tags: [`rei-route-draft-${draftId}`],
   });
 
   return NextResponse.json({
     ok: true,
-    imageUrl: uploadResult.secure_url,
-    publicId: uploadResult.public_id,
+    imageUrl: uploadResult.imageUrl,
+    publicId: uploadResult.cloudinaryPublicId,
   });
 }
