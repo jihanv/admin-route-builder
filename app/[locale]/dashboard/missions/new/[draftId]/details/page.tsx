@@ -122,7 +122,7 @@ export default async function MissionDetailsPage({
             defaultStartValue={draftStartDate}
             defaultEndValue={draftEndDate}
           />
-          <MissionDetailsSubmitButton saveAction={updateMissionDetails} />
+          <MissionDetailsSubmitButton />
         </fieldset>
       </form>
       <div className="flex justify-end">
