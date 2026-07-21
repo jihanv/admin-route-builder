@@ -79,6 +79,7 @@ export default async function MissionDetailsPage({
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
 
       <MissionDetailsForm
+        draftId={draftId}
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
