@@ -4,7 +4,6 @@ import { updateMissionDetailsAction } from "./actions";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
-import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
@@ -111,7 +110,6 @@ export default async function MissionDetailsPage({
           defaultStartValue={draftStartDate}
           defaultEndValue={draftEndDate}
         />
-        <MissionDetailsSubmitButton />
       </MissionDetailsEditor>
     </section>
   );

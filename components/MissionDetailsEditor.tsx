@@ -6,6 +6,7 @@ import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 import type { HeroBannerImageAsset } from "@/types/routeTypes";
+import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
@@ -39,6 +40,7 @@ export function MissionDetailsEditor({
               savedImageAsset={savedHeroBannerImageAsset}
             />
             {children}
+            <MissionDetailsSubmitButton />
           </fieldset>
         </form>
         <div className="flex justify-end">
