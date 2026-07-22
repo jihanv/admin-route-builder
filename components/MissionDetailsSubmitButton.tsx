@@ -16,11 +16,10 @@ function getFormText(formData: FormData, name: string) {
 }
 type MissionDetailsSubmitButtonProps = {
   isResizingHeroImage: boolean;
-  hasUnsavedHeroImage: boolean;
 };
+
 export function MissionDetailsSubmitButton({
   isResizingHeroImage,
-  hasUnsavedHeroImage,
 }: MissionDetailsSubmitButtonProps) {
   const { pending } = useFormStatus();
 
@@ -62,10 +61,7 @@ export function MissionDetailsSubmitButton({
     };
   }, []);
 
-  const heroImageReason = hasUnsavedHeroImage
-    ? "Hero image saving is being connected."
-    : "";
-  const currentDisabledReason = heroImageReason || disabledReason;
+  const currentDisabledReason = disabledReason;
   const isDisabled =
     pending || isResizingHeroImage || Boolean(currentDisabledReason);
 
