@@ -79,54 +79,51 @@ export default async function MissionDetailsPage({
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
 
       <MissionDetailsEditor
+        canEditDraft={canEditDraft}
         draftId={draftId}
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
-          <HeroBannerImageEditor savedImageAsset={draftHeroBannerImageAsset} />
-          <label className="block text-base font-medium">Mission title</label>
+        <HeroBannerImageEditor savedImageAsset={draftHeroBannerImageAsset} />
+        <label className="block text-base font-medium">Mission title</label>
 
-          <Input
-            name="title"
-            defaultValue={draftTitle}
-            required
-            maxLength={120}
-          />
-          <label className="block text-base font-medium">Description</label>
-          <Textarea
-            name="description"
-            defaultValue={draftDescription}
-            maxLength={1000}
-            placeholder="Describe the mission route for participants."
-          />
-          <label className="block text-base font-medium">
-            Fundraising goal (USD)
-          </label>
-          <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
+        <Input
+          name="title"
+          defaultValue={draftTitle}
+          required
+          maxLength={120}
+        />
+        <label className="block text-base font-medium">Description</label>
+        <Textarea
+          name="description"
+          defaultValue={draftDescription}
+          maxLength={1000}
+          placeholder="Describe the mission route for participants."
+        />
+        <label className="block text-base font-medium">
+          Fundraising goal (USD)
+        </label>
+        <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
+        <p className="text-sm text-muted-foreground">
+          Enter the total amount this mission aims to raise.
+        </p>
+        <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
+          Route distance:{" "}
+          <span className="font-medium">{draftGoalDistanceMeters} meters</span>
           <p className="text-sm text-muted-foreground">
-            Enter the total amount this mission aims to raise.
+            The route is locked after it is saved.
           </p>
-          <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
-            Route distance:{" "}
-            <span className="font-medium">
-              {draftGoalDistanceMeters} meters
-            </span>
-            <p className="text-sm text-muted-foreground">
-              The route is locked after it is saved.
-            </p>
-          </div>
+        </div>
 
-          <label className="block text-base font-medium">Mission dates</label>
-          <DateRangePicker
-            startName="startDate"
-            endName="endDate"
-            defaultStartValue={draftStartDate}
-            defaultEndValue={draftEndDate}
-          />
-          <MissionDetailsSubmitButton />
-        </fieldset>
+        <label className="block text-base font-medium">Mission dates</label>
+        <DateRangePicker
+          startName="startDate"
+          endName="endDate"
+          defaultStartValue={draftStartDate}
+          defaultEndValue={draftEndDate}
+        />
+        <MissionDetailsSubmitButton />
       </MissionDetailsEditor>
       <div className="flex justify-end">
         <MissionDetailsNextButton
