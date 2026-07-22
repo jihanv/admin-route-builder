@@ -10,6 +10,9 @@ import {
   MAX_IMAGE_FILE_SIZE_BYTES,
 } from "@/lib/imageUploadLimits";
 import { heroBannerImageAssetSchema } from "@/lib/routeDraftSchemas";
+import { fileToBuffer } from "@/lib/fileToBuffer";
+import { uploadCloudinaryImageAsset } from "@/lib/uploadCloudinaryImageAsset";
+import { deleteCloudinaryImageAsset } from "@/lib/deleteCloudinaryImageAsset";
 
 const missionDetailsSchema = z
   .object({
@@ -154,7 +157,61 @@ export async function updateMissionDetailsAction(
     detailsSavedAt: new Date().toISOString(),
   };
 
-  await draftRef.update(missionDetailsUpdates);
+  if (!newHeroBannerImageFile) {
+    await draftRef.update(missionDetailsUpdates);
+  } else {
+    try {
+      const buffer = await fileToBuffer(newHeroBannerImageFile);
+
+      const uploadedHeroBannerImageAsset = await uploadCloudinaryImageAsset({
+        buffer,
+        folder: `rei-mission-drafts/${draftIdResult.data}/hero-banner`,
+        tags: [`rei-route-draft-${draftIdResult.data}`],
+      });
+
+      try {
+        await draftRef.update({
+          ...missionDetailsUpdates,
+          heroBannerImageAsset: uploadedHeroBannerImageAsset,
+        });
+      } catch (error) {
+        try {
+          await deleteCloudinaryImageAsset(
+            uploadedHeroBannerImageAsset.cloudinaryPublicId,
+          );
+        } catch (cleanupError) {
+          console.error(
+            "Failed to delete the unsaved new hero banner image.",
+            cleanupError,
+          );
+        }
+
+        throw error;
+      }
+
+      if (
+        currentHeroBannerImageAsset &&
+        currentHeroBannerImageAsset.cloudinaryPublicId !==
+          uploadedHeroBannerImageAsset.cloudinaryPublicId
+      ) {
+        try {
+          await deleteCloudinaryImageAsset(
+            currentHeroBannerImageAsset.cloudinaryPublicId,
+          );
+        } catch (error) {
+          console.error(
+            "Failed to delete the replaced hero banner image.",
+            error,
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed to save the new hero banner image.", error);
+      redirect(
+        `/dashboard/missions/new/${draftIdResult.data}/details?error=image`,
+      );
+    }
+  }
 
   revalidatePath(`/dashboard/missions/new/${draftIdResult.data}/details`);
 
