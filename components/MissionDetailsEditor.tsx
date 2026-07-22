@@ -17,6 +17,11 @@ export function MissionDetailsEditor({
   return (
     <>
       <MissionDetailsSaveToast />
+      {!canEditDraft && (
+        <p className="rounded-md border bg-card p-3 text-base text-muted-foreground">
+          You can view this mission draft, but only the creator can edit it.
+        </p>
+      )}
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
       <form {...formProps} data-draft-id={draftId}>

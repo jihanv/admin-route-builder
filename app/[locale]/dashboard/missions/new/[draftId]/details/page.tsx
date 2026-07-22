@@ -67,11 +67,6 @@ export default async function MissionDetailsPage({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
-      {!canEditDraft && (
-        <p className="rounded-md border bg-card p-3 text-base text-muted-foreground">
-          You can view this mission draft, but only the creator can edit it.
-        </p>
-      )}
       <MissionDetailsEditor
         canEditDraft={canEditDraft}
         draftId={draftId}
