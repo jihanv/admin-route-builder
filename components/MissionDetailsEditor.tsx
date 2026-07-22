@@ -119,6 +119,7 @@ export function MissionDetailsEditor({
             />
             <MissionDetailsSubmitButton
               isResizingHeroImage={isResizingHeroImage}
+              hasUnsavedHeroImage={hasUnsavedHeroImage}
             />
           </fieldset>
         </form>
