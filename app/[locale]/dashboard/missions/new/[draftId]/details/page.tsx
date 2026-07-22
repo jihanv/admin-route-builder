@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
@@ -65,6 +64,7 @@ export default async function MissionDetailsPage({
   return (
     <section className="space-y-6 p-8">
       <MissionDetailsEditor
+        draftTitle={draftTitle}
         canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
         draftId={draftId}
@@ -73,14 +73,6 @@ export default async function MissionDetailsPage({
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <label className="block text-base font-medium">Mission title</label>
-
-        <Input
-          name="title"
-          defaultValue={draftTitle}
-          required
-          maxLength={120}
-        />
         <label className="block text-base font-medium">Description</label>
         <Textarea
           name="description"

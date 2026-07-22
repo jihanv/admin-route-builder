@@ -7,11 +7,13 @@ import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton"
 import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 import type { HeroBannerImageAsset } from "@/types/routeTypes";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
+import { Input } from "@/components/ui/input";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
   canEditDraft: boolean;
   canContinueToMilestones: boolean;
+  draftTitle: string;
   savedHeroBannerImageAsset?: HeroBannerImageAsset;
 };
 
@@ -21,6 +23,7 @@ export function MissionDetailsEditor({
   canContinueToMilestones,
   savedHeroBannerImageAsset,
   children,
+  draftTitle,
   ...formProps
 }: MissionDetailsEditorProps) {
   return (
@@ -38,6 +41,13 @@ export function MissionDetailsEditor({
           <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
             <HeroBannerImageEditor
               savedImageAsset={savedHeroBannerImageAsset}
+            />
+            <label className="block text-base font-medium">Mission title</label>
+            <Input
+              name="title"
+              defaultValue={draftTitle}
+              required
+              maxLength={120}
             />
             {children}
             <MissionDetailsSubmitButton />
