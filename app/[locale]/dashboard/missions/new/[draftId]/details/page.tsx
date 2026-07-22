@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
-import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({
@@ -70,11 +69,11 @@ export default async function MissionDetailsPage({
         canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
         draftId={draftId}
+        savedHeroBannerImageAsset={draftHeroBannerImageAsset}
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <HeroBannerImageEditor savedImageAsset={draftHeroBannerImageAsset} />
         <label className="block text-base font-medium">Mission title</label>
 
         <Input
@@ -114,7 +113,6 @@ export default async function MissionDetailsPage({
         />
         <MissionDetailsSubmitButton />
       </MissionDetailsEditor>
-      <p className="text-base text-muted-foreground">Draft ID: {draftId}</p>
     </section>
   );
 }
