@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
 import { DateRangePicker } from "@/components/DateRangePicker";
-import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({
@@ -68,18 +67,12 @@ export default async function MissionDetailsPage({
         canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
         draftId={draftId}
+        draftFundraisingGoalDollars={draftFundraisingGoalDollars}
         savedHeroBannerImageAsset={draftHeroBannerImageAsset}
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <label className="block text-base font-medium">
-          Fundraising goal (USD)
-        </label>
-        <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
-        <p className="text-sm text-muted-foreground">
-          Enter the total amount this mission aims to raise.
-        </p>
         <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
           Route distance:{" "}
           <span className="font-medium">{draftGoalDistanceMeters} meters</span>

@@ -9,6 +9,7 @@ import type { HeroBannerImageAsset } from "@/types/routeTypes";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
@@ -16,6 +17,7 @@ type MissionDetailsEditorProps = ComponentProps<"form"> & {
   canContinueToMilestones: boolean;
   draftTitle: string;
   draftDescription: string;
+  draftFundraisingGoalDollars: string;
   savedHeroBannerImageAsset?: HeroBannerImageAsset;
 };
 
@@ -26,6 +28,7 @@ export function MissionDetailsEditor({
   savedHeroBannerImageAsset,
   children,
   draftDescription,
+  draftFundraisingGoalDollars,
   draftTitle,
   ...formProps
 }: MissionDetailsEditorProps) {
@@ -59,6 +62,13 @@ export function MissionDetailsEditor({
               maxLength={1000}
               placeholder="Describe the mission route for participants."
             />
+            <label className="block text-base font-medium">
+              Fundraising goal (USD)
+            </label>
+            <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
+            <p className="text-sm text-muted-foreground">
+              Enter the total amount this mission aims to raise.
+            </p>
             {children}
             <MissionDetailsSubmitButton />
           </fieldset>
