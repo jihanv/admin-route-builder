@@ -21,6 +21,12 @@ export function MissionDetailsSaveToast() {
       });
       router.replace(pathname, { scroll: false });
     }
+    if (searchParams.get("error") === "image") {
+      toast.error("The hero image could not be saved. Please try again.", {
+        id: "mission-details-image-error",
+      });
+      router.replace(pathname, { scroll: false });
+    }
   }, [pathname, router, searchParams]);
 
   return null;
