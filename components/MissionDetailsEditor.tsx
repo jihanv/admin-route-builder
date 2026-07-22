@@ -14,10 +14,13 @@ export function MissionDetailsEditor({
   ...formProps
 }: MissionDetailsEditorProps) {
   return (
-    <form {...formProps} data-draft-id={draftId}>
-      <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
-        {children}
-      </fieldset>
-    </form>
+    <>
+      <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
+      <form {...formProps} data-draft-id={draftId}>
+        <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
+          {children}
+        </fieldset>
+      </form>
+    </>
   );
 }

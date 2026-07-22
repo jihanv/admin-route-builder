@@ -76,7 +76,6 @@ export default async function MissionDetailsPage({
         </p>
       )}
       <MissionBuilderSteps currentStepId="mission-details" />
-      <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
 
       <MissionDetailsEditor
         canEditDraft={canEditDraft}
