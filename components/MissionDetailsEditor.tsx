@@ -41,6 +41,9 @@ export function MissionDetailsEditor({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
 
   const [, setSelectedHeroBannerFile] = useState<File | null>(null);
+  const handleHeroBannerImageSelected = (imageFile: File | null) => {
+    setSelectedHeroBannerFile(imageFile);
+  };
 
   return (
     <>
@@ -62,7 +65,7 @@ export function MissionDetailsEditor({
           <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
             <HeroBannerImageEditor
               savedImageAsset={savedHeroBannerImageAsset}
-              onImageSelected={setSelectedHeroBannerFile}
+              onImageSelected={handleHeroBannerImageSelected}
             />
             <label className="block text-base font-medium">Mission title</label>
             <Input
