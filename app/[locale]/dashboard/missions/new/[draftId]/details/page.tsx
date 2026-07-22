@@ -1,4 +1,3 @@
-import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
@@ -75,8 +74,6 @@ export default async function MissionDetailsPage({
           You can view this mission draft, but only the creator can edit it.
         </p>
       )}
-      <MissionBuilderSteps currentStepId="mission-details" />
-
       <MissionDetailsEditor
         canEditDraft={canEditDraft}
         draftId={draftId}
