@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentProps } from "react";
+import { useState } from "react";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
@@ -13,7 +13,7 @@ import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { updateMissionDetailsAction } from "@/lib/mission-details/updateMissionDetailsAction";
 
-type MissionDetailsEditorProps = ComponentProps<"form"> & {
+type MissionDetailsEditorProps = {
   draftId: string;
   canEditDraft: boolean;
   canContinueToMilestones: boolean;
@@ -37,7 +37,6 @@ export function MissionDetailsEditor({
   draftEndDate,
   draftFundraisingGoalDollars,
   draftTitle,
-  ...formProps
 }: MissionDetailsEditorProps) {
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
 
@@ -55,7 +54,6 @@ export function MissionDetailsEditor({
         <MissionBuilderSteps currentStepId="mission-details" />
         <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
         <form
-          {...formProps}
           id="mission-details-form"
           action={updateMissionDetails}
           data-draft-id={draftId}
