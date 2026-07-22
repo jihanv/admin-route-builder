@@ -5,7 +5,11 @@ import { adminDb } from "@/lib/firebaseAdmin";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { dollarsToCents } from "@/lib/formatters";
-import { ALLOWED_IMAGE_TYPES } from "@/lib/imageUploadLimits";
+import {
+  ALLOWED_IMAGE_TYPES,
+  MAX_IMAGE_FILE_SIZE_BYTES,
+} from "@/lib/imageUploadLimits";
+
 const missionDetailsSchema = z
   .object({
     title: z
@@ -92,6 +96,16 @@ export async function updateMissionDetailsAction(
     !ALLOWED_IMAGE_TYPES.includes(heroBannerImageFile.type)
   ) {
     console.log("Unsupported hero banner image type.");
+    redirect(
+      `/dashboard/missions/new/${draftIdResult.data}/details?error=image`,
+    );
+  }
+
+  if (
+    heroBannerImageFile instanceof File &&
+    heroBannerImageFile.size > MAX_IMAGE_FILE_SIZE_BYTES
+  ) {
+    console.log("Hero banner image exceeds the file-size limit.");
     redirect(
       `/dashboard/missions/new/${draftIdResult.data}/details?error=image`,
     );
