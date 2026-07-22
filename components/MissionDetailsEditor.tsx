@@ -43,6 +43,7 @@ export function MissionDetailsEditor({
 
   const [, setSelectedHeroBannerFile] = useState<File | null>(null);
   const [isResizingHeroImage, setIsResizingHeroImage] = useState(false);
+  const [hasUnsavedHeroImage, setHasUnsavedHeroImage] = useState(false);
   const handleHeroBannerImageSelected = async (imageFile: File | null) => {
     setIsResizingHeroImage(true);
     try {
@@ -50,6 +51,7 @@ export function MissionDetailsEditor({
         ? await resizeImageFile(imageFile)
         : null;
       setSelectedHeroBannerFile(resizedImageFile);
+      setHasUnsavedHeroImage(Boolean(resizedImageFile));
       return resizedImageFile;
     } finally {
       setIsResizingHeroImage(false);
@@ -126,6 +128,7 @@ export function MissionDetailsEditor({
             canContinue={canContinueToMilestones}
             formId="mission-details-form"
             isResizingHeroImage={isResizingHeroImage}
+            hasUnsavedHeroImage={hasUnsavedHeroImage}
           />
         </div>
       </section>
