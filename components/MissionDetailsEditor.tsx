@@ -17,6 +17,7 @@ type MissionDetailsEditorProps = ComponentProps<"form"> & {
   canContinueToMilestones: boolean;
   draftTitle: string;
   draftDescription: string;
+  draftGoalDistanceMeters: number;
   draftFundraisingGoalDollars: string;
   savedHeroBannerImageAsset?: HeroBannerImageAsset;
 };
@@ -28,6 +29,7 @@ export function MissionDetailsEditor({
   savedHeroBannerImageAsset,
   children,
   draftDescription,
+  draftGoalDistanceMeters,
   draftFundraisingGoalDollars,
   draftTitle,
   ...formProps
@@ -69,6 +71,15 @@ export function MissionDetailsEditor({
             <p className="text-sm text-muted-foreground">
               Enter the total amount this mission aims to raise.
             </p>
+            <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
+              Route distance:{" "}
+              <span className="font-medium">
+                {draftGoalDistanceMeters} meters
+              </span>
+              <p className="text-sm text-muted-foreground">
+                The route is locked after it is saved.
+              </p>
+            </div>
             {children}
             <MissionDetailsSubmitButton />
           </fieldset>

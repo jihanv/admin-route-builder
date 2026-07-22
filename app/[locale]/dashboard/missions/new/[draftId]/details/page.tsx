@@ -69,18 +69,11 @@ export default async function MissionDetailsPage({
         draftId={draftId}
         draftFundraisingGoalDollars={draftFundraisingGoalDollars}
         savedHeroBannerImageAsset={draftHeroBannerImageAsset}
+        draftGoalDistanceMeters={draftGoalDistanceMeters}
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
-          Route distance:{" "}
-          <span className="font-medium">{draftGoalDistanceMeters} meters</span>
-          <p className="text-sm text-muted-foreground">
-            The route is locked after it is saved.
-          </p>
-        </div>
-
         <label className="block text-base font-medium">Mission dates</label>
         <DateRangePicker
           startName="startDate"
