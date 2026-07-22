@@ -8,12 +8,14 @@ import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 import type { HeroBannerImageAsset } from "@/types/routeTypes";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
   canEditDraft: boolean;
   canContinueToMilestones: boolean;
   draftTitle: string;
+  draftDescription: string;
   savedHeroBannerImageAsset?: HeroBannerImageAsset;
 };
 
@@ -23,6 +25,7 @@ export function MissionDetailsEditor({
   canContinueToMilestones,
   savedHeroBannerImageAsset,
   children,
+  draftDescription,
   draftTitle,
   ...formProps
 }: MissionDetailsEditorProps) {
@@ -48,6 +51,13 @@ export function MissionDetailsEditor({
               defaultValue={draftTitle}
               required
               maxLength={120}
+            />
+            <label className="block text-base font-medium">Description</label>
+            <Textarea
+              name="description"
+              defaultValue={draftDescription}
+              maxLength={1000}
+              placeholder="Describe the mission route for participants."
             />
             {children}
             <MissionDetailsSubmitButton />

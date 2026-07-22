@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
-import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
@@ -65,6 +64,7 @@ export default async function MissionDetailsPage({
     <section className="space-y-6 p-8">
       <MissionDetailsEditor
         draftTitle={draftTitle}
+        draftDescription={draftDescription}
         canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
         draftId={draftId}
@@ -73,13 +73,6 @@ export default async function MissionDetailsPage({
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       >
-        <label className="block text-base font-medium">Description</label>
-        <Textarea
-          name="description"
-          defaultValue={draftDescription}
-          maxLength={1000}
-          placeholder="Describe the mission route for participants."
-        />
         <label className="block text-base font-medium">
           Fundraising goal (USD)
         </label>
