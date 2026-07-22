@@ -90,6 +90,18 @@ export default async function ReviewMissionPage({
         <h2 className="font-semibold">Mission details</h2>
 
         <div className="mt-3 space-y-2 text-sm">
+          {draft?.heroBannerImageAsset?.imageUrl ? (
+            <div className="relative h-48 w-full overflow-hidden rounded-md border">
+              <Image
+                src={String(draft.heroBannerImageAsset.imageUrl)}
+                alt="Mission hero banner"
+                fill
+                sizes="48rem"
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          ) : null}
           <p>
             <span className="font-medium">Title:</span>{" "}
             {String(draft?.title ?? "Untitled mission")}

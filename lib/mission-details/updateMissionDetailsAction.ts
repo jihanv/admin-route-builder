@@ -170,12 +170,6 @@ export async function updateMissionDetailsAction(
       });
 
       try {
-        if (
-          process.env.NODE_ENV === "development" &&
-          process.env.TEST_HERO_BANNER_FIRESTORE_FAILURE === "true"
-        ) {
-          throw new Error("Simulated hero banner Firestore failure.");
-        }
         await draftRef.update({
           ...missionDetailsUpdates,
           heroBannerImageAsset: uploadedHeroBannerImageAsset,
@@ -183,10 +177,6 @@ export async function updateMissionDetailsAction(
       } catch (error) {
         try {
           await deleteCloudinaryImageAsset(
-            uploadedHeroBannerImageAsset.cloudinaryPublicId,
-          );
-          console.log(
-            "Deleted unsaved hero banner image:",
             uploadedHeroBannerImageAsset.cloudinaryPublicId,
           );
         } catch (cleanupError) {
