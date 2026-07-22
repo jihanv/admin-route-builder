@@ -135,7 +135,7 @@ export async function updateMissionDetailsAction(
   const fundraisingGoalDollars = result.data.fundraisingGoalDollars;
   const fundraisingGoalCents = dollarsToCents(fundraisingGoalDollars);
 
-  await draftRef.update({
+  const missionDetailsUpdates = {
     title: result.data.title,
     description: result.data.description,
     fundraisingGoalCents,
@@ -143,7 +143,9 @@ export async function updateMissionDetailsAction(
     endDate: result.data.endDate,
     updatedAt: new Date().toISOString(),
     detailsSavedAt: new Date().toISOString(),
-  });
+  };
+
+  await draftRef.update(missionDetailsUpdates);
 
   revalidatePath(`/dashboard/missions/new/${draftIdResult.data}/details`);
 
