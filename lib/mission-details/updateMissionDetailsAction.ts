@@ -91,9 +91,12 @@ export async function updateMissionDetailsAction(
     );
   }
 
+  const newHeroBannerImageFile =
+    heroBannerImageFile instanceof File ? heroBannerImageFile : null;
+
   if (
-    heroBannerImageFile instanceof File &&
-    !ALLOWED_IMAGE_TYPES.includes(heroBannerImageFile.type)
+    newHeroBannerImageFile &&
+    !ALLOWED_IMAGE_TYPES.includes(newHeroBannerImageFile.type)
   ) {
     console.log("Unsupported hero banner image type.");
     redirect(
@@ -102,8 +105,8 @@ export async function updateMissionDetailsAction(
   }
 
   if (
-    heroBannerImageFile instanceof File &&
-    heroBannerImageFile.size > MAX_IMAGE_FILE_SIZE_BYTES
+    newHeroBannerImageFile &&
+    newHeroBannerImageFile.size > MAX_IMAGE_FILE_SIZE_BYTES
   ) {
     console.log("Hero banner image exceeds the file-size limit.");
     redirect(
