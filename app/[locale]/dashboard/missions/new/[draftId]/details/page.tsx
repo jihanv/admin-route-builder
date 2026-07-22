@@ -10,7 +10,7 @@ import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
-import { MissionDetailsForm } from "@/components/MissionDetailsForm";
+import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({
   params,
@@ -78,7 +78,7 @@ export default async function MissionDetailsPage({
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
 
-      <MissionDetailsForm
+      <MissionDetailsEditor
         draftId={draftId}
         id="mission-details-form"
         action={updateMissionDetails}
@@ -127,7 +127,7 @@ export default async function MissionDetailsPage({
           />
           <MissionDetailsSubmitButton />
         </fieldset>
-      </MissionDetailsForm>
+      </MissionDetailsEditor>
       <div className="flex justify-end">
         <MissionDetailsNextButton
           href={`/dashboard/missions/new/${draftId}/milestones`}
