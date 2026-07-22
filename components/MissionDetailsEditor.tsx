@@ -84,39 +84,47 @@ export function MissionDetailsEditor({
           className="space-y-3 rounded-lg border bg-card p-4"
         >
           <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
-            <HeroBannerImageEditor
-              savedImageAsset={savedHeroBannerImageAsset}
-              onImageSelected={handleHeroBannerImageSelected}
-            />
-            <label className="block text-base font-medium">Mission title</label>
-            <Input
-              name="title"
-              defaultValue={draftTitle}
-              required
-              maxLength={120}
-            />
-            <label className="block text-base font-medium">Description</label>
-            <Textarea
-              name="description"
-              defaultValue={draftDescription}
-              maxLength={1000}
-              placeholder="Describe the mission route for participants."
-            />
-            <label className="block text-base font-medium">
-              Fundraising goal (USD)
-            </label>
-            <FundraisingGoalInput defaultValue={draftFundraisingGoalDollars} />
-            <p className="text-sm text-muted-foreground">
-              Enter the total amount this mission aims to raise.
-            </p>
+            <div className="grid gap-4 md:grid-cols-[45fr_55fr]">
+              <HeroBannerImageEditor
+                savedImageAsset={savedHeroBannerImageAsset}
+                onImageSelected={handleHeroBannerImageSelected}
+              />
+              <div className="space-y-3">
+                <label className="block text-base font-medium">
+                  Mission title
+                </label>
+                <Input
+                  name="title"
+                  defaultValue={draftTitle}
+                  required
+                  maxLength={120}
+                />
+                <label className="block text-base font-medium">
+                  Description
+                </label>
+                <Textarea
+                  name="description"
+                  defaultValue={draftDescription}
+                  maxLength={1000}
+                  placeholder="Describe the mission route for participants."
+                />
+                <label className="block text-base font-medium">
+                  Fundraising goal (USD)
+                </label>
+                <FundraisingGoalInput
+                  defaultValue={draftFundraisingGoalDollars}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Enter the total amount this mission aims to raise.
+                </p>
+              </div>
+            </div>
+
             <div className="flex items-center gap-3 rounded-md border bg-background p-3 text-base">
               Route distance:{" "}
               <span className="font-medium">
                 {draftGoalDistanceMeters} meters
               </span>
-              <p className="text-sm text-muted-foreground">
-                The route is locked after it is saved.
-              </p>
             </div>
             <label className="block text-base font-medium">Mission dates</label>
             <DateRangePicker

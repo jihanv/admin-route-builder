@@ -44,7 +44,7 @@ export function HeroBannerImageEditor({
       >
         Hero banner image
       </label>
-      <div className="grid gap-4 rounded-lg border border-dashed bg-muted/30 p-4 md:grid-cols-[1fr_18rem]">
+      <div className="space-y-4 rounded-lg border border-dashed bg-muted/30 p-4">
         <div className="space-y-3">
           <div>
             <p className="font-medium">Upload a wide mission image</p>
@@ -73,7 +73,7 @@ export function HeroBannerImageEditor({
             </p>
           )}
         </div>
-        <div className="relative flex h-36 overflow-hidden rounded-md border bg-background">
+        <div className="relative flex h-30 w-full max-w-sm overflow-hidden rounded-md border bg-background">
           {previewUrl ? (
             <Image
               src={previewUrl}
