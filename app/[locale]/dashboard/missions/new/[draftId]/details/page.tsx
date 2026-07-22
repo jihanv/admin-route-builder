@@ -1,6 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { updateMissionDetailsAction } from "@/lib/mission-details/updateMissionDetailsAction";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({
@@ -56,8 +55,6 @@ export default async function MissionDetailsPage({
       : "";
   const detailsSavedAt = draft?.detailsSavedAt ?? "";
   const canContinueToMilestones = canEditDraft && Boolean(detailsSavedAt);
-
-  const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
       <MissionDetailsEditor
@@ -72,7 +69,6 @@ export default async function MissionDetailsPage({
         savedHeroBannerImageAsset={draftHeroBannerImageAsset}
         draftGoalDistanceMeters={draftGoalDistanceMeters}
         id="mission-details-form"
-        action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
       ></MissionDetailsEditor>
     </section>
