@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
-import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
@@ -68,6 +67,7 @@ export default async function MissionDetailsPage({
   return (
     <section className="space-y-6 p-8">
       <MissionDetailsEditor
+        canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
         draftId={draftId}
         id="mission-details-form"
@@ -114,13 +114,6 @@ export default async function MissionDetailsPage({
         />
         <MissionDetailsSubmitButton />
       </MissionDetailsEditor>
-      <div className="flex justify-end">
-        <MissionDetailsNextButton
-          href={`/dashboard/missions/new/${draftId}/milestones`}
-          canContinue={canContinueToMilestones}
-          formId="mission-details-form"
-        />
-      </div>
       <p className="text-base text-muted-foreground">Draft ID: {draftId}</p>
     </section>
   );

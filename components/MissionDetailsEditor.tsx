@@ -3,14 +3,17 @@
 import type { ComponentProps } from "react";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
+import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
   canEditDraft: boolean;
+  canContinueToMilestones: boolean;
 };
 
 export function MissionDetailsEditor({
   draftId,
   canEditDraft,
+  canContinueToMilestones,
   children,
   ...formProps
 }: MissionDetailsEditorProps) {
@@ -29,6 +32,13 @@ export function MissionDetailsEditor({
           {children}
         </fieldset>
       </form>
+      <div className="flex justify-end">
+        <MissionDetailsNextButton
+          href={`/dashboard/missions/new/${draftId}/milestones`}
+          canContinue={canContinueToMilestones}
+          formId="mission-details-form"
+        />
+      </div>
     </>
   );
 }
