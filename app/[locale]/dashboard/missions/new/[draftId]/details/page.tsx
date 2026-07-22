@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { updateMissionDetailsAction } from "./actions";
-import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({
@@ -63,6 +62,8 @@ export default async function MissionDetailsPage({
     <section className="space-y-6 p-8">
       <MissionDetailsEditor
         draftTitle={draftTitle}
+        draftStartDate={draftStartDate}
+        draftEndDate={draftEndDate}
         draftDescription={draftDescription}
         canContinueToMilestones={canContinueToMilestones}
         canEditDraft={canEditDraft}
@@ -73,15 +74,7 @@ export default async function MissionDetailsPage({
         id="mission-details-form"
         action={updateMissionDetails}
         className="space-y-3 rounded-lg border bg-card p-4"
-      >
-        <label className="block text-base font-medium">Mission dates</label>
-        <DateRangePicker
-          startName="startDate"
-          endName="endDate"
-          defaultStartValue={draftStartDate}
-          defaultEndValue={draftEndDate}
-        />
-      </MissionDetailsEditor>
+      ></MissionDetailsEditor>
     </section>
   );
 }

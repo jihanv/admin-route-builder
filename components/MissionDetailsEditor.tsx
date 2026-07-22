@@ -10,6 +10,7 @@ import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitBut
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
+import { DateRangePicker } from "@/components/DateRangePicker";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
@@ -17,6 +18,8 @@ type MissionDetailsEditorProps = ComponentProps<"form"> & {
   canContinueToMilestones: boolean;
   draftTitle: string;
   draftDescription: string;
+  draftStartDate: string;
+  draftEndDate: string;
   draftGoalDistanceMeters: number;
   draftFundraisingGoalDollars: string;
   savedHeroBannerImageAsset?: HeroBannerImageAsset;
@@ -30,6 +33,8 @@ export function MissionDetailsEditor({
   children,
   draftDescription,
   draftGoalDistanceMeters,
+  draftStartDate,
+  draftEndDate,
   draftFundraisingGoalDollars,
   draftTitle,
   ...formProps
@@ -80,6 +85,13 @@ export function MissionDetailsEditor({
                 The route is locked after it is saved.
               </p>
             </div>
+            <label className="block text-base font-medium">Mission dates</label>
+            <DateRangePicker
+              startName="startDate"
+              endName="endDate"
+              defaultStartValue={draftStartDate}
+              defaultEndValue={draftEndDate}
+            />
             {children}
             <MissionDetailsSubmitButton />
           </fieldset>
