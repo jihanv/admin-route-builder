@@ -125,6 +125,7 @@ export function MissionDetailsEditor({
             href={`/dashboard/missions/new/${draftId}/milestones`}
             canContinue={canContinueToMilestones}
             formId="mission-details-form"
+            isResizingHeroImage={isResizingHeroImage}
           />
         </div>
       </section>

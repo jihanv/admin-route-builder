@@ -14,6 +14,7 @@ type MissionDetailsNextButtonProps = {
   href: string;
   canContinue: boolean;
   formId: string;
+  isResizingHeroImage: boolean;
 };
 
 function getFormSnapshot(form: HTMLFormElement) {
@@ -32,6 +33,7 @@ export function MissionDetailsNextButton({
   href,
   canContinue,
   formId,
+  isResizingHeroImage,
 }: MissionDetailsNextButtonProps) {
   const initialSnapshotRef = useRef("");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -64,11 +66,13 @@ export function MissionDetailsNextButton({
     };
   }, [formId]);
 
-  const disabledReason = !canContinue
-    ? "Save mission details before adding milestones."
-    : hasUnsavedChanges
-      ? "Save your changes before adding milestones."
-      : "";
+  const disabledReason = isResizingHeroImage
+    ? "Wait for the hero image to finish preparing."
+    : !canContinue
+      ? "Save mission details before adding milestones."
+      : hasUnsavedChanges
+        ? "Save your changes before adding milestones."
+        : "";
 
   if (!disabledReason) {
     return (
