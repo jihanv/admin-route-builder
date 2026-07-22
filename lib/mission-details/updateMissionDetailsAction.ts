@@ -9,6 +9,7 @@ import {
   ALLOWED_IMAGE_TYPES,
   MAX_IMAGE_FILE_SIZE_BYTES,
 } from "@/lib/imageUploadLimits";
+import { heroBannerImageAssetSchema } from "@/lib/routeDraftSchemas";
 
 const missionDetailsSchema = z
   .object({
@@ -81,6 +82,14 @@ export async function updateMissionDetailsAction(
     console.log("Cannot edit another admin's draft.");
     return;
   }
+
+  const currentHeroBannerResult = heroBannerImageAssetSchema.safeParse(
+    draft?.heroBannerImageAsset,
+  );
+
+  const currentHeroBannerImageAsset = currentHeroBannerResult.success
+    ? currentHeroBannerResult.data
+    : null;
 
   const heroBannerImageFile = formData.get("heroBannerImageFile");
 
