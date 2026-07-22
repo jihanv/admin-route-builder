@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 type HeroBannerImageEditorProps = {
   savedImageAsset?: HeroBannerImageAsset;
-  onImageSelected: (imageFile: File | null) => void;
+  onImageSelected: (imageFile: File | null) => Promise<File | null>;
 };
 
 export function HeroBannerImageEditor({
@@ -24,14 +24,16 @@ export function HeroBannerImageEditor({
     };
   }, [previewUrl]);
 
-  const handleHeroBannerImageChange = (
+  const handleHeroBannerImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const imageFile = event.target.files?.[0] ?? null;
+    const preparedImageFile = await onImageSelected(imageFile);
 
-    setSelectedImageName(imageFile?.name ?? "");
-    setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
-    onImageSelected(imageFile);
+    setSelectedImageName(preparedImageFile?.name ?? "");
+    setPreviewUrl(
+      preparedImageFile ? URL.createObjectURL(preparedImageFile) : null,
+    );
   };
 
   return (

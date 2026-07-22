@@ -41,8 +41,9 @@ export function MissionDetailsEditor({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
 
   const [, setSelectedHeroBannerFile] = useState<File | null>(null);
-  const handleHeroBannerImageSelected = (imageFile: File | null) => {
+  const handleHeroBannerImageSelected = async (imageFile: File | null) => {
     setSelectedHeroBannerFile(imageFile);
+    return imageFile;
   };
 
   return (
