@@ -42,6 +42,10 @@ export function MissionDetailsEditor({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
 
   const handleMissionDetailsSubmit = async (formData: FormData) => {
+    if (preparedHeroBannerFile) {
+      formData.set("heroBannerImageFile", preparedHeroBannerFile);
+    }
+
     await updateMissionDetails(formData);
   };
 
