@@ -14,8 +14,12 @@ function getFormText(formData: FormData, name: string) {
   const value = formData.get(name);
   return typeof value === "string" ? value.trim() : "";
 }
-
-export function MissionDetailsSubmitButton() {
+type MissionDetailsSubmitButtonProps = {
+  isResizingHeroImage: boolean;
+};
+export function MissionDetailsSubmitButton({
+  isResizingHeroImage,
+}: MissionDetailsSubmitButtonProps) {
   const { pending } = useFormStatus();
 
   const triggerRef = useRef<HTMLSpanElement>(null);
@@ -56,15 +60,19 @@ export function MissionDetailsSubmitButton() {
     };
   }, []);
 
-  const isDisabled = pending || Boolean(disabledReason);
+  const isDisabled = pending || isResizingHeroImage || Boolean(disabledReason);
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           <span ref={triggerRef} className="inline-flex w-fit">
-            <Button type="submit" disabled={isDisabled} className="min-w-28">
-              {pending ? "Saving..." : "Save Details"}
+            <Button type="submit" disabled={isDisabled} className="w-40">
+              {isResizingHeroImage
+                ? "Preparing image..."
+                : pending
+                  ? "Saving..."
+                  : "Save Details"}
             </Button>
           </span>
         </TooltipTrigger>

@@ -45,7 +45,6 @@ export function MissionDetailsEditor({
   const [isResizingHeroImage, setIsResizingHeroImage] = useState(false);
   const handleHeroBannerImageSelected = async (imageFile: File | null) => {
     setIsResizingHeroImage(true);
-
     try {
       const resizedImageFile = imageFile
         ? await resizeImageFile(imageFile)
@@ -116,7 +115,9 @@ export function MissionDetailsEditor({
               defaultStartValue={draftStartDate}
               defaultEndValue={draftEndDate}
             />
-            <MissionDetailsSubmitButton />
+            <MissionDetailsSubmitButton
+              isResizingHeroImage={isResizingHeroImage}
+            />
           </fieldset>
         </form>
         <div className="flex justify-end">
