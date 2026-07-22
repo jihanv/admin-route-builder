@@ -56,8 +56,10 @@ export function MissionDetailsEditor({
         <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
         <form
           {...formProps}
+          id="mission-details-form"
           action={updateMissionDetails}
           data-draft-id={draftId}
+          className="space-y-3 rounded-lg border bg-card p-4"
         >
           <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
             <HeroBannerImageEditor

@@ -68,8 +68,6 @@ export default async function MissionDetailsPage({
         draftFundraisingGoalDollars={draftFundraisingGoalDollars}
         savedHeroBannerImageAsset={draftHeroBannerImageAsset}
         draftGoalDistanceMeters={draftGoalDistanceMeters}
-        id="mission-details-form"
-        className="space-y-3 rounded-lg border bg-card p-4"
       ></MissionDetailsEditor>
     </section>
   );
