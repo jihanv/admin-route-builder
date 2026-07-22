@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { updateMissionDetailsAction } from "@/lib/mission-details/updateMissionDetailsAction";
+import { resizeImageFile } from "@/lib/imageResize";
 
 type MissionDetailsEditorProps = {
   draftId: string;
@@ -42,8 +43,12 @@ export function MissionDetailsEditor({
 
   const [, setSelectedHeroBannerFile] = useState<File | null>(null);
   const handleHeroBannerImageSelected = async (imageFile: File | null) => {
-    setSelectedHeroBannerFile(imageFile);
-    return imageFile;
+    const resizedImageFile = imageFile
+      ? await resizeImageFile(imageFile)
+      : null;
+
+    setSelectedHeroBannerFile(resizedImageFile);
+    return resizedImageFile;
   };
 
   return (
