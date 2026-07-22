@@ -2,6 +2,7 @@
 
 import type { ComponentProps } from "react";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
+import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
   canEditDraft: boolean;
@@ -15,6 +16,7 @@ export function MissionDetailsEditor({
 }: MissionDetailsEditorProps) {
   return (
     <>
+      <MissionDetailsSaveToast />
       <MissionBuilderSteps currentStepId="mission-details" />
       <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
       <form {...formProps} data-draft-id={draftId}>

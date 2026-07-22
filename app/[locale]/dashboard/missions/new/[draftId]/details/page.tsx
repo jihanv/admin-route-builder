@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { MissionDetailsSubmitButton } from "@/components/MissionDetailsSubmitButton";
-import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
 import { HeroBannerImageEditor } from "@/components/HeroBannerImageEditor";
@@ -68,7 +67,6 @@ export default async function MissionDetailsPage({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
   return (
     <section className="space-y-6 p-8">
-      <MissionDetailsSaveToast />
       {!canEditDraft && (
         <p className="rounded-md border bg-card p-3 text-base text-muted-foreground">
           You can view this mission draft, but only the creator can edit it.
