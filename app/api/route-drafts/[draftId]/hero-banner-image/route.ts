@@ -2,6 +2,10 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { uploadCloudinaryImageAsset } from "@/lib/uploadCloudinaryImageAsset";
 import { adminDb } from "@/lib/firebaseAdmin";
+import {
+  ALLOWED_IMAGE_TYPES,
+  MAX_IMAGE_FILE_SIZE_BYTES,
+} from "@/lib/imageUploadLimits";
 
 export const runtime = "nodejs";
 
@@ -37,18 +41,14 @@ export async function POST(
     return NextResponse.json({ error: "Missing image file" }, { status: 400 });
   }
 
-  const allowedImageTypes = ["image/png", "image/jpeg", "image/webp"];
-
-  if (!allowedImageTypes.includes(imageFile.type)) {
+  if (!ALLOWED_IMAGE_TYPES.includes(imageFile.type)) {
     return NextResponse.json(
       { error: "File must be a PNG, JPG, or WebP image" },
       { status: 400 },
     );
   }
 
-  const maxFileSizeBytes = 5 * 1024 * 1024;
-
-  if (imageFile.size > maxFileSizeBytes) {
+  if (imageFile.size > MAX_IMAGE_FILE_SIZE_BYTES) {
     return NextResponse.json(
       { error: "Image must be smaller than 5 MB" },
       { status: 400 },
