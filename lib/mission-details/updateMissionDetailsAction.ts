@@ -5,7 +5,7 @@ import { adminDb } from "@/lib/firebaseAdmin";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { dollarsToCents } from "@/lib/formatters";
-
+import { ALLOWED_IMAGE_TYPES } from "@/lib/imageUploadLimits";
 const missionDetailsSchema = z
   .object({
     title: z
@@ -76,6 +76,25 @@ export async function updateMissionDetailsAction(
   if (draft?.createdByAdminId !== userId) {
     console.log("Cannot edit another admin's draft.");
     return;
+  }
+
+  const heroBannerImageFile = formData.get("heroBannerImageFile");
+
+  if (heroBannerImageFile !== null && !(heroBannerImageFile instanceof File)) {
+    console.log("Hero banner image must be a file.");
+    redirect(
+      `/dashboard/missions/new/${draftIdResult.data}/details?error=image`,
+    );
+  }
+
+  if (
+    heroBannerImageFile instanceof File &&
+    !ALLOWED_IMAGE_TYPES.includes(heroBannerImageFile.type)
+  ) {
+    console.log("Unsupported hero banner image type.");
+    redirect(
+      `/dashboard/missions/new/${draftIdResult.data}/details?error=image`,
+    );
   }
 
   const result = missionDetailsSchema.safeParse({
