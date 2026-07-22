@@ -26,16 +26,6 @@ export async function saveRouteDraft(draft: SaveRouteDraftInput) {
   });
 }
 
-export async function uploadHeroBannerImage(draftId: string, imageFile: File) {
-  const formData = new FormData();
-  formData.append("imageFile", imageFile);
-
-  return fetch(`/api/route-drafts/${draftId}/hero-banner-image`, {
-    method: "POST",
-    body: formData,
-  });
-}
-
 export async function uploadMilestoneImage(draftId: string, imageFile: File) {
   const formData = new FormData();
 
