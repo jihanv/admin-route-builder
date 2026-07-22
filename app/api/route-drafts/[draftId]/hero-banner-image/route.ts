@@ -6,7 +6,7 @@ import {
   ALLOWED_IMAGE_TYPES,
   MAX_IMAGE_FILE_SIZE_BYTES,
 } from "@/lib/imageUploadLimits";
-
+import { fileToBuffer } from "@/lib/fileToBuffer";
 export const runtime = "nodejs";
 
 export async function POST(
@@ -54,11 +54,8 @@ export async function POST(
       { status: 400 },
     );
   }
-  //Reads the file’s contents and gives us its raw binary bytes in an ArrayBuffer
-  const arrayBuffer = await imageFile.arrayBuffer();
 
-  // Takes the same raw image bytes and creates a Node.js Buffer
-  const buffer = Buffer.from(arrayBuffer);
+  const buffer = await fileToBuffer(imageFile);
 
   const uploadResult = await uploadCloudinaryImageAsset({
     buffer,
