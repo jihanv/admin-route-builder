@@ -30,7 +30,6 @@ export function MissionDetailsEditor({
   canEditDraft,
   canContinueToMilestones,
   savedHeroBannerImageAsset,
-  children,
   draftDescription,
   draftGoalDistanceMeters,
   draftStartDate,
@@ -92,7 +91,6 @@ export function MissionDetailsEditor({
               defaultStartValue={draftStartDate}
               defaultEndValue={draftEndDate}
             />
-            {children}
             <MissionDetailsSubmitButton />
           </fieldset>
         </form>
