@@ -2,14 +2,16 @@
 import { useEffect, useState } from "react";
 import type { HeroBannerImageAsset } from "@/types/routeTypes";
 
-type HeroBannerImageEditorProps = {
-  savedImageAsset?: HeroBannerImageAsset;
-};
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+type HeroBannerImageEditorProps = {
+  savedImageAsset?: HeroBannerImageAsset;
+  onImageSelected: (imageFile: File | null) => void;
+};
 
 export function HeroBannerImageEditor({
   savedImageAsset,
+  onImageSelected,
 }: HeroBannerImageEditorProps) {
   const [selectedImageName, setSelectedImageName] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(
@@ -29,6 +31,7 @@ export function HeroBannerImageEditor({
 
     setSelectedImageName(imageFile?.name ?? "");
     setPreviewUrl(imageFile ? URL.createObjectURL(imageFile) : null);
+    onImageSelected(imageFile);
   };
 
   return (

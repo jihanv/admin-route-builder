@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { updateMissionDetailsAction } from "./actions";
+import { updateMissionDetailsAction } from "@/lib/mission-details/updateMissionDetailsAction";
 import { MissionDetailsEditor } from "@/components/MissionDetailsEditor";
 
 export default async function MissionDetailsPage({

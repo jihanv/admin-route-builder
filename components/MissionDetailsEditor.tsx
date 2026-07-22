@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentProps } from "react";
+import { useState, type ComponentProps } from "react";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MissionDetailsSaveToast } from "@/components/MissionDetailsSaveToast";
 import { MissionDetailsNextButton } from "@/components/MissionDetailsNextButton";
@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FundraisingGoalInput } from "@/components/FundraisingGoalInput";
 import { DateRangePicker } from "@/components/DateRangePicker";
+import { updateMissionDetailsAction } from "@/lib/mission-details/updateMissionDetailsAction";
 
 type MissionDetailsEditorProps = ComponentProps<"form"> & {
   draftId: string;
@@ -38,6 +39,10 @@ export function MissionDetailsEditor({
   draftTitle,
   ...formProps
 }: MissionDetailsEditorProps) {
+  const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
+
+  const [, setSelectedHeroBannerFile] = useState<File | null>(null);
+
   return (
     <>
       <section className="space-y-6 p-8">
@@ -49,10 +54,15 @@ export function MissionDetailsEditor({
         )}
         <MissionBuilderSteps currentStepId="mission-details" />
         <h1 className="text-2xl font-semibold text-primary">Mission Details</h1>
-        <form {...formProps} data-draft-id={draftId}>
+        <form
+          {...formProps}
+          action={updateMissionDetails}
+          data-draft-id={draftId}
+        >
           <fieldset disabled={!canEditDraft} className="space-y-3 border-0 p-0">
             <HeroBannerImageEditor
               savedImageAsset={savedHeroBannerImageAsset}
+              onImageSelected={setSelectedHeroBannerFile}
             />
             <label className="block text-base font-medium">Mission title</label>
             <Input
