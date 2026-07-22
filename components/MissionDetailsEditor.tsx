@@ -42,13 +42,19 @@ export function MissionDetailsEditor({
   const updateMissionDetails = updateMissionDetailsAction.bind(null, draftId);
 
   const [, setSelectedHeroBannerFile] = useState<File | null>(null);
+  const [isResizingHeroImage, setIsResizingHeroImage] = useState(false);
   const handleHeroBannerImageSelected = async (imageFile: File | null) => {
-    const resizedImageFile = imageFile
-      ? await resizeImageFile(imageFile)
-      : null;
+    setIsResizingHeroImage(true);
 
-    setSelectedHeroBannerFile(resizedImageFile);
-    return resizedImageFile;
+    try {
+      const resizedImageFile = imageFile
+        ? await resizeImageFile(imageFile)
+        : null;
+      setSelectedHeroBannerFile(resizedImageFile);
+      return resizedImageFile;
+    } finally {
+      setIsResizingHeroImage(false);
+    }
   };
 
   return (
