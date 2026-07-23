@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const routePointSchema = z.object({
   latitude: z.number().min(-90).max(90),
-  longitude: z.number(),
+  longitude: z.number().min(-180).max(180),
 });
 
 export const missionMilestoneSchema = z.object({
