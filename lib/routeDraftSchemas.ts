@@ -9,7 +9,7 @@ export const routePointSchema = z.object({
 
 export const missionMilestoneSchema = z.object({
   id: z.string(),
-  title: z.string(),
+  title: z.string().trim().min(1),
   description: z.string(),
   distanceMeters: z.number(),
   position: routePointSchema,
