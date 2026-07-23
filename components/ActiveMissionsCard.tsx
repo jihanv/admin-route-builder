@@ -66,18 +66,18 @@ export function ActiveMissionsCard({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-1">
+      <CardContent className="flex flex-1 flex-col">
         {missions.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             No missions are active today.
           </p>
         ) : (
-          <div className="divide-y">
+          <div className="grid flex-1 grid-rows-3 divide-y">
             {visibleMissions.map((mission) => (
               <Link
                 key={mission.id}
                 href="/dashboard/mission/current"
-                className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1 rounded-lg py-5 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="grid content-center grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1 rounded-lg py-5 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <span className="min-w-0 truncate font-medium">
                   {mission.title}
