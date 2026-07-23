@@ -78,7 +78,11 @@ export function MilestoneEditor({
         return;
       }
 
-      router.push(`/dashboard/missions/new/${draftId}/milestones/content`);
+      router.push(
+        selectedPositions.length === 0
+          ? `/dashboard/missions/new/${draftId}/review`
+          : `/dashboard/missions/new/${draftId}/milestones/content`,
+      );
     } catch (error) {
       console.error("Save milestone positions failed:", error);
       toast.error("Could not save milestone positions.");
@@ -141,9 +145,7 @@ export function MilestoneEditor({
         </ol>
         <Button
           onClick={handleContinueToContent}
-          disabled={
-            selectedPositions.length === 0 || isSavingMilestonePositions
-          }
+          disabled={isSavingMilestonePositions}
         >
           {isSavingMilestonePositions
             ? "Saving milestone positions..."
