@@ -70,6 +70,7 @@ export function MilestoneEditor({
       const response = await saveRouteDraft({
         id: draftId,
         milestones: nextMilestones,
+        milestoneImageAssets: selectedPositions.length === 0 ? [] : undefined,
       });
 
       if (!response.ok) {
