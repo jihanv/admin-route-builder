@@ -3,7 +3,7 @@ import "server-only";
 import { z } from "zod";
 
 export const routePointSchema = z.object({
-  latitude: z.number(),
+  latitude: z.number().min(-90).max(90),
   longitude: z.number(),
 });
 
