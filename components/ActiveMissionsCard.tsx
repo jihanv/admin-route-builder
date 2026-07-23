@@ -77,15 +77,8 @@ export function ActiveMissionsCard({
               <Link
                 key={mission.id}
                 href="/dashboard/mission/current"
-                className="grid grid-cols-[2.5rem_1fr_auto] gap-x-3 gap-y-1 rounded-lg py-5 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1 rounded-lg py-5 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <span className="row-span-4 flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                  <MapPinned
-                    aria-hidden="true"
-                    className="size-5 text-primary"
-                  />
-                </span>
-
                 <span className="min-w-0 truncate font-medium">
                   {mission.title}
                 </span>
@@ -99,7 +92,7 @@ export function ActiveMissionsCard({
                   {formatCurrencyFromCents(mission.fundraisingGoalCents)}
                 </span>
 
-                <span className="col-span-2 col-start-2 h-2 overflow-hidden rounded-full bg-muted">
+                <span className="col-span-2 h-2 overflow-hidden rounded-full bg-muted">
                   <span
                     className="block h-full rounded-full bg-primary"
                     style={{
@@ -108,7 +101,7 @@ export function ActiveMissionsCard({
                   />
                 </span>
 
-                <span className="col-start-2 text-xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   Ends {formatMissionEndDate(mission.endDate)}
                 </span>
               </Link>
