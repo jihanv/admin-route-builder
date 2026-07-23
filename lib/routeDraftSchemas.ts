@@ -17,7 +17,7 @@ export const missionMilestoneSchema = z.object({
 });
 
 export const routeDraftMilestoneImageAssetSchema = z.object({
-  milestoneId: z.string(),
+  milestoneId: z.string().trim().min(1),
   imageUrl: z.url(),
   cloudinaryPublicId: z.string(),
 });
