@@ -29,8 +29,13 @@ export function validateDraftForPublish(draft: RouteDraft) {
     throw new Error("Mission route is required");
   }
 
-  if (!draft.milestones || draft.milestones.length === 0) {
-    throw new Error("At least one milestone is required");
+  if (
+    draft.milestones?.some(
+      (milestone) =>
+        typeof milestone.title !== "string" || !milestone.title.trim(),
+    )
+  ) {
+    throw new Error("Every milestone title is required");
   }
 
   if (!draft.createdByAdminId) {
