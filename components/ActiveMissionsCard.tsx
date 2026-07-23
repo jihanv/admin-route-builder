@@ -64,10 +64,6 @@ export function ActiveMissionsCard({
           />
           Active Missions
         </CardTitle>
-
-        <p className="text-sm text-muted-foreground">
-          {missions.length} missions are published and happening right now.
-        </p>
       </CardHeader>
 
       <CardContent className="flex-1">

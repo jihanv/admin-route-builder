@@ -106,7 +106,7 @@ export function DonationTrendChart({
 
       <ChartContainer
         config={chartConfig}
-        className="mt-6 h-64 w-full aspect-auto"
+        className="mt-6 h-[clamp(10rem,24vh,16rem)] w-full aspect-auto"
         aria-label="Cumulative net donations over time"
       >
         <AreaChart
