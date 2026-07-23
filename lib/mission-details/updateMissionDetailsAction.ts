@@ -35,16 +35,8 @@ const missionDetailsSchema = z
       .refine((value) => Number(value) > 0, {
         message: "Fundraising goal must be greater than zero.",
       }),
-    startDate: z
-      .string()
-      .trim()
-      .min(1, "Start date is required.")
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Start date must use YYYY-MM-DD format."),
-    endDate: z
-      .string()
-      .trim()
-      .min(1, "End date is required.")
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "End date must use YYYY-MM-DD format."),
+    startDate: z.iso.date(),
+    endDate: z.iso.date(),
   })
   .refine((data) => data.endDate > data.startDate, {
     message: "End date must be after start date.",
