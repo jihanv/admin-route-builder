@@ -45,10 +45,12 @@ export function MilestoneEditor({
   const [isSavingMilestonePositions, setIsSavingMilestonePositions] =
     useState(false);
 
-  const handleSaveMilestonePositions = async () => {
+  const handleSaveMilestonePositions = async (
+    positionsToSave: SelectedMilestonePosition[],
+  ) => {
     setIsSavingMilestonePositions(true);
 
-    const nextMilestones = selectedPositions.map((position) => {
+    const nextMilestones = positionsToSave.map((position) => {
       const existingMilestone = milestones.find(
         (milestone) => milestone.id === position.temporaryId,
       );
@@ -70,7 +72,7 @@ export function MilestoneEditor({
       const response = await saveRouteDraft({
         id: draftId,
         milestones: nextMilestones,
-        milestoneImageAssets: selectedPositions.length === 0 ? [] : undefined,
+        milestoneImageAssets: positionsToSave.length === 0 ? [] : undefined,
       });
 
       if (!response.ok) {
@@ -79,7 +81,7 @@ export function MilestoneEditor({
       }
 
       router.push(
-        selectedPositions.length === 0
+        positionsToSave.length === 0
           ? `/dashboard/missions/new/${draftId}/review`
           : `/dashboard/missions/new/${draftId}/milestones/content`,
       );
@@ -144,7 +146,7 @@ export function MilestoneEditor({
           ))}
         </ol>
         <Button
-          onClick={handleSaveMilestonePositions}
+          onClick={() => handleSaveMilestonePositions(selectedPositions)}
           disabled={isSavingMilestonePositions}
         >
           {isSavingMilestonePositions
