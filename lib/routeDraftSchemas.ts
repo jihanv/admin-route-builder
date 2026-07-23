@@ -11,7 +11,7 @@ export const missionMilestoneSchema = z.object({
   id: z.string(),
   title: z.string().trim().min(1),
   description: z.string(),
-  distanceMeters: z.number(),
+  distanceMeters: z.number().nonnegative(),
   position: routePointSchema,
   imageUrls: z.array(z.string()),
 });
