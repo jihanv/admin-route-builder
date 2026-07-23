@@ -45,7 +45,7 @@ export function MilestoneEditor({
   const [isSavingMilestonePositions, setIsSavingMilestonePositions] =
     useState(false);
 
-  const handleContinueToContent = async () => {
+  const handleSaveMilestonePositions = async () => {
     setIsSavingMilestonePositions(true);
 
     const nextMilestones = selectedPositions.map((position) => {
@@ -144,7 +144,7 @@ export function MilestoneEditor({
           ))}
         </ol>
         <Button
-          onClick={handleContinueToContent}
+          onClick={handleSaveMilestonePositions}
           disabled={isSavingMilestonePositions}
         >
           {isSavingMilestonePositions
