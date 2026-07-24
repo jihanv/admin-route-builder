@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,10 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
         <DialogFooter>
           <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
             Not now
+          </Button>
+
+          <Button asChild>
+            <Link href={`/dashboard/missions/${draftId}`}>View mission</Link>
           </Button>
         </DialogFooter>
       </DialogContent>
