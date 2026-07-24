@@ -25,10 +25,17 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
   async function handleCreateMission() {
     setErrorMessage(null);
     setIsPublishing(true);
+    let response: Response;
 
-    const response = await fetch(`/api/missions/publish/${draftId}`, {
-      method: "POST",
-    });
+    try {
+      response = await fetch(`/api/missions/publish/${draftId}`, {
+        method: "POST",
+      });
+    } catch {
+      setErrorMessage("Could not connect. Please check your connection.");
+      setIsPublishing(false);
+      return;
+    }
 
     if (response.ok) {
       setIsPublished(true);
