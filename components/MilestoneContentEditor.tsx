@@ -145,6 +145,7 @@ export function MilestoneContentEditor({
         const resizedImageFile = await resizeImageFile(imageFile);
         const uploadResponse = await uploadMilestoneImage(
           draftId,
+          milestone.id,
           resizedImageFile,
         );
         const uploadResult = (await uploadResponse.json()) as {

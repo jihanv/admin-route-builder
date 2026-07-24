@@ -27,9 +27,14 @@ export async function saveRouteDraft(draft: SaveRouteDraftInput) {
   });
 }
 
-export async function uploadMilestoneImage(draftId: string, imageFile: File) {
+export async function uploadMilestoneImage(
+  draftId: string,
+  milestoneId: string,
+  imageFile: File,
+) {
   const formData = new FormData();
 
+  formData.append("milestoneId", milestoneId);
   formData.append("imageFile", imageFile);
 
   return fetch(`/api/route-drafts/${draftId}/milestone-images`, {
