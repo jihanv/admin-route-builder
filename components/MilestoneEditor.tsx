@@ -147,11 +147,21 @@ export function MilestoneEditor({
         </ol>
         <Button
           onClick={() => handleSaveMilestonePositions(selectedPositions)}
-          disabled={isSavingMilestonePositions}
+          disabled={
+            selectedPositions.length === 0 || isSavingMilestonePositions
+          }
         >
           {isSavingMilestonePositions
             ? "Saving milestone positions..."
-            : "Next: Add milestone content"}
+            : "Continue to milestone details"}
+        </Button>
+
+        <Button
+          variant="outline"
+          onClick={() => handleSaveMilestonePositions([])}
+          disabled={selectedPositions.length > 0 || isSavingMilestonePositions}
+        >
+          Skip milestones
         </Button>
 
         {/* <MilestoneList milestones={milestones} /> */}
