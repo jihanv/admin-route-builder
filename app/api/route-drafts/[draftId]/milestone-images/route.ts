@@ -30,6 +30,13 @@ export async function POST(
     return NextResponse.json({ error: "Draft not found" }, { status: 404 });
   }
 
+  if (!draftSnapshot.data()?.milestonesLockedAt) {
+    return NextResponse.json(
+      { error: "Milestone positions are not confirmed" },
+      { status: 409 },
+    );
+  }
+
   const formData = await request.formData();
   const milestoneId = formData.get("milestoneId");
   const imageFile = formData.get("imageFile");
