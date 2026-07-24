@@ -200,13 +200,15 @@ export default async function ReviewMissionPage({
               </div>
             ))}
 
-            <Button asChild variant="outline" size="sm">
-              <Link
-                href={`/dashboard/missions/new/${draftId}/milestones/content`}
-              >
-                Edit milestone content
-              </Link>
-            </Button>
+            {milestones.length > 0 ? (
+              <Button asChild variant="outline" size="sm">
+                <Link
+                  href={`/dashboard/missions/new/${draftId}/milestones/content`}
+                >
+                  Edit milestone content
+                </Link>
+              </Button>
+            ) : null}
           </div>
         </div>
       </div>
