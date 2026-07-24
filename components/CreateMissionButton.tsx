@@ -17,6 +17,7 @@ import {
 export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
   const [isPublishing, setIsPublishing] = useState(false);
   const [isPublished, setIsPublished] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleCreateMission() {
@@ -29,6 +30,7 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
 
     if (response.ok) {
       setIsPublished(true);
+      setIsDialogOpen(true);
       setIsPublishing(false);
       return;
     }
@@ -38,7 +40,7 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
   }
 
   return (
-    <Dialog open={isPublished}>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <div>
         <Button
           disabled={isPublishing || isPublished}
