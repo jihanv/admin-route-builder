@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import type {
   MissionMilestone,
@@ -24,7 +24,6 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Link from "next/link";
 
 type MilestoneContentEditorProps = {
   draftId: string;
@@ -37,6 +36,7 @@ export function MilestoneContentEditor({
   milestones,
   milestoneImageAssets,
 }: MilestoneContentEditorProps) {
+  const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [savedImageAssetsByMilestoneId, setSavedImageAssetsByMilestoneId] =
     useState<Record<string, RouteDraftMilestoneImageAsset>>(() =>
@@ -212,7 +212,24 @@ export function MilestoneContentEditor({
       setIsSaving(false);
     }
   };
+  const handleContinueToReview = async () => {
+    try {
+      const response = await saveRouteDraft({
+        id: draftId,
+        milestonesLockedAt: new Date().toISOString(),
+      });
 
+      if (!response.ok) {
+        toast.error("Could not continue to review.");
+        return;
+      }
+
+      router.push(`/dashboard/missions/new/${draftId}/review`);
+    } catch (error) {
+      console.error("Lock milestones failed:", error);
+      toast.error("Could not continue to review.");
+    }
+  };
   return (
     <>
       <Dialog open={isSaving}>
@@ -396,10 +413,8 @@ export function MilestoneContentEditor({
             <TooltipTrigger asChild>
               <span className="inline-block">
                 {canReview ? (
-                  <Button asChild>
-                    <Link href={`/dashboard/missions/new/${draftId}/review`}>
-                      Next: Review Mission
-                    </Link>
+                  <Button type="button" onClick={handleContinueToReview}>
+                    Next: Review Mission
                   </Button>
                 ) : (
                   <Button type="button" disabled>
