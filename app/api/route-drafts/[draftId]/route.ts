@@ -142,6 +142,15 @@ export async function PATCH(
       { status: 409 },
     );
 
+  const isLockingMilestonesBeforeRoute =
+    parseResult.data.milestonesLockedAt !== undefined && !draft?.routeLockedAt;
+
+  if (isLockingMilestonesBeforeRoute)
+    return NextResponse.json(
+      { error: "Route must be locked before milestones" },
+      { status: 409 },
+    );
+
   const hasUnknownMilestoneImageAsset =
     Boolean(draft?.milestonesLockedAt) &&
     parseResult.data.milestoneImageAssets?.some(
