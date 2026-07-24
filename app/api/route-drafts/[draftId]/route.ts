@@ -82,7 +82,17 @@ export async function PATCH(
   const currentImageAssets = Array.isArray(draft?.milestoneImageAssets)
     ? (draft.milestoneImageAssets as RouteDraftMilestoneImageAsset[])
     : [];
+  const isChangingLockedMilestoneCount =
+    Boolean(draft?.milestonesLockedAt) &&
+    parseResult.data.milestones !== undefined &&
+    parseResult.data.milestones.length !==
+      (Array.isArray(draft?.milestones) ? draft.milestones.length : 0);
 
+  if (isChangingLockedMilestoneCount)
+    return NextResponse.json(
+      { error: "Milestone positions are locked" },
+      { status: 409 },
+    );
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 

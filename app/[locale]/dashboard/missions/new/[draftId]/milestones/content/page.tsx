@@ -2,8 +2,6 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MilestoneContentEditor } from "@/components/MilestoneContentEditor";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default async function MilestoneContentPage({
   params,
