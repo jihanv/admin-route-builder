@@ -165,6 +165,19 @@ export async function PATCH(
       { error: "Milestone image does not match an existing milestone" },
       { status: 409 },
     );
+
+  const milestoneImageFolder = `rei-mission-drafts/${draftId}/milestones/`;
+
+  const hasForeignMilestoneImageAsset =
+    parseResult.data.milestoneImageAssets?.some(
+      (asset) => !asset.cloudinaryPublicId.startsWith(milestoneImageFolder),
+    );
+
+  if (hasForeignMilestoneImageAsset)
+    return NextResponse.json(
+      { error: "Milestone image does not belong to this draft" },
+      { status: 409 },
+    );
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 
