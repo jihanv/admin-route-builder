@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import type { MissionMilestone, RoutePoint } from "@/types/routeTypes";
 import { MilestoneEditor } from "@/components/MilestoneEditor";
+import { redirect } from "next/navigation";
 
 type MilestonesPageProps = {
   params: Promise<{ draftId: string }>;
@@ -37,7 +38,13 @@ export default async function MilestonesPage({ params }: MilestonesPageProps) {
   const milestones = Array.isArray(draft?.milestones)
     ? (draft.milestones as MissionMilestone[])
     : [];
-
+  if (draft?.milestonesLockedAt) {
+    redirect(
+      milestones.length > 0
+        ? `/dashboard/missions/new/${draftId}/milestones/content`
+        : `/dashboard/missions/new/${draftId}/review`,
+    );
+  }
   const routePoints = Array.isArray(draft?.routePoints)
     ? (draft.routePoints as RoutePoint[])
     : [];
