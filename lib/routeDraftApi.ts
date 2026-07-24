@@ -12,6 +12,7 @@ type SaveRouteDraftInput = Pick<
   | "snapToRoads"
   | "routeLockedAt"
   | "milestones"
+  | "milestonesLockedAt"
   | "milestoneImageAssets"
 > & { id?: string | null };
 

@@ -67,6 +67,7 @@ export type RouteDraft = {
   createdByAdminId?: string;
   createdAt?: string;
   detailsSavedAt?: string;
+  milestonesLockedAt?: string;
   routeLockedAt?: string;
   updatedAt?: string;
   expiresAt?: Date;
