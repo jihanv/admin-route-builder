@@ -132,8 +132,10 @@ export async function PATCH(
     Boolean(draft?.milestonesLockedAt) &&
     parseResult.data.milestones?.some(
       (milestone, index) =>
-        milestone.position.latitude !== draft?.milestones?.[index]?.latitude ||
-        milestone.position.longitude !== draft?.milestones?.[index]?.longitude,
+        milestone.position.latitude !==
+          draft?.milestones?.[index]?.position?.latitude ||
+        milestone.position.longitude !==
+          draft?.milestones?.[index]?.position?.longitude,
     );
 
   if (isChangingLockedMilestoneCoordinates)
