@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { CreateMissionButton } from "@/components/CreateMissionButton";
 
 export default async function ReviewMissionPage({
   params,
@@ -224,13 +225,7 @@ export default async function ReviewMissionPage({
       </div>
 
       <div className="rounded-lg border bg-muted/40 p-4">
-        <Button type="button" disabled>
-          Create Mission
-        </Button>
-
-        <p className="mt-2 text-sm text-muted-foreground">
-          Final mission creation will be added later.
-        </p>
+        <CreateMissionButton draftId={draftId} />
       </div>
     </section>
   );
