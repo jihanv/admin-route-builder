@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { MissionBuilderSteps } from "@/components/MissionBuilderSteps";
 import { MilestoneContentEditor } from "@/components/MilestoneContentEditor";
+import { redirect } from "next/navigation";
 
 export default async function MilestoneContentPage({
   params,
@@ -31,7 +32,9 @@ export default async function MilestoneContentPage({
   if (draft?.createdByAdminId !== userId) {
     return <div>Only the creator can edit milestone content.</div>;
   }
-
+  if (!draft?.milestonesLockedAt) {
+    redirect(`/dashboard/missions/new/${draftId}/milestones`);
+  }
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
   const milestoneImageAssets = Array.isArray(draft?.milestoneImageAssets)
     ? draft.milestoneImageAssets
