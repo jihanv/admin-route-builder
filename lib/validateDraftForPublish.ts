@@ -37,7 +37,9 @@ export function validateDraftForPublish(draft: RouteDraft) {
   ) {
     throw new Error("Every milestone title is required");
   }
-
+  if (!draft.milestonesLockedAt) {
+    throw new Error("Milestone positions must be confirmed");
+  }
   if (!draft.createdByAdminId) {
     throw new Error("Mission owner is required");
   }
