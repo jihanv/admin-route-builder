@@ -105,6 +105,19 @@ export async function PATCH(
       { error: "Milestone order is locked" },
       { status: 409 },
     );
+
+  const isChangingLockedMilestoneDistance =
+    Boolean(draft?.milestonesLockedAt) &&
+    parseResult.data.milestones?.some(
+      (milestone, index) =>
+        milestone.distanceMeters !== draft?.milestones?.[index]?.distanceMeters,
+    );
+
+  if (isChangingLockedMilestoneDistance)
+    return NextResponse.json(
+      { error: "Milestone positions are locked" },
+      { status: 409 },
+    );
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 
