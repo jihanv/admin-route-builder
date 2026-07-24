@@ -212,23 +212,8 @@ export function MilestoneContentEditor({
       setIsSaving(false);
     }
   };
-  const handleContinueToReview = async () => {
-    try {
-      const response = await saveRouteDraft({
-        id: draftId,
-        milestonesLockedAt: new Date().toISOString(),
-      });
-
-      if (!response.ok) {
-        toast.error("Could not continue to review.");
-        return;
-      }
-
-      router.push(`/dashboard/missions/new/${draftId}/review`);
-    } catch (error) {
-      console.error("Lock milestones failed:", error);
-      toast.error("Could not continue to review.");
-    }
+  const handleContinueToReview = () => {
+    router.push(`/dashboard/missions/new/${draftId}/review`);
   };
   return (
     <>
