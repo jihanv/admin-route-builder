@@ -10,6 +10,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -66,6 +67,11 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
             Your new mission was created successfully.
           </DialogDescription>
         </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            Not now
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
