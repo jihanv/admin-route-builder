@@ -73,6 +73,8 @@ export function MilestoneEditor({
         id: draftId,
         milestones: nextMilestones,
         milestoneImageAssets: positionsToSave.length === 0 ? [] : undefined,
+        milestonesLockedAt:
+          positionsToSave.length === 0 ? new Date().toISOString() : undefined,
       });
 
       if (!response.ok) {
