@@ -5,10 +5,6 @@ export function validateDraftForPublish(draft: RouteDraft) {
     throw new Error("Mission title is required");
   }
 
-  if (!draft.description) {
-    throw new Error("Mission description is required");
-  }
-
   if (!draft.startDate || !draft.endDate) {
     throw new Error("Mission dates are required");
   }
