@@ -5,6 +5,7 @@ import { ReviewRouteMap } from "@/components/ReviewRouteMap";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function ReviewMissionPage({
   params,
@@ -35,7 +36,9 @@ export default async function ReviewMissionPage({
   if (draft?.createdByAdminId !== userId) {
     return <div>Only the creator can review this mission draft.</div>;
   }
-
+  if (!draft?.milestonesLockedAt) {
+    redirect(`/dashboard/missions/new/${draftId}/milestones`);
+  }
   if (!draft?.detailsSavedAt) {
     return <div>Save mission details before reviewing this mission.</div>;
   }
