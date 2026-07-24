@@ -36,6 +36,11 @@ export default async function MilestoneContentPage({
     redirect(`/dashboard/missions/new/${draftId}/milestones`);
   }
   const milestones = Array.isArray(draft?.milestones) ? draft.milestones : [];
+
+  if (milestones.length === 0) {
+    redirect(`/dashboard/missions/new/${draftId}/review`);
+  }
+
   const milestoneImageAssets = Array.isArray(draft?.milestoneImageAssets)
     ? draft.milestoneImageAssets
     : [];
