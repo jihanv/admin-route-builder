@@ -110,6 +110,7 @@ export function MilestoneEditor({
           Selected milestone points: {selectedPositions.length}
         </p>
         <Button
+          variant="secondary"
           onClick={() => setSelectedPositions([])}
           disabled={selectedPositions.length === 0}
         >
