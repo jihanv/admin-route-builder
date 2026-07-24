@@ -46,11 +46,6 @@ export default async function MilestoneContentPage({
         This draft has {milestones.length} milestone positions ready for
         content.
       </p>
-      <Button asChild>
-        <Link href={`/dashboard/missions/new/${draftId}/milestones`}>
-          Back to milestone positions
-        </Link>
-      </Button>
       <MilestoneContentEditor
         draftId={draftId}
         milestones={milestones}
