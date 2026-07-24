@@ -64,7 +64,16 @@ export async function PATCH(
       { status: 403 },
     );
   }
+  const isChangingMilestoneLockTime =
+    Boolean(draft?.milestonesLockedAt) &&
+    parseResult.data.milestonesLockedAt !== undefined &&
+    parseResult.data.milestonesLockedAt !== draft?.milestonesLockedAt;
 
+  if (isChangingMilestoneLockTime)
+    return NextResponse.json(
+      { error: "Milestone lock time cannot be changed" },
+      { status: 409 },
+    );
   const lockedRouteFields = [
     "goalDistanceMeters",
     "snapToRoads",
