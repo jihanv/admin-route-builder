@@ -31,7 +31,17 @@ export async function POST(
   }
 
   const formData = await request.formData();
+  const milestoneId = formData.get("milestoneId");
   const imageFile = formData.get("imageFile");
+  const milestones = draftSnapshot.data()?.milestones;
+
+  if (
+    typeof milestoneId !== "string" ||
+    !Array.isArray(milestones) ||
+    !milestones.some((milestone) => milestone?.id === milestoneId)
+  ) {
+    return NextResponse.json({ error: "Milestone not found" }, { status: 400 });
+  }
 
   if (!(imageFile instanceof File)) {
     return NextResponse.json({ error: "Missing image file" }, { status: 400 });
