@@ -21,6 +21,7 @@ const routeDraftPatchSchema = z.object({
   routePoints: z.array(routePointSchema).optional(),
   snappedRoutePoints: z.array(routePointSchema).optional(),
   routeLockedAt: z.iso.datetime().optional(),
+  milestonesLockedAt: z.iso.datetime().optional(),
   milestones: z.array(missionMilestoneSchema).optional(),
   milestoneImageAssets: z.array(routeDraftMilestoneImageAssetSchema).optional(),
 });
