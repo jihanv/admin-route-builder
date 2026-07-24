@@ -9,6 +9,7 @@ type CreateMissionButtonProps = {
 
 export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
   const [isPublishing, setIsPublishing] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleCreateMission() {
@@ -19,16 +20,28 @@ export function CreateMissionButton({ draftId }: CreateMissionButtonProps) {
       method: "POST",
     });
 
-    if (!response.ok) {
-      setErrorMessage("Failed to create the mission. Please try again.");
+    if (response.ok) {
+      setIsPublished(true);
       setIsPublishing(false);
+      return;
     }
+
+    setErrorMessage("Failed to create the mission. Please try again.");
+    setIsPublishing(false);
   }
 
   return (
     <div>
-      <Button disabled={isPublishing} onClick={handleCreateMission}>
-        {isPublishing ? "Creating Mission..." : "Create Mission"}
+      <Button
+        disabled={isPublishing || isPublished}
+        onClick={handleCreateMission}
+        className="w-44"
+      >
+        {isPublished
+          ? "Mission Created"
+          : isPublishing
+            ? "Creating Mission..."
+            : "Create Mission"}
       </Button>
 
       {errorMessage && (
