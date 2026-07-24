@@ -118,6 +118,20 @@ export async function PATCH(
       { error: "Milestone positions are locked" },
       { status: 409 },
     );
+
+  const isChangingLockedMilestoneCoordinates =
+    Boolean(draft?.milestonesLockedAt) &&
+    parseResult.data.milestones?.some(
+      (milestone, index) =>
+        milestone.position.latitude !== draft?.milestones?.[index]?.latitude ||
+        milestone.position.longitude !== draft?.milestones?.[index]?.longitude,
+    );
+
+  if (isChangingLockedMilestoneCoordinates)
+    return NextResponse.json(
+      { error: "Milestone positions are locked" },
+      { status: 409 },
+    );
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 
