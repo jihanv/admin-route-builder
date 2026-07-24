@@ -141,6 +141,21 @@ export async function PATCH(
       { error: "Milestone positions are locked" },
       { status: 409 },
     );
+
+  const hasUnknownMilestoneImageAsset =
+    Boolean(draft?.milestonesLockedAt) &&
+    parseResult.data.milestoneImageAssets?.some(
+      (asset) =>
+        !draft?.milestones?.some(
+          (milestone: { id?: string }) => milestone.id === asset.milestoneId,
+        ),
+    );
+
+  if (hasUnknownMilestoneImageAsset)
+    return NextResponse.json(
+      { error: "Milestone image does not match an existing milestone" },
+      { status: 409 },
+    );
   const nextImageAssets = parseResult.data.milestoneImageAssets;
   const oldImagePublicIds: string[] = [];
 
